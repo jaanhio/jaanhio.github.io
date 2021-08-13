@@ -1,0 +1,33 @@
+baseurl: jaanhio.github.io/
+languageCode: en-us
+theme: hello-friend
+paginate: 5
+params:
+  contentTypeName: blog
+  defaultTheme: dark
+  showMenuItems: 2
+  showReadingTime: true
+languages:
+  en:
+    title: jaanhio
+    subtitle:
+    keywords: ''
+    copyright: ''
+    menuMore: Show more
+    writtenBy: Written by
+    readMore: Read more
+    readOtherPosts: Read other posts
+    newerPosts: Newer posts
+    olderPosts: Older posts
+    minuteReadingTime: min read
+    dateFormatSingle: '6 Jan 2006'
+    dateFormatList: '6 Jan 2006'
+    params:
+      logo:
+        logoText: $
+        logoHomeLink: /
+    menu:
+      main:
+        - identifier: "???"
+          name: "???"
+          url: /about
