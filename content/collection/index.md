@@ -11,8 +11,9 @@ draft: false
 [#architecture](/tags/architecture) [#foo](/tags/foo) 
 
 ---
-
 [10 Architecture Patterns Used In Enterprise Software Development Today](https://www.youtube.com/watch?v=BrT3AO8bVQY&ab_channel=CodingTech)
+
+[#architecture](/tags/architecture)
 
 ---
 [Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc.](https://www.youtube.com/watch?v=J2NWvh3lgJI&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D)
