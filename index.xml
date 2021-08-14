@@ -9,10 +9,30 @@
     <description>Recent content on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Aug 2021 16:34:18 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 14 Aug 2021 16:37:46 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Seventh Post</title>
+      <link>/blog/seventh-post/</link>
+      <pubDate>Sat, 14 Aug 2021 16:37:46 +0800</pubDate>
+      
+      <guid>/blog/seventh-post/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum rhoncus quam, in venenatis sapien. Mauris ut congue purus, quis porttitor augue. Duis tempus arcu in nisl auctor, vel laoreet dolor rutrum. Pellentesque justo mauris, congue eget porta a, consectetur eget libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ullamcorper eros et ipsum iaculis facilisis. Phasellus et nunc suscipit, faucibus leo nec, dignissim nisl.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Sixth Post</title>
