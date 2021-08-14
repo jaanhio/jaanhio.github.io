@@ -5,7 +5,7 @@ slug: ""
 description: ""
 keywords: []
 draft: false
-tags: []
+tags: ["architecture"]
 math: false
 toc: false
 ---

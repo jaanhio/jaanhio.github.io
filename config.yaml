@@ -4,7 +4,7 @@ theme: hello-friend
 paginate: 5
 params:
   contentTypeName: blog
-  defaultTheme: dark
+  defaultTheme: light
   showMenuItems: 2
   showReadingTime: true
 languages:
@@ -28,6 +28,9 @@ languages:
         logoHomeLink: /
     menu:
       main:
-        - identifier: "???"
-          name: "???"
+        - identifier: "About me"
+          name: "About me"
           url: /about
+        - identifier: "Collection"
+          name: "Collection"
+          url: /collection
