@@ -3,7 +3,7 @@ title: "Collection"
 draft: false
 ---
 
-#### A collection of interesting articles or videos I found.
+#### A collection of interesting resources I found.
 
 
 [LISA19 - Why Are Distributed Systems So Hard?](https://www.youtube.com/watch?v=bG9AQ9ce5Zo&ab_channel=USENIX)
