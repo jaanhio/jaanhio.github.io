@@ -8,7 +8,7 @@ draft: false
 
 [LISA19 - Why Are Distributed Systems So Hard?](https://www.youtube.com/watch?v=bG9AQ9ce5Zo&ab_channel=USENIX)
 
-[#architecture](/tags/architecture) [#foo](/tags/foo) 
+[#architecture](/tags/architecture)
 
 ---
 [10 Architecture Patterns Used In Enterprise Software Development Today](https://www.youtube.com/watch?v=BrT3AO8bVQY&ab_channel=CodingTech)
