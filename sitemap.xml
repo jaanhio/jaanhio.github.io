@@ -1,1 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>jaanhio.github.io/about/</loc></url><url><loc>jaanhio.github.io/categories/</loc></url><url><loc>jaanhio.github.io/</loc></url><url><loc>jaanhio.github.io/tags/</loc></url></urlset>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>/blog/</loc>
+    <lastmod>2021-08-13T09:27:38+08:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2021-08-13T09:27:38+08:00</lastmod>
+  </url><url>
+    <loc>/blog/second-post/</loc>
+    <lastmod>2021-08-13T09:27:38+08:00</lastmod>
+  </url><url>
+    <loc>/amiwefnivmwe/</loc>
+    <lastmod>2021-08-13T09:03:30+08:00</lastmod>
+  </url><url>
+    <loc>/amiwefnivmwe/dawjdnawdna/</loc>
+    <lastmod>2021-08-13T09:03:30+08:00</lastmod>
+  </url><url>
+    <loc>/blog/first-post/</loc>
+    <lastmod>2021-08-13T08:50:33+08:00</lastmod>
+  </url><url>
+    <loc>/about/</loc>
+  </url><url>
+    <loc>/categories/</loc>
+  </url><url>
+    <loc>/tags/</loc>
+  </url>
+</urlset>
