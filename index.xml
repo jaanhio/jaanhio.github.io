@@ -193,7 +193,8 @@ Memory isn&amp;rsquo;t my greatest strength, hence the existence of this page wh
         
         
           A collection of interesting resources I found.
-LISA19 - Why Are Distributed Systems So Hard? #architecture  10 Architecture Patterns Used In Enterprise Software Development Today #architecture  Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc. #ebpf #architecture
+Webinar: Kubernetes and Networks: Why is This So Dang Hard? #kubernetes #networking
+ LISA19 - Why Are Distributed Systems So Hard? #architecture  10 Architecture Patterns Used In Enterprise Software Development Today #architecture  Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc. #ebpf #architecture
  BPF: Tracing and More #ebpf  Introduction to Linux Kernel Architecture #linux #architecture
  Essential Complexity in Systems Architecture #architecture  Kubernetes Networking: How to Write a CNI Plugin From Scratch - Eran Yanay, Twistlock #kubernetes #networking
           
