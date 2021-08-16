@@ -5,6 +5,11 @@ draft: false
 
 A collection of interesting resources I found.
 
+### [Webinar: Kubernetes and Networks: Why is This So Dang Hard?](https://youtu.be/GgCA2USI5iQ)
+
+{{<tag title="kubernetes">}} {{<tag title="networking">}}
+
+---
 
 ### [LISA19 - Why Are Distributed Systems So Hard?](https://www.youtube.com/watch?v=bG9AQ9ce5Zo&ab_channel=USENIX)
 
