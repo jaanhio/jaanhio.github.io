@@ -17,3 +17,32 @@
       margin-top: 5vh;
     }
 }
+
+input[type=checkbox] {
+  display: none
+}
+
+input[type=checkbox]:checked ~ label > img {
+  transform: scale(1.8) translateY(5vh);
+  cursor: zoom-out;
+}
+
+label > img {
+  display: block;
+  max-width: 100%;
+  transition: transform 0.25s ease;
+  cursor: zoom-in;
+
+  &.left {
+    margin-right: auto;
+  }
+
+  &.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.right {
+    margin-left: auto;
+  }
+}
