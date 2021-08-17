@@ -5,6 +5,21 @@ draft: false
 
 A collection of interesting resources I found.
 
+### [AWS re:Invent 2019: [REPEAT 1] BPF performance analysis at Netflix (OPN303-R1)](https://youtu.be/16slh29iN1g)
+
+{{<tag title="bpf">}}
+
+---
+### [Successful Kubernetes Development Workflows • Ellen Körbes • GOTO 2021](https://youtu.be/9csPAXYEf7M)
+
+{{<tag title="kubernetes">}}
+
+---
+### [Tutorial: Communication Is Key - Understanding Kubernetes Networking - Jeff Poole, Vivint Smart Home](https://youtu.be/InZVNuKY5GY)
+
+{{<tag title="kubernetes">}} {{<tag title="networking">}}
+
+---
 ### [Webinar: Kubernetes and Networks: Why is This So Dang Hard?](https://youtu.be/GgCA2USI5iQ)
 
 {{<tag title="kubernetes">}} {{<tag title="networking">}}
@@ -24,13 +39,13 @@ A collection of interesting resources I found.
 ### [Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc.](https://www.youtube.com/watch?v=J2NWvh3lgJI&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D)
 
 
-{{<tag title="ebpf">}} {{<tag title="architecture">}} 
+{{<tag title="bpf">}} {{<tag title="architecture">}} 
 
 ---
 
 ### [BPF: Tracing and More](https://youtu.be/JRFNIKUROPE)
 
-{{<tag title="ebpf">}}
+{{<tag title="bpf">}}
 
 ---
 
@@ -102,7 +117,7 @@ Useful for someone looking to contribute to Kubernetes.
 
 ### [LISA21 - BPF Internals](https://youtu.be/_5Z2AU7QTH4)
 
-{{<tag title="ebpf">}}
+{{<tag title="bpf">}}
 
 ---
 
