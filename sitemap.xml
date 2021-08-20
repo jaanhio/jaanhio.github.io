@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/blog/</loc>
-    <lastmod>2021-08-14T16:34:18+08:00</lastmod>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2021-08-14T16:34:18+08:00</lastmod>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/tags/linux/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/tags/monitoring/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/tags/node-exporter/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/blog/linux-node-exporter-setup/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/tags/systemd/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-08-19T22:22:18+08:00</lastmod>
   </url><url>
     <loc>/blog/sixth-post/</loc>
     <lastmod>2021-08-14T16:34:18+08:00</lastmod>
@@ -33,9 +51,6 @@
     <lastmod>2021-08-13T08:50:33+08:00</lastmod>
   </url><url>
     <loc>/blog/first-post/</loc>
-    <lastmod>2021-08-13T08:50:33+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2021-08-13T08:50:33+08:00</lastmod>
   </url><url>
     <loc>/about/</loc>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>systemd on jaanhio</title>
+    
+    
+    
+    <link>/tags/systemd/</link>
+    <description>Recent content in systemd on jaanhio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Aug 2021 22:22:18 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/systemd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Node-exporter setup with Systemd</title>
+      <link>/blog/linux-node-exporter-setup/</link>
+      <pubDate>Thu, 19 Aug 2021 22:22:18 +0800</pubDate>
+      
+      <guid>/blog/linux-node-exporter-setup/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
+To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
+This is where systemd comes in.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>
