@@ -4,7 +4,7 @@ date: 2021-08-13T08:50:33+08:00
 slug: ""
 description: ""
 keywords: []
-draft: false
+draft: true
 tags: ["architecture"]
 math: false
 toc: false

@@ -4,7 +4,7 @@ date: 2021-08-13T09:27:38+08:00
 slug: ""
 description: "懐かしい声と匂い、愛しい光と温度。私は大切な誰かと隙間なくぴったりとくっついている。。。"
 keywords: []
-draft: false
+draft: true
 tags: []
 math: false
 toc: false
