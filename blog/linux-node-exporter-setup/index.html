@@ -262,7 +262,7 @@ Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<sp
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo restorecon -rv /usr/local/bin/node_exporter
 sudo systemctl restart node_exporter
 </code></pre></div><p>If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the <code>/metrics</code> endpoint. This is due to the iptable rules.</p>
-<p>The following snippet will check for existence of rule and add if rule is missing.</p>
+<p>The following snippet will check for existence of required rule that accepts packets from <code>port: 9100</code>(default port of node-exporter) and add if rule is missing.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo iptables -C INPUT -p tcp -m tcp --dport <span style="color:#ae81ff">9100</span> -j ACCEPT 2&gt;/dev/null
 NODE_EXPORTER_RULE_EXIST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo $?<span style="color:#66d9ef">)</span>
 <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $NODE_EXPORTER_RULE_EXIST -eq <span style="color:#ae81ff">1</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
