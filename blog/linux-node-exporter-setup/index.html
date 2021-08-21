@@ -205,63 +205,63 @@ This is where systemd comes in." />
 <p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
 <p>Now let&rsquo;s look at how we can use it to set up node-exporter on a Linux machine.</p>
 <p>First, download the binary from <a href="https://github.com/prometheus/node_exporter">release page</a>. If you are setting node-exporter as part of your bootstrap script, it may be useful to execute the downloading in a subshell (enclose command in <code>()</code>) so that you do not have change directory,</p>
-<pre><code>(cd /tmp &amp;&amp; curl -OL https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz)
-(cd /tmp &amp;&amp; tar -xvf /tmp/node_exporter-1.2.2.linux-amd64.tar.gz)
-</code></pre><p>Next, create user and group for running node-exporter process. <a href="https://unix.stackexchange.com/questions/52268/why-is-it-a-bad-idea-to-run-as-root"><!-- raw HTML omitted -->You do not want to run your process as root.<!-- raw HTML omitted --></a></p>
-<pre><code>sudo useradd -m node_exporter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">(</span>cd /tmp <span style="color:#f92672">&amp;&amp;</span> curl -OL https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz<span style="color:#f92672">)</span>
+<span style="color:#f92672">(</span>cd /tmp <span style="color:#f92672">&amp;&amp;</span> tar -xvf /tmp/node_exporter-1.2.2.linux-amd64.tar.gz<span style="color:#f92672">)</span>
+</code></pre></div><p>Next, create user and group for running node-exporter process. <a href="https://unix.stackexchange.com/questions/52268/why-is-it-a-bad-idea-to-run-as-root"><!-- raw HTML omitted -->You do not want to run your process as root.<!-- raw HTML omitted --></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo useradd -m node_exporter
 sudo groupadd node_exporter
 sudo usermod -a -G node_exporter node_exporter
-</code></pre><p>Then, move binary to <code>/usr/local/bin</code> and change owner of file to the user (<code>node_exporter</code>) created above.</p>
-<pre><code>sudo mv /tmp/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64/node_exporter /usr/local/bin/
+</code></pre></div><p>Then, move binary to <code>/usr/local/bin</code> and change owner of file to the user (<code>node_exporter</code>) created above.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo mv /tmp/node_exporter-<span style="color:#e6db74">${</span>NODE_EXPORTER_VERSION<span style="color:#e6db74">}</span>.linux-amd64/node_exporter /usr/local/bin/
 sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
-</code></pre><p>Now, create a <code>.service</code> file to running node-exporter process using systemd.</p>
-<pre><code>sudo bash -c 'cat &lt;&lt;EOF &gt; /etc/systemd/system/node_exporter.service
-[Unit]
-Description=Node Exporter
-After=network.target
-
-[Service]
-User=node_exporter
-Group=node_exporter
-Type=simple
-ExecStart=/usr/local/bin/node_exporter
-
-[Install]
-WantedBy=multi-user.target
-EOF'
-</code></pre><p>We now perform a reload and start the process.</p>
-<pre><code>sudo systemctl daemon-reload
+</code></pre></div><p>Now, create a <code>.service</code> file to running node-exporter process using systemd.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo bash -c <span style="color:#e6db74">&#39;cat &lt;&lt;EOF &gt; /etc/systemd/system/node_exporter.service
+</span><span style="color:#e6db74">[Unit]
+</span><span style="color:#e6db74">Description=Node Exporter
+</span><span style="color:#e6db74">After=network.target
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">[Service]
+</span><span style="color:#e6db74">User=node_exporter
+</span><span style="color:#e6db74">Group=node_exporter
+</span><span style="color:#e6db74">Type=simple
+</span><span style="color:#e6db74">ExecStart=/usr/local/bin/node_exporter
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">[Install]
+</span><span style="color:#e6db74">WantedBy=multi-user.target
+</span><span style="color:#e6db74">EOF&#39;</span>
+</code></pre></div><p>We now perform a reload and start the process.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo systemctl daemon-reload
 sudo systemctl start node_exporter
-</code></pre><p>We can then check to see if process is running properly.</p>
-<pre><code>$ sudo systemctl status node_exporter
+</code></pre></div><p>We can then check to see if process is running properly.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ sudo systemctl status node_exporter
 ● node_exporter.service - Node Exporter
-   Loaded: loaded (/etc/systemd/system/node_exporter.service; disabled; vendor preset: disabled)
-   Active: active (running) since Thu 2021-08-19 14:38:14 +08; 23h ago
- Main PID: 66608 (node_exporter)
-    Tasks: 6 (limit: 23494)
+   Loaded: loaded <span style="color:#f92672">(</span>/etc/systemd/system/node_exporter.service; disabled; vendor preset: disabled<span style="color:#f92672">)</span>
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Thu 2021-08-19 14:38:14 +08; 23h ago
+ Main PID: <span style="color:#ae81ff">66608</span> <span style="color:#f92672">(</span>node_exporter<span style="color:#f92672">)</span>
+    Tasks: <span style="color:#ae81ff">6</span> <span style="color:#f92672">(</span>limit: 23494<span style="color:#f92672">)</span>
    Memory: 21.1M
    CGroup: /system.slice/node_exporter.service
            └─66608 /usr/local/bin/node_exporter
 
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=thermal_zone
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=time
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=timex
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=udp_queues
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=uname
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=vmstat
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=xfs
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:115 collector=zfs
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=node_exporter.go:199 msg=&quot;Listening on&quot; address=:9100
-Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=tls_config.go:191 msg=&quot;TLS is disabled.&quot; http2=false
-</code></pre><p>If you see the following error, it could be due to SELinux being enabled.</p>
-<pre><code>Failed to execute command: Permission denied
-</code></pre><p>By default, SELinux doesn&rsquo;t allow execution of scripts from <code>/tmp</code> or user&rsquo;s <code>/home</code> directory. Even though the binary has been moved to <code>/usr/local/bin</code>, the context is still <code>/tmp</code>.</p>
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>thermal_zone
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>time
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>timex
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>udp_queues
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>uname
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>vmstat
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>xfs
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:115 collector<span style="color:#f92672">=</span>zfs
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>node_exporter.go:199 msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Listening on&#34;</span> address<span style="color:#f92672">=</span>:9100
+Aug <span style="color:#ae81ff">19</span> 14:38:14 foo-instance node_exporter<span style="color:#f92672">[</span>66608<span style="color:#f92672">]</span>: level<span style="color:#f92672">=</span>info ts<span style="color:#f92672">=</span>2021-08-19T06:38:14.080Z caller<span style="color:#f92672">=</span>tls_config.go:191 msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;TLS is disabled.&#34;</span> http2<span style="color:#f92672">=</span>false
+</code></pre></div><p>If you see the following error, it could be due to SELinux being enabled.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Failed to execute command: Permission denied
+</code></pre></div><p>By default, SELinux doesn&rsquo;t allow execution of scripts from <code>/tmp</code> or user&rsquo;s <code>/home</code> directory. Even though the binary has been moved to <code>/usr/local/bin</code>, the context is still <code>/tmp</code>.</p>
 <p>Check if SELinux is enabled</p>
-<pre><code>sestatus
-</code></pre><p>To fix the permission issue, run the following to update the context and restart the service. Node-exporter process should be able to run after this change.</p>
-<pre><code>sudo restorecon -rv /usr/local/bin/node_exporter
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sestatus
+</code></pre></div><p>To fix the permission issue, run the following to update the context and restart the service. Node-exporter process should be able to run after this change.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo restorecon -rv /usr/local/bin/node_exporter
 sudo systemctl restart node_exporter
-</code></pre><p>If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the <code>/metrics</code> endpoint. This is due to the iptable rules.</p>
+</code></pre></div><p>If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the <code>/metrics</code> endpoint. This is due to the iptable rules.</p>
 <p>The following snippet will check for existence of rule and add if rule is missing.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo iptables -C INPUT -p tcp -m tcp --dport <span style="color:#ae81ff">9100</span> -j ACCEPT 2&gt;/dev/null
 NODE_EXPORTER_RULE_EXIST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo $?<span style="color:#66d9ef">)</span>
