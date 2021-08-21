@@ -255,13 +255,20 @@ Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:3
 Aug 19 14:38:14 foo-instance node_exporter[66608]: level=info ts=2021-08-19T06:38:14.080Z caller=tls_config.go:191 msg=&quot;TLS is disabled.&quot; http2=false
 </code></pre><p>If you see the following error, it could be due to SELinux being enabled.</p>
 <pre><code>Failed to execute command: Permission denied
-</code></pre><p>Check if SELinux is enabled</p>
-<pre><code>sestatus
 </code></pre><p>By default, SELinux doesn&rsquo;t allow execution of scripts from <code>/tmp</code> or user&rsquo;s <code>/home</code> directory. Even though the binary has been moved to <code>/usr/local/bin</code>, the context is still <code>/tmp</code>.</p>
-<p>To fix this, run the following to update the context and restart the service</p>
+<p>Check if SELinux is enabled</p>
+<pre><code>sestatus
+</code></pre><p>To fix the permission issue, run the following to update the context and restart the service. Node-exporter process should be able to run after this change.</p>
 <pre><code>sudo restorecon -rv /usr/local/bin/node_exporter
 sudo systemctl restart node_exporter
-</code></pre>
+</code></pre><p>If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the <code>/metrics</code> endpoint. This is due to the iptable rules.</p>
+<p>The following snippet will check for existence of rule and add if rule is missing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo iptables -C INPUT -p tcp -m tcp --dport <span style="color:#ae81ff">9100</span> -j ACCEPT 2&gt;/dev/null
+NODE_EXPORTER_RULE_EXIST<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo $?<span style="color:#66d9ef">)</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $NODE_EXPORTER_RULE_EXIST -eq <span style="color:#ae81ff">1</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+sudo iptables -A INPUT -p tcp -m tcp --dport <span style="color:#ae81ff">9100</span> -j ACCEPT
+<span style="color:#66d9ef">fi</span>
+</code></pre></div>
     </div>
     
       
