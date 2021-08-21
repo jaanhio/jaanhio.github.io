@@ -91,16 +91,28 @@ If you see the following error, it could be due to SELinux being enabled.
 ```
 Failed to execute command: Permission denied
 ```
+By default, SELinux doesn't allow execution of scripts from `/tmp` or user's `/home` directory. Even though the binary has been moved to `/usr/local/bin`, the context is still `/tmp`.
 
 Check if SELinux is enabled
 ```
 sestatus
 ```
 
-By default, SELinux doesn't allow execution of scripts from `/tmp` or user's `/home` directory. Even though the binary has been moved to `/usr/local/bin`, the context is still `/tmp`.
-
-To fix this, run the following to update the context and restart the service
+To fix the permission issue, run the following to update the context and restart the service. Node-exporter process should be able to run after this change.
 ```
 sudo restorecon -rv /usr/local/bin/node_exporter
 sudo systemctl restart node_exporter
 ```
+
+If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the `/metrics` endpoint. This is due to the iptable rules.
+
+The following snippet will check for existence of rule and add if rule is missing.
+```shell
+sudo iptables -C INPUT -p tcp -m tcp --dport 9100 -j ACCEPT 2>/dev/null
+NODE_EXPORTER_RULE_EXIST=$(echo $?)
+if [[ $NODE_EXPORTER_RULE_EXIST -eq 1 ]]; then
+sudo iptables -A INPUT -p tcp -m tcp --dport 9100 -j ACCEPT
+fi
+```
+
+
