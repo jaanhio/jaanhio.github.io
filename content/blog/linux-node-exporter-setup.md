@@ -106,7 +106,7 @@ sudo systemctl restart node_exporter
 
 If you are installing node-exporter on an instance using CIS Hardened image, you may encounter issue accessing the `/metrics` endpoint. This is due to the iptable rules.
 
-The following snippet will check for existence of rule and add if rule is missing.
+The following snippet will check for existence of required rule that accepts packets from `port: 9100`(default port of node-exporter) and add if rule is missing.
 ```shell
 sudo iptables -C INPUT -p tcp -m tcp --dport 9100 -j ACCEPT 2>/dev/null
 NODE_EXPORTER_RULE_EXIST=$(echo $?)
