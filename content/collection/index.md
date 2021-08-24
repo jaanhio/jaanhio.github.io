@@ -1,49 +1,47 @@
 ---
 title: "Collection"
 draft: false
+type: collection
+enableSearch: true
+content:
+  - title: Simply Python Server
+    url: https://gist.github.com/mdonkers/63e115cc0c79b4f6b8b3a6b797e485c7#file-server-py-L1
+    tags: ["debug", "tool"]
+    description: A really simply Python server for debugging needs.
+  - title: Network Policy Editor by Cilium
+    url: https://editor.cilium.io/
+    tags: ["kubernetes", "networking"]
+  - title: Successful Kubernetes Development Workflows • Ellen Körbes • GOTO 2021
+    url: https://youtu.be/9csPAXYEf7M
+    tags: ["kubernetes"]
+  - title: Visual subnet calculator
+    url: https://www.davidc.net/sites/default/subnets/subnets.html
+    tags: ["networking"]
+    description: No more wrecking your brain trying to visualize the subnets.
+  - title: "AWS re:Invent 2019: [REPEAT 1] BPF performance analysis at Netflix (OPN303-R1)"
+    url: https://youtu.be/16slh29iN1g
+    tags: ["bpf"]
+  - title: "Tutorial: Communication Is Key - Understanding Kubernetes Networking - Jeff Poole, Vivint Smart Home"
+    url: https://youtu.be/InZVNuKY5GY
+    tags: ["kubernetes", "networking"]
+  - title: "Webinar: Kubernetes and Networks: Why is This So Dang Hard?"
+    url: https://youtu.be/GgCA2USI5iQ
+    tags: ["kubernetes", "networking"]
+  - title: "LISA19 - Why Are Distributed Systems So Hard?"
+    url: https://www.youtube.com/watch?v=bG9AQ9ce5Zo&ab_channel=USENIX
+    tags: ["architecture"]
+    description: "Key takeaway: Shit's gonna fail."
+  - title: "10 Architecture Patterns Used In Enterprise Software Development Today"
+    url: https://www.youtube.com/watch?v=BrT3AO8bVQY&ab_channel=CodingTech
+    tags: ["architecture"]
+  - title: "Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc."
+    url: https://www.youtube.com/watch?v=J2NWvh3lgJI&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D
+    tags: ["architecture", "bpf", "monitoring"]
 ---
 
-A collection of interesting resources I found.
+A collection of interesting learning resources and tools I found.
 
-### [AWS re:Invent 2019: [REPEAT 1] BPF performance analysis at Netflix (OPN303-R1)](https://youtu.be/16slh29iN1g)
-
-{{<tag title="bpf">}}
-
----
-### [Successful Kubernetes Development Workflows • Ellen Körbes • GOTO 2021](https://youtu.be/9csPAXYEf7M)
-
-{{<tag title="kubernetes">}}
-
----
-### [Tutorial: Communication Is Key - Understanding Kubernetes Networking - Jeff Poole, Vivint Smart Home](https://youtu.be/InZVNuKY5GY)
-
-{{<tag title="kubernetes">}} {{<tag title="networking">}}
-
----
-### [Webinar: Kubernetes and Networks: Why is This So Dang Hard?](https://youtu.be/GgCA2USI5iQ)
-
-{{<tag title="kubernetes">}} {{<tag title="networking">}}
-
----
-
-### [LISA19 - Why Are Distributed Systems So Hard?](https://www.youtube.com/watch?v=bG9AQ9ce5Zo&ab_channel=USENIX)
-
-{{<tag title="architecture">}} 
-
----
-### [10 Architecture Patterns Used In Enterprise Software Development Today](https://www.youtube.com/watch?v=BrT3AO8bVQY&ab_channel=CodingTech)
-
-{{<tag title="architecture">}} 
-
----
-### [Monitoring Service Architecture and Health with BPF - Jonathan Perry, Flowmill, Inc.](https://www.youtube.com/watch?v=J2NWvh3lgJI&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D)
-
-
-{{<tag title="bpf">}} {{<tag title="architecture">}} 
-
----
-
-### [BPF: Tracing and More](https://youtu.be/JRFNIKUROPE)
+<!-- ### [BPF: Tracing and More](https://youtu.be/JRFNIKUROPE)
 
 {{<tag title="bpf">}}
 
@@ -361,4 +359,4 @@ Key takeaways:
 If you ever struggled with building an intuitive and understandable dashboard, this is for you.
 
 ---
-
+ -->

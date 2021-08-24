@@ -46,3 +46,14 @@ label > img {
     margin-left: auto;
   }
 }
+
+#tag-searchbar {
+  width: 50%;
+  border-width: medium;
+  height: 35px;
+  font-size: 1em;
+
+  @media (--phone) {
+    width: 90%;
+  }
+}
