@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # Set a branch to deploy
-  # pull_request:
+  # pull_request: # commented out to prevent build on pull request
 
 jobs:
   deploy:
