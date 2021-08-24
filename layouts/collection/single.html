@@ -48,17 +48,12 @@
       </figure>
     {{ end }}
     <input type="search" placeholder="Search tags" id="tag-searchbar" list="tags">
-    <!-- {{ $options := slice "a" "b" "c" }} -->
+    <!--collate all unique tags and iterate to create options-->
     {{ with .Params.content }}
       {{ $alltags := slice }}
-      {{ printf "%#v alltags" $alltags }}
       {{ range . }}
-        {{ $tags := .tags }}
-        <!-- {{ printf "%#v" $tags }} -->
-        {{ $alltags = $alltags | union $tags }}
-        <!-- {{ printf "alltags mid %#v" $alltags }} -->
+        {{ $alltags = $alltags | union .tags }}
       {{ end }}
-      {{ printf "alltags end %#v" $alltags }}
       <datalist id="tags">
         {{ with $alltags }}
           {{ range . }}
@@ -75,11 +70,11 @@
         {{ end }}
       {{ end }}
       {{ .Content }}
-      <!-- logic for rendering collection page via content list -->
+      <!-- logic for rendering collection page via content list. data-tags used to identify each content for filtering -->
       {{ with .Params.content }}
         {{ range . }}
         {{ $alltags := .tags }}
-        <div data-tags="{{ with $alltags }}{{ . }}{{ end }}">
+        <div data-tags="{{ with $alltags }}{{ delimit . ", " }}{{ end }}" class="collection-content">
           <h3>
             <a href="{{ .url }}">{{ .title }}</a>
           </h3>
@@ -97,6 +92,7 @@
         </div>
         {{ end }}
       {{ end }}
+      <!-- end logic for rendering collection page via content list-->
     </div>
     {{ if eq .Type $.Site.Params.contentTypeName }}
       {{ if or .NextInSection .PrevInSection }}

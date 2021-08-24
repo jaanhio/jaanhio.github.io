@@ -41,7 +41,7 @@ content:
 
 A collection of interesting learning resources and tools I found.
 
-### [BPF: Tracing and More](https://youtu.be/JRFNIKUROPE)
+<!-- ### [BPF: Tracing and More](https://youtu.be/JRFNIKUROPE)
 
 {{<tag title="bpf">}}
 
@@ -359,4 +359,4 @@ Key takeaways:
 If you ever struggled with building an intuitive and understandable dashboard, this is for you.
 
 ---
-
+ -->
