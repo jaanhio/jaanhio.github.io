@@ -86,7 +86,11 @@
           </p>
           {{ end }}
           {{ with .description }}
-            <p>{{ . }}</p>
+            {{ $lines := . }}
+            {{ $listoflines := split $lines "\\n" }}
+            {{ range $listoflines }}
+              <p>{{ . }}</p>
+            {{ end }}
           {{ end }}
           <hr>
         </div>
