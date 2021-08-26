@@ -19,7 +19,7 @@ content:
     tags: ["kubernetes"]
   - title: Visual subnet calculator
     url: https://www.davidc.net/sites/default/subnets/subnets.html
-    tags: ["networking"]
+    tags: ["networking", "tool"]
     description: No more wrecking your brain trying to visualize the subnets.
   - title: "AWS re:Invent 2019: [REPEAT 1] BPF performance analysis at Netflix (OPN303-R1)"
     url: https://youtu.be/16slh29iN1g
@@ -191,7 +191,7 @@ content:
   - title: "The Evolution of Distributed Systems on Kubernetes"
     url: https://www.infoq.com/articles/distributed-systems-kubernetes/
     tags: ["kubernetes", "architecture"]
-    description: "Modern distributed applications have needs around lifecycle, networking, binding, and state management that cloud-native platforms must provide.\nKubernetes has great support around lifecycle management but relies on other platforms using the sidecar and operator concepts to satisfy the networking, binding, and state management primitives.\nFuture distributed systems on Kubernetes will be composed of multiple runtimes where the business logic forms the core of the application, and sidecar “mecha” components offer powerful out-of-the-box distributed primitives.\nThis decoupled mecha architecture offers the benefits of cohesive units of business logic and improves day-2 operations, such as patching, upgrades, and long-term maintainability."
+    description: Modern distributed applications have needs around lifecycle, networking, binding, and state management that cloud-native platforms must provide.\nKubernetes has great support around lifecycle management but relies on other platforms using the sidecar and operator concepts to satisfy the networking, binding, and state management primitives.\nFuture distributed systems on Kubernetes will be composed of multiple runtimes where the business logic forms the core of the application, and sidecar “mecha” components offer powerful out-of-the-box distributed primitives.\nThis decoupled mecha architecture offers the benefits of cohesive units of business logic and improves day-2 operations, such as patching, upgrades, and long-term maintainability.
   - title: "Demystifying memory management in modern programming languages"
     url: https://dev.to/deepu105/demystifying-memory-management-in-modern-programming-languages-ddd
     tags: ["memory management"]
