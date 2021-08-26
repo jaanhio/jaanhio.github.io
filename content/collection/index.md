@@ -4,6 +4,9 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Building Blocks for Site Reliability At Google
+    url: https://youtu.be/nQv9ySa8MTU
+    tags: ["site reliability", "architecture"]
   - title: Simply Python Server
     url: https://gist.github.com/mdonkers/63e115cc0c79b4f6b8b3a6b797e485c7#file-server-py-L1
     tags: ["debug", "tool"]

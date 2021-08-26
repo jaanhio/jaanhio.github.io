@@ -7,7 +7,7 @@ draft: false
 
 My name is Jianhao and I am a software engineer based in Singapore. 
 
-I have a strong passion for systems reliability, automation, performance and believe that a product is only as good as how reliable it is for its users.
+I am interested in all things about systems reliability, automation, performance and believe that a product is only as good as how reliable it is for its users.
 
 Also a Marvel fan, food lover, competitive swimmer/lifesaver, aquascaper.
 
