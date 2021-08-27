@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Understanding the differences between alertmanager&#39;s group_wait, group_interval and repeat_interval ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
+That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
+While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/understanding-alertmanager/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Understanding the differences between alertmanager&#39;s group_wait, group_interval and repeat_interval"/>
+<meta name="twitter:description" content="Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
+That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
+While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval."/>
+
+
+
+<meta property="og:title" content="Understanding the differences between alertmanager&#39;s group_wait, group_interval and repeat_interval" />
+<meta property="og:description" content="Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
+That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
+While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/understanding-alertmanager/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-08-27T12:07:56+08:00" />
+<meta property="article:modified_time" content="2021-08-27T12:07:56+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Understanding the differences between alertmanager&rsquo;s group_wait, group_interval and repeat_interval</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Aug 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 2 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/alertmanager/">#alertmanager</a>&nbsp;
+        
+          <a href="/tags/monitoring/">#monitoring</a>&nbsp;
+        
+          <a href="/tags/prometheus/">#prometheus</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p><a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Alertmanager</a> is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.</p>
+<p>That being said, configuring it can be a little daunting with the many different <a href="https://prometheus.io/docs/alerting/latest/configuration/">configurations</a> available and somewhat vague explanations on some of the terms.</p>
+<p>While configuring Alertmanager, I came across these 3 confusing terms: <code>group_wait</code>, <code>group_interval</code> and <code>repeat_interval</code>.</p>
+<p>From the <a href="https://prometheus.io/docs/alerting/latest/configuration/#route">official documentation</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># How long to initially wait to send a notification for a group</span>
+<span style="color:#75715e"># of alerts. Allows to wait for an inhibiting alert to arrive or collect</span>
+<span style="color:#75715e"># more initial alerts for the same group. (Usually ~0s to few minutes.)</span>
+<span style="color:#f92672">[ group_wait</span>: <span style="color:#ae81ff">&lt;duration&gt; | default = 30s ]</span>
+
+<span style="color:#75715e"># How long to wait before sending a notification about new alerts that</span>
+<span style="color:#75715e"># are added to a group of alerts for which an initial notification has</span>
+<span style="color:#75715e"># already been sent. (Usually ~5m or more.)</span>
+<span style="color:#f92672">[ group_interval</span>: <span style="color:#ae81ff">&lt;duration&gt; | default = 5m ]</span>
+
+<span style="color:#75715e"># How long to wait before sending a notification again if it has already</span>
+<span style="color:#75715e"># been sent successfully for an alert. (Usually ~3h or more).</span>
+<span style="color:#f92672">[ repeat_interval</span>: <span style="color:#ae81ff">&lt;duration&gt; | default = 4h ]</span>
+</code></pre></div><p>Thanks to the <a href="https://www.robustperception.io/whats-the-difference-between-group_interval-group_wait-and-repeat_interval">blog post from robustperception</a> and a much more in-depth explanation from <a href="https://www.oreilly.com/library/view/prometheus-up/9781492034131/">Prometheus: Up &amp; Running</a> book, I now have a much better understanding of it.</p>
+<p>Diagrams help me understand things way better than reading chunks of text, so I created one to better illustrate the differences between the 3 terms and how they work with each other.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="alertmanager-terms.png">
+      <label for="alertmanager-terms.png">
+        <img src="alertmanager-terms.png" alt="alertmanager-terms-diagram" />
+      </label>
+    
+</figure>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/linux-node-exporter-setup/">
+                  <span class="button__text">Node-exporter setup with Systemd</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on jaanhio</title>
+    <title>prometheus on jaanhio</title>
     
     
     
-    <link>/blog/</link>
-    <description>Recent content in Blogs on jaanhio</description>
+    <link>/tags/prometheus/</link>
+    <description>Recent content in prometheus on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 27 Aug 2021 12:07:56 +0800</lastBuildDate>
     
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -31,28 +31,6 @@
           Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
 That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
 While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>Node-exporter setup with Systemd</title>
-      <link>/blog/linux-node-exporter-setup/</link>
-      <pubDate>Thu, 19 Aug 2021 22:22:18 +0800</pubDate>
-      
-      <guid>/blog/linux-node-exporter-setup/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
           
         
         </description>
