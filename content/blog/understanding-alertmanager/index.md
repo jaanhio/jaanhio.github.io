@@ -38,7 +38,3 @@ Thanks to the [blog post from robustperception](https://www.robustperception.io/
 Diagrams help me understand things way better than reading chunks of text, so I created one to better illustrate the differences between the 3 terms and how they work with each other.
 
 {{<zoomable-img src="alertmanager-terms.png" alt="alertmanager-terms-diagram" caption="" >}}
-
-References:
-- https://www.robustperception.io/whats-the-difference-between-group_interval-group_wait-and-repeat_interval
-- https://www.oreilly.com/library/view/prometheus-up/9781492034131/
