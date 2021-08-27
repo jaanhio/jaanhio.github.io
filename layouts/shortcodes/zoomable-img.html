@@ -1,0 +1,9 @@
+<figure class="post-cover">
+    <input type="checkbox" id="{{ .Get "src" }}">
+      <label for="{{ .Get "src" }}">
+        <img src="{{ .Get "src" }}" alt="{{ .Get "alt" }}" />
+      </label>
+    {{ if .Get "caption" }}
+      <figcaption class="center">{{ .Get "caption" }}</figcaption>
+    {{ end }}
+</figure>
