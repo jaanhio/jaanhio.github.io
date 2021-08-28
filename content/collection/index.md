@@ -4,6 +4,13 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Linux source code reference 
+    url: https://elixir.bootlin.com/linux/latest/source
+    tags: ["linux"]
+  - title: Creating a simple kubernetes debug pod
+    url: https://downey.io/notes/dev/ubuntu-sleep-pod-yaml/
+    tags: ["debug", "kubernetes", "tool"]
+    description: "For moments when you wish you had a pod that isn't on an alpine diet"
   - title: Building Blocks for Site Reliability At Google
     url: https://youtu.be/nQv9ySa8MTU
     tags: ["site reliability", "architecture"]

@@ -25,3 +25,7 @@ Start `http-server` in same directory. By default, `http-server` will serve file
 ```
 http-server -c-1 -d -p 8080
 ```
+
+Improvements:
+- Implement pagination on collections page
+- Shift images to image hosting service
