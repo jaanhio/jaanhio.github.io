@@ -2,7 +2,7 @@ baseurl: /
 languageCode: en-us
 theme: hello-friend
 paginate: 5
-disqusShortname: jianhaotan
+disqusShortname: jaanhio-me
 params:
   contentTypeName: blog
   defaultTheme: light
