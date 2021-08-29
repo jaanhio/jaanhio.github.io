@@ -76,7 +76,7 @@
         {{ $alltags := .tags }}
         <div data-tags="{{ with $alltags }}{{ delimit . ", " }}{{ end }}" class="collection-content">
           <h3>
-            <a href="{{ .url }}">{{ .title }}</a>
+            <a href="{{ .url }}" target="_blank" rel="noopener noreferrer"></a>{{ .title }}</a>
           </h3>
           {{ with .tags }}
           <p>
