@@ -8,6 +8,7 @@ draft: false
 tags: ["alertmanager", "monitoring", "prometheus"]
 math: false
 toc: false
+comments: true
 ---
 
 [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
