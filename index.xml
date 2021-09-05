@@ -9,10 +9,31 @@
     <description>Recent content on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Aug 2021 12:07:56 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Sep 2021 15:28:44 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Debugging high CPU usage and memory leak on Nodejs application</title>
+      <link>/blog/debugging-nodejs-app/</link>
+      <pubDate>Sat, 04 Sep 2021 15:28:44 +0800</pubDate>
+      
+      <guid>/blog/debugging-nodejs-app/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
+It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Understanding the differences between alertmanager&#39;s group_wait, group_interval and repeat_interval</title>
@@ -93,9 +114,9 @@ This is where systemd comes in.
         
         
           Hello there! My name is Jianhao and I am a software engineer based in Singapore.
-I am interested in all things about systems reliability, automation, performance and believe that a product is only as good as how reliable it is for its users.
+I am interested in all things about systems reliability, automation, performance (big fan of Brendan Gregg) and believe that a product is only as good as how reliable it is for its users.
+This is where I write my about learnings and interesting finds and serve as mine HA knowledge dumping ground.
 Also a Marvel fan, food lover, competitive swimmer/lifesaver, aquascaper.
-Memory isn&amp;rsquo;t my greatest strength, hence the existence of this page which serves as my HA knowledge dumping ground.
           
         
         </description>
