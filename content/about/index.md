@@ -9,7 +9,7 @@ My name is Jianhao and I am a software engineer based in Singapore.
 
 I am interested in all things about systems reliability, automation, performance (big fan of [Brendan Gregg](https://www.brendangregg.com/)) and believe that a product is only as good as how reliable it is for its users.
 
-I write my about learnings and interesting finds on this HA knowledge dumping ground.
+This is where I write my about learnings and interesting finds and serve as mine HA knowledge dumping ground.
 
 Also a Marvel fan, food lover, competitive swimmer/lifesaver, aquascaper.
 
