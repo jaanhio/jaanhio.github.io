@@ -4,6 +4,21 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Daniel Miessler Blog
+    url: https://danielmiessler.com/
+    tags: ["blog"]
+    description: "Author of 2 incredibly detailed articles on tcpdump and lsof."
+  - title: Nodejs timers
+    url: https://asafdav2.github.io/2017/node-js-timers/
+    tags: ["nodejs", "blog"]
+  - title: Julia Evans Blog
+    url: https://jvns.ca/
+    tags: ["linux", "blog"]
+    description: "Amazing blog belonging to publisher of Wizardzines. Plenty of articles on Linux and more."
+  - title: Wizardzines
+    url: https://wizardzines.com/
+    tags: ["linux"]
+    description: "Complicated topics packaged in a digestible format"
   - title: Linux source code reference 
     url: https://elixir.bootlin.com/linux/latest/source
     tags: ["linux"]

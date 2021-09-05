@@ -206,4 +206,6 @@ Below are diagrams comparing before and after change was made (new pod metrics i
 
 Tools are only as powerful as the wielder.
 
-Spending time understanding the fundamentals (syscalls, linux networking, nodejs internals) and how the tools (debugger, `strace`, `lsof`, `netcat`) work is immensely helpful in debugging issues. Using the blackbox approach can only take you so far in figuring out root causes.
+I have always believed in understanding the fundamentals of various topics/domains and not take the blackbox approach when using libraries/tools/frameworks and this experience has reinforced that belief. 
+
+Honestly, I probably wouldn't even know where to start if I didn't have basic understanding of syscalls, linux networking, nodejs internals and the use of tools such as debugger, `strace`, `lsof`, `netcat`.
