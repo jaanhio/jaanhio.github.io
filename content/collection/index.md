@@ -4,6 +4,10 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Kubedex
+    url: https://kubedex.com/
+    tags: ["blog", "kubernetes"]
+    description: "Pokedex for Kubernetes"
   - title: Daniel Miessler Blog
     url: https://danielmiessler.com/
     tags: ["blog"]
