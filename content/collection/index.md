@@ -4,6 +4,16 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Nodejs internals
+    url: https://www.smashingmagazine.com/2020/04/nodejs-internals/
+    tags: ["nodejs", "debug", "performance analysis"]
+  - title: How the Node.js Event Loop Polls
+    url: https://www.atomiccommits.io/event-loop-polling/
+    tags: ["nodejs", "debug", "performance analysis"]
+  - title: Linux x86 Program Start Up or - How the heck do we get to main()?
+    url: http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html
+    tags: ["linux", "debug"]
+    description: "For those who want to understand how programs get loaded under Linux"
   - title: Kubedex
     url: https://kubedex.com/
     tags: ["blog", "kubernetes"]

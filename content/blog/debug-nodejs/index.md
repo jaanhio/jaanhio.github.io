@@ -3,9 +3,9 @@ title: "Debugging high CPU usage and memory leak on Nodejs application"
 date: 2021-09-04T15:28:44+08:00
 slug: "debugging-nodejs-app"
 description: ""
-keywords: ["debug", "performance analysis", "nodejs", "kubernetes"]
+keywords: ["debug", "performance analysis", "nodejs"]
 draft: false
-tags: ["debug", "performance analysis", "nodejs", "kubernetes"]
+tags: ["debug", "performance analysis", "nodejs"]
 math: false
 toc: false
 ---
