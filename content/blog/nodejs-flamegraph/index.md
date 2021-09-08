@@ -66,9 +66,10 @@ We have to use `perf script` to generate a trace record file, do some scrubbing 
 ```bash
 $ sudo perf script > perf.out
 $ sed -i '/\[unknown\]/d' perf.out
+$ sed -i -e "/( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| LoadIC:|\[unknown\]| LoadPolymorphicIC:)/d" -e 's/ LazyCompile:[*~]\?/ /' perf.out
 $ git clone --depth 1 http://github.com/brendangregg/FlameGraph
 $ cd FlameGraph
-$ ./stackcollapse-perf.pl < ../perf | ./flamegraph.pl --colors js > ../node-flamegraph.svg
+$ ./stackcollapse-perf.pl < ../perf.out | ./flamegraph.pl --colors js > ../node-flamegraph.svg
 ```
 
 #### Accessing the flame graph
@@ -85,15 +86,37 @@ Let's see what we can find out about Nodejs internals from this.
 
 {{<zoomable-img src="flamegraph-zoomed-out.png" caption="Nodejs application flame graph">}}
 
-Many foreign terms (`__libc_start_main`, `uv_*`, `Builtins_*`) and some a little for familiar ones (`node::*`, `v8::Function::*`). Well, I say familiar because i see the word `node` (as in nodejs) and `v8` (as in V8 engine); I still have no idea what they actually do. 
+Many foreign terms (`__libc_start_main`, `uv_*`, `Builtins_*`) and some a little more familiar ones (`node::*`, `v8::Function::*`).
 
-Let's dive a little deeper.
+After some researching, I found this awesome article on [Nodejs internals](https://www.smashingmagazine.com/2020/04/nodejs-internals/). Despite having used Nodejs for a few years, it's always been sort of a blackbox to me. It's really interesting to know what goes on underneath.
 
-#### __libc_start_main
+A little summary of the [article](https://www.smashingmagazine.com/2020/04/nodejs-internals/):
+* Nodejs is a runtime i.e an environment provided for a program to execute successfully. In the case of Nodejs, it is through a combination of [V8](https://v8.dev/) and various C++ libraries to enable Nodejs applications to execute
+* Core Nodejs dependencies are V8 and [libuv](http://docs.libuv.org/en/v1.x/index.html). 
+* V8 allows Javascript source code (originally designed for browsers) to run outside of browser environment. 
+* `libuv` is a library written in C++ that enables low-level (networking, file system, concurrency) access to operating system
 
-#### uv_*
+Highly recommended to read it yourself and check out the examples in it.
 
+Now the appearance of `__libc_start_main` and `uv_*` frames make sense!
 
-- uv_run
-- uv__io_poll
+`uv_*` are actually the functions from `libuv` library, which as explained, is required to provide low-level OS access. It is also used to [implement the Nodejs event loop](https://www.atomiccommits.io/event-loop-polling/)!
 
+As for `__libc_start_main`, I found this [stackoverflow answer](https://stackoverflow.com/a/62709108) explaining the role of this function and seems to match the description taken from [Linux standard base specification](https://refspecs.linuxbase.org/LSB_3.1.0/LSB-generic/LSB-generic/baselib---libc-start-main-.html#:~:text=The%20__libc_start_main()%20function,to%20the%20exit()%20function.)
+> `__libc_start_main` is an initialization routine and performs necessary initialization of execution environment.
+
+Some further digging down the rabbit hole later, I found this [Linux x86 Program Start Up](http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html) post, which explains the steps taken to load and run an application and the role that `__libc_start_main` plays.
+
+---
+
+As the current flame graph still contains Nodejs and V8 internal functions, I filtered it again to make application related functions more visible.
+```bash
+$ sed -i -E '/( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| LoadIC:|\[unknown\]| LoadPolymorphicIC:)/d' perf.out
+```
+
+{{<zoomable-img src="filtered-flamegraph.png" caption="Flame graph after filtering non-application frames">}}
+
+Almost immediately, we can see the functions called by `readable-stream`, `winston-transport`, `@elastic/elasticsearch` and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.
+
+{{<zoomable-img src="zoomed-in-1.png" caption="Flame graph after filtering non-application frames">}}
+{{<zoomable-img src="zoomed-in-2.png" caption="Flame graph after filtering non-application frames">}}
