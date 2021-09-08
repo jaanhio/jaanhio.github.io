@@ -19,7 +19,7 @@ Flame graphs, as the name suggests, are graphs that look like flames because of 
 
 {{<figure src="https://www.brendangregg.com/FlameGraphs/cpu-mysql-updated.svg" caption="Example flame graph https://www.brendangregg.com/FlameGraphs/cpu-mysql-updated.svg">}}
 
-There are various flame graphs generation tool (e.g `stackvis`, `node-stackvis`) available but the one I will be using is the one built by Brendan Gregg http://github.com/brendangregg/FlameGraph.
+There are various flame graphs generation tool (e.g `stackvis`, `node-stackvis`) available. The one I am using is the one built by Brendan Gregg http://github.com/brendangregg/FlameGraph.
 
 As with all tools, it's important that we understand how to use it. Despite looking rather similar to most time-series graphs, the x/y axes do not represent value/time.
 
@@ -73,7 +73,7 @@ $ ./stackcollapse-perf.pl < ../perf.out | ./flamegraph.pl --colors js > ../node-
 ```
 
 #### Accessing the flame graph
-You can open the `svg` directly in a browser. For my case, I used a simple Python HTTP server to serve the file as I am using a VM.
+You can open the `svg` directly in a browser. For my case, I used a simple Python HTTP server to serve the SVG files as I am using a VM.
 ```
 $ python3 -m http.server
 ```
@@ -116,7 +116,7 @@ $ sed -i -E '/( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| Loa
 
 {{<zoomable-img src="filtered-flamegraph.png" caption="Flame graph after filtering non-application frames">}}
 
-Almost immediately, we can see the functions called by `readable-stream`, `winston-transport`, `@elastic/elasticsearch` and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.
+Almost immediately, we can identify the functions called by `readable-stream`, `winston-transport`, `@elastic/elasticsearch` and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.
 
 {{<zoomable-img src="zoomed-in-1.png" caption="Flame graph after filtering non-application frames">}}
 {{<zoomable-img src="zoomed-in-2.png" caption="Flame graph after filtering non-application frames">}}
