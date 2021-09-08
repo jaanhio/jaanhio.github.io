@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Nodejs application CPU profile analysis with Flame Graphs ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
+ What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly."
+/>
+<meta
+  name="keywords"
+  content="debug, performance analysis, nodejs"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/nodejs-flamegraph-analysis/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nodejs application CPU profile analysis with Flame Graphs"/>
+<meta name="twitter:description" content="In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
+ What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly."/>
+
+
+
+<meta property="og:title" content="Nodejs application CPU profile analysis with Flame Graphs" />
+<meta property="og:description" content="In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
+ What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/nodejs-flamegraph-analysis/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-09-06T22:03:43+08:00" />
+<meta property="article:modified_time" content="2021-09-06T22:03:43+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Nodejs application CPU profile analysis with Flame Graphs</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Sep 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 5 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/debug/">#debug</a>&nbsp;
+        
+          <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
+        
+          <a href="/tags/nodejs/">#nodejs</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>In my <a href="/blog/debugging-nodejs-app">previous post</a>, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.</p>
+<hr>
+<h2 id="what-are-flame-graphs">What are flame graphs?</h2>
+<p>Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.</p>
+
+  <figure class="left" >
+    <img src="https://www.brendangregg.com/FlameGraphs/cpu-mysql-updated.svg"   />
+    
+      <figcaption class="center" >Example flame graph <a href="https://www.brendangregg.com/FlameGraphs/cpu-mysql-updated.svg">https://www.brendangregg.com/FlameGraphs/cpu-mysql-updated.svg</a></figcaption>
+    
+  </figure>
+
+
+<p>There are various flame graphs generation tool (e.g <code>stackvis</code>, <code>node-stackvis</code>) available but the one I will be using is the one built by Brendan Gregg <a href="http://github.com/brendangregg/FlameGraph">http://github.com/brendangregg/FlameGraph</a>.</p>
+<p>As with all tools, it&rsquo;s important that we understand how to use it. Despite looking rather similar to most time-series graphs, the x/y axes do not represent value/time.</p>
+<p>Taken from <a href="https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html:">https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html:</a></p>
+<blockquote>
+<ul>
+<li>Each box represents a function in the stack (a &ldquo;stack frame&rdquo;).</li>
+<li>The y-axis shows stack depth (number of frames on the stack). The top box shows the function that was on-CPU. Everything beneath that is ancestry. The function beneath a function is its parent, just like the stack traces shown earlier. (Some flame graph implementations prefer to invert the order and use an &ldquo;icicle layout&rdquo;, so flames look upside down.)</li>
+<li>The x-axis spans the sample population. It does not show the passing of time from left to right, as most graphs do. The left to right ordering has no meaning (it&rsquo;s sorted alphabetically to maximize frame merging).</li>
+<li>The width of the box shows the total time it was on-CPU or part of an ancestry that was on-CPU (based on sample count). Functions with wide boxes may consume more CPU per execution than those with narrow boxes, or, they may simply be called more often. The call count is not shown (or known via sampling).</li>
+<li>The sample count can exceed elapsed time if multiple threads were running and sampled concurrently.</li>
+<li>The colors aren&rsquo;t significant, and are usually picked at random to be warm colors (other meaningful palettes are supported).</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="capturing-perf-data">Capturing perf data</h2>
+<p>Before we can perform flame graph analysis, we have to first capture the CPU profile data.</p>
+<p>To do that, I will be using Linux <a href="https://perf.wiki.kernel.org/index.php/Main_Page"><code>perf</code></a> tool.</p>
+<h4 id="installing-perf">Installing perf</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ uname -a
+Linux vm1 4.15.0-154-generic <span style="color:#75715e">#161-Ubuntu SMP Fri Jul 30 13:04:17 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+
+$ sudo apt install -y linux-tools-4.15.0-154-generic
+</code></pre></div><h4 id="capturing-profile">Capturing profile</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo perf record -e cycles:u -g -- npm run watch
+...
+..
+.
+^C<span style="color:#f92672">[</span> perf record: Woken up <span style="color:#ae81ff">33</span> times to write data <span style="color:#f92672">]</span>
+failed to mmap file
+Terminated
+<span style="color:#f92672">[</span> perf record: Captured and wrote 8.227 MB perf.data <span style="color:#f92672">]</span>
+</code></pre></div><p>After recording, <code>perf</code> will generate a <code>perf.data</code> file and also a <code>perf-*.map</code> file in the <code>/tmp</code> directory. The purpose of <code>.map</code> file is to provide <code>perf</code> with application-specifc symbol map, with which it will be able to tell which instruction pointers belong to which application functions.</p>
+<h4 id="processing-the-data-into-flame-graph">Processing the data into flame graph</h4>
+<p>Currently we only have a raw <code>perf.data</code>, which isn&rsquo;t really useful.</p>
+<p>We have to use <code>perf script</code> to generate a trace record file, do some scrubbing of the data to remove less-than-useful frames and finally generate the flame graph.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo perf script &gt; perf.out
+$ sed -i <span style="color:#e6db74">&#39;/\[unknown\]/d&#39;</span> perf.out
+$ sed -i -e <span style="color:#e6db74">&#34;/( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| LoadIC:|\[unknown\]| LoadPolymorphicIC:)/d&#34;</span> -e <span style="color:#e6db74">&#39;s/ LazyCompile:[*~]\?/ /&#39;</span> perf.out
+$ git clone --depth <span style="color:#ae81ff">1</span> http://github.com/brendangregg/FlameGraph
+$ cd FlameGraph
+$ ./stackcollapse-perf.pl &lt; ../perf.out | ./flamegraph.pl --colors js &gt; ../node-flamegraph.svg
+</code></pre></div><h4 id="accessing-the-flame-graph">Accessing the flame graph</h4>
+<p>You can open the <code>svg</code> directly in a browser. For my case, I used a simple Python HTTP server to serve the file as I am using a VM.</p>
+<pre tabindex="0"><code>$ python3 -m http.server
+</code></pre><hr>
+<h2 id="analyzing-the-flame-graph">Analyzing the flame graph</h2>
+<p>Let&rsquo;s see what we can find out about Nodejs internals from this.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="flamegraph-zoomed-out.png">
+      <label for="flamegraph-zoomed-out.png">
+        <img src="flamegraph-zoomed-out.png" alt="" />
+      </label>
+    
+      <figcaption class="center">Nodejs application flame graph</figcaption>
+    
+</figure>
+<p>Many foreign terms (<code>__libc_start_main</code>, <code>uv_*</code>, <code>Builtins_*</code>) and some a little more familiar ones (<code>node::*</code>, <code>v8::Function::*</code>).</p>
+<p>After some researching, I found this awesome article on <a href="https://www.smashingmagazine.com/2020/04/nodejs-internals/">Nodejs internals</a>. Despite having used Nodejs for a few years, it&rsquo;s always been sort of a blackbox to me. It&rsquo;s really interesting to know what goes on underneath.</p>
+<p>A little summary of the <a href="https://www.smashingmagazine.com/2020/04/nodejs-internals/">article</a>:</p>
+<ul>
+<li>Nodejs is a runtime i.e an environment provided for a program to execute successfully. In the case of Nodejs, it is through a combination of <a href="https://v8.dev/">V8</a> and various C++ libraries to enable Nodejs applications to execute</li>
+<li>Core Nodejs dependencies are V8 and <a href="http://docs.libuv.org/en/v1.x/index.html">libuv</a>.</li>
+<li>V8 allows Javascript source code (originally designed for browsers) to run outside of browser environment.</li>
+<li><code>libuv</code> is a library written in C++ that enables low-level (networking, file system, concurrency) access to operating system</li>
+</ul>
+<p>Highly recommended to read it yourself and check out the examples in it.</p>
+<p>Now the appearance of <code>__libc_start_main</code> and <code>uv_*</code> frames make sense!</p>
+<p><code>uv_*</code> are actually the functions from <code>libuv</code> library, which as explained, is required to provide low-level OS access. It is also used to <a href="https://www.atomiccommits.io/event-loop-polling/">implement the Nodejs event loop</a>!</p>
+<p>As for <code>__libc_start_main</code>, I found this <a href="https://stackoverflow.com/a/62709108">stackoverflow answer</a> explaining the role of this function and seems to match the description taken from <a href="https://refspecs.linuxbase.org/LSB_3.1.0/LSB-generic/LSB-generic/baselib---libc-start-main-.html#:~:text=The%20__libc_start_main()%20function,to%20the%20exit()%20function.">Linux standard base specification</a></p>
+<blockquote>
+<p><code>__libc_start_main</code> is an initialization routine and performs necessary initialization of execution environment.</p>
+</blockquote>
+<p>Some further digging down the rabbit hole later, I found this <a href="http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html">Linux x86 Program Start Up</a> post, which explains the steps taken to load and run an application and the role that <code>__libc_start_main</code> plays.</p>
+<hr>
+<p>As the current flame graph still contains Nodejs and V8 internal functions, I filtered it again to make application related functions more visible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sed -i -E <span style="color:#e6db74">&#39;/( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| LoadIC:|\[unknown\]| LoadPolymorphicIC:)/d&#39;</span> perf.out
+</code></pre></div><figure class="post-cover">
+    <input type="checkbox" id="filtered-flamegraph.png">
+      <label for="filtered-flamegraph.png">
+        <img src="filtered-flamegraph.png" alt="" />
+      </label>
+    
+      <figcaption class="center">Flame graph after filtering non-application frames</figcaption>
+    
+</figure>
+<p>Almost immediately, we can see the functions called by <code>readable-stream</code>, <code>winston-transport</code>, <code>@elastic/elasticsearch</code> and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.</p>
+<p><figure class="post-cover">
+    <input type="checkbox" id="zoomed-in-1.png">
+      <label for="zoomed-in-1.png">
+        <img src="zoomed-in-1.png" alt="" />
+      </label>
+    
+      <figcaption class="center">Flame graph after filtering non-application frames</figcaption>
+    
+</figure>
+<figure class="post-cover">
+    <input type="checkbox" id="zoomed-in-2.png">
+      <label for="zoomed-in-2.png">
+        <img src="zoomed-in-2.png" alt="" />
+      </label>
+    
+      <figcaption class="center">Flame graph after filtering non-application frames</figcaption>
+    
+</figure></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/debugging-nodejs-app/">
+                  <span class="button__text">Debugging high CPU usage and memory leak on Nodejs application</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+  </body>
+</html>
