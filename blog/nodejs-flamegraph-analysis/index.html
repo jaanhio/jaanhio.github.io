@@ -208,7 +208,7 @@
   </figure>
 
 
-<p>There are various flame graphs generation tool (e.g <code>stackvis</code>, <code>node-stackvis</code>) available but the one I will be using is the one built by Brendan Gregg <a href="http://github.com/brendangregg/FlameGraph">http://github.com/brendangregg/FlameGraph</a>.</p>
+<p>There are various flame graphs generation tool (e.g <code>stackvis</code>, <code>node-stackvis</code>) available. The one I am using is the one built by Brendan Gregg <a href="http://github.com/brendangregg/FlameGraph">http://github.com/brendangregg/FlameGraph</a>.</p>
 <p>As with all tools, it&rsquo;s important that we understand how to use it. Despite looking rather similar to most time-series graphs, the x/y axes do not represent value/time.</p>
 <p>Taken from <a href="https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html:">https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html:</a></p>
 <blockquote>
@@ -250,7 +250,7 @@ $ git clone --depth <span style="color:#ae81ff">1</span> http://github.com/brend
 $ cd FlameGraph
 $ ./stackcollapse-perf.pl &lt; ../perf.out | ./flamegraph.pl --colors js &gt; ../node-flamegraph.svg
 </code></pre></div><h4 id="accessing-the-flame-graph">Accessing the flame graph</h4>
-<p>You can open the <code>svg</code> directly in a browser. For my case, I used a simple Python HTTP server to serve the file as I am using a VM.</p>
+<p>You can open the <code>svg</code> directly in a browser. For my case, I used a simple Python HTTP server to serve the SVG files as I am using a VM.</p>
 <pre tabindex="0"><code>$ python3 -m http.server
 </code></pre><hr>
 <h2 id="analyzing-the-flame-graph">Analyzing the flame graph</h2>
@@ -293,7 +293,7 @@ $ ./stackcollapse-perf.pl &lt; ../perf.out | ./flamegraph.pl --colors js &gt; ..
       <figcaption class="center">Flame graph after filtering non-application frames</figcaption>
     
 </figure>
-<p>Almost immediately, we can see the functions called by <code>readable-stream</code>, <code>winston-transport</code>, <code>@elastic/elasticsearch</code> and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.</p>
+<p>Almost immediately, we can identify the functions called by <code>readable-stream</code>, <code>winston-transport</code>, <code>@elastic/elasticsearch</code> and would have helped greatly in identify the tranporting of huge amount of logs to ElasticCloud as the root cause behind the high CPU usage.</p>
 <p><figure class="post-cover">
     <input type="checkbox" id="zoomed-in-1.png">
       <label for="zoomed-in-1.png">
