@@ -9,10 +9,30 @@
     <description>Recent content in Blogs on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Sep 2021 22:03:43 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 20 Sep 2021 11:46:24 +0800</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Debugging a misfiring Prometheus alert</title>
+      <link>/blog/debugging-prometheus-alert/</link>
+      <pubDate>Mon, 20 Sep 2021 11:46:24 +0800</pubDate>
+      
+      <guid>/blog/debugging-prometheus-alert/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Last week at work, I encountered an alert that was misfiring. Or so I thought...
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Nodejs application CPU profile analysis with Flame Graphs</title>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Debugging a misfiring Prometheus alert ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Last week at work, I encountered an alert that was misfiring. Or so I thought.
+This was the PromQL used for alerting when HTTP requests error rate exceeds the SLO of 5% per hour:
+(sum(rate(service_foo_http_request_total{status_code!~&amp;quot;2..&amp;quot;}[1h])) / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &amp;gt;= 0.05 Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.
+The cause can be summarized into these 3 points:
+ misunderstanding of how PromQL vector() function works misunderstanding of how PromQL comparison binary operators work misunderstanding of how Prometheus/Thanos-ruler evaluates query result and trigger alerts  In this post, I will share about what I have learned about the 3 points and what are changes made to PromQL to make it behave as intended."
+/>
+<meta
+  name="keywords"
+  content="prometheus, monitoring"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/debugging-prometheus-alert/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Debugging a misfiring Prometheus alert"/>
+<meta name="twitter:description" content="Last week at work, I encountered an alert that was misfiring. Or so I thought..."/>
+
+
+
+<meta property="og:title" content="Debugging a misfiring Prometheus alert" />
+<meta property="og:description" content="Last week at work, I encountered an alert that was misfiring. Or so I thought..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/debugging-prometheus-alert/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-09-20T11:46:24+08:00" />
+<meta property="article:modified_time" content="2021-09-20T11:46:24+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Debugging a misfiring Prometheus alert</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Sep 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 6 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/prometheus/">#prometheus</a>&nbsp;
+        
+          <a href="/tags/monitoring/">#monitoring</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>Last week at work, I encountered an alert that was misfiring. Or so I thought.</p>
+<p>This was the PromQL used for alerting when HTTP requests error rate exceeds the <a href="https://sre.google/sre-book/service-level-objectives/">SLO</a> of 5% per hour:</p>
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+  / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
+</code></pre><p>Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.</p>
+<p>The cause can be summarized into these 3 points:</p>
+<ul>
+<li>misunderstanding of how PromQL <a href="https://prometheus.io/docs/prometheus/latest/querying/functions/#vector">vector()</a> function works</li>
+<li>misunderstanding of how PromQL <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#comparison-binary-operators">comparison</a> binary operators work</li>
+<li>misunderstanding of how Prometheus/Thanos-ruler evaluates query result and trigger alerts</li>
+</ul>
+<p>In this post, I will share about what I have learned about the 3 points and what are changes made to PromQL to make it behave as intended.</p>
+<p><em>ps</em>: <a href="https://prometheus.io/docs/introduction/overview/">Prometheus documentation</a> isn&rsquo;t the clearest. I highly recommend checking out <a href="https://www.amazon.com/Prometheus-Infrastructure-Application-Performance-Monitoring/dp/1492034142">Prometheus: Up &amp; Running</a> book for better explanations on the various features &amp; functions provided by Prometheus.</p>
+<hr>
+<h2 id="how-does-vector-function-work">How does <code>vector()</code> function work?</h2>
+<p>Let&rsquo;s check out the function description from <a href="(https://prometheus.io/docs/prometheus/latest/querying/functions/#vector)">Prometheus docs</a>:</p>
+<blockquote>
+<p>vector(s scalar) returns the scalar s as a vector with no labels.</p>
+</blockquote>
+<p>I think the description taken from <a href="https://www.amazon.com/Prometheus-Infrastructure-Application-Performance-Monitoring/dp/1492034142">Prometheus: Up &amp; Running</a> is much clearer:</p>
+<blockquote>
+<p>Vector function takes a scalar value and converts it into an instant vector with one label-less sample with the given value.</p>
+</blockquote>
+<p>Scalar? Label-less instant vector? What are these?</p>
+<h4 id="instant-vector-data-type">Instant vector data type</h4>
+<blockquote>
+<p>a set of time series containing a single sample for each time series, all sharing the same timestamp</p>
+</blockquote>
+<p>Example:</p>
+<pre tabindex="0"><code>prometheus_operator_kubernetes_client_http_requests_total
+</code></pre><p>The PromQL above returns an instant vector, with each row being a time series at a particular point in time of query.
+<figure class="post-cover">
+    <input type="checkbox" id="instant-vector.png">
+      <label for="instant-vector.png">
+        <img src="instant-vector.png" alt="instant-vector" />
+      </label>
+    
+</figure></p>
+<h4 id="scalar-data-type">Scalar data type</h4>
+<blockquote>
+<p>a simple numeric floating point value</p>
+</blockquote>
+<p>It literally is just a value. It cannot have labels (i.e just scalar).</p>
+<p>Example:</p>
+<pre tabindex="0"><code>2
+</code></pre><p>The PromQL above returns a scalar.
+<figure class="post-cover">
+    <input type="checkbox" id="scalar.png">
+      <label for="scalar.png">
+        <img src="scalar.png" alt="scalar" />
+      </label>
+    
+</figure></p>
+<p><strong>NOTE</strong>: &ldquo;cannot have labels&rdquo; !== &ldquo;label-less&rdquo;. &ldquo;Label-less&rdquo; only applies to vector (instant &amp; range) data type.
+Example of label-less data:</p>
+<pre tabindex="0"><code>year()
+</code></pre><figure class="post-cover">
+    <input type="checkbox" id="label-less-instant-vector.png">
+      <label for="label-less-instant-vector.png">
+        <img src="label-less-instant-vector.png" alt="scalar" />
+      </label>
+    
+</figure>
+<p>Usually scalar type is used to make a comparison easier.</p>
+<p>For example: Checking the year of the time series vector data. Both PromQL examples below can be used to perform the comparison, but scalar comparisons are a little easier to understand as compared to vector matching.</p>
+<p>Scalar comparison</p>
+<pre tabindex="0"><code>year(prometheus_operator_kubernetes_client_http_requests_total) == 1971
+</code></pre><p>Vector comparison</p>
+<pre tabindex="0"><code>year(prometheus_operator_kubernetes_client_http_requests_total) == on() group_left vector(1970)
+</code></pre><p>Another question to answer: <strong>when should we use vector()?</strong></p>
+<p><code>vector()</code> function can be useful if we need to ensure an expression returns a result but can&rsquo;t depend on any particular time series to exist.</p>
+<p>For example:</p>
+<pre tabindex="0"><code>sum(some_gauge) or vector(0)
+</code></pre><hr>
+<h2 id="how-does-comparison-binary-operators-work">How does comparison binary operators work?</h2>
+<p><a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#comparison-binary-operators"><strong>Comparison binary operators</strong></a>:</p>
+<ul>
+<li><code>==</code> (equal)</li>
+<li><code>!=</code> (not-equal)</li>
+<li><code>&gt;</code> (greater-than)</li>
+<li><code>&lt;</code> (less-than)</li>
+<li><code>&gt;=</code> (greater-or-equal)</li>
+<li><code>&lt;=</code> (less-or-equal)</li>
+</ul>
+<p>Refering to the PromQL again:</p>
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+  / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
+</code></pre><p>In the PromQL, we used the <code>&gt;=</code> operator.</p>
+<p><strong>Expectation 1</strong> (entire <code>(sum(...)/sum(...))</code> expression resulting in <code>no data</code>):</p>
+<ul>
+<li>if either the numerator expression or denominator expression evaluates to <code>no data</code>, the entire expression <code>(sum(...)/sum(...))</code> will result in <code>no data</code></li>
+<li><code>OR vector(0)</code> will handle the above and return a fallback value of <code>{} 0</code></li>
+<li><code>{} 0 &gt;= 0.1</code> will evaluate to <code>false</code></li>
+<li>because it evaluates to <code>false</code>, we might expect the entire PromQL evaluates to <code>0</code> OR <code>1</code> (in place of <code>true</code> or <code>false</code>)</li>
+</ul>
+<p><strong>Reality 1</strong>: expression evaluates to <code>false</code>, which means no matching time series found and returns <code>no data</code></p>
+<p><strong>Explanation 1</strong>:</p>
+<p>The PromQL above is actually performing a <strong>vector</strong> <code>(sum(...)/sum(...))</code> VS <strong>scalar</strong> <code>(0.1)</code> comparison.</p>
+<p>Depending on what data types are being compared, there are <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#comparison-binary-operators">variations in behaviour</a>:</p>
+<ul>
+<li>scalar VS scalar</li>
+<li>scalar VS vector</li>
+<li>vector VS vector</li>
+</ul>
+<p>As per Prometheus docs,</p>
+<blockquote>
+<p>Between an instant vector and a scalar, these operators are applied to the value of every data sample in the vector, and vector elements between which the comparison result is false get dropped from the result vector</p>
+</blockquote>
+<p>This is why <code>no data</code> was returned.</p>
+<p>If we want it to evaluate to a boolean value (<code>{} 0</code> or <code>{} 1</code>), we will need to add a <code>bool</code> modifier after the operator.</p>
+<p>Example:</p>
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+  / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;=bool 0.05 
+</code></pre><p>What if the entire <code>(sum(...)/sum(...))</code> expression evaluated to <code>{} 0</code> instead? Based on what we understood so far&hellip;</p>
+<p><strong>Expectation 2</strong> (entire <code>(sum(...)/sum(...))</code> expression resulting in <code>{} 0</code>):</p>
+<ul>
+<li>if either the numerator expression or denominator expression evaluates to <code>0</code>, the entire expression <code>(sum(...)/sum(...))</code> will result in <code>0</code></li>
+<li><code>OR vector(0)</code> will handle the above and return a fallback value of <code>0</code></li>
+<li><code>0 &gt;= 0.1</code> will evaluate to <code>false</code></li>
+<li>because it evaluates to <code>false</code>, it means no matching time series found and it will return <code>no data</code></li>
+</ul>
+<p><strong>Reality 2</strong>: evaluated to a label-less instant vector <code>{} 0</code></p>
+<p><strong>Explanation 2</strong>:</p>
+<p>Missing parenthesis enclosing the <code>OR vector(0)</code> portion (i.e <code>(sum(...) / sum(...) OR vector(0)) &gt;= 0.05</code>).</p>
+<p>Without enclosing the <code>OR vector(0)</code> section, the <code>sum(...) / sum(...)</code> and <code>OR vector(0) &gt;= 0.05</code> will be evaluated seperately, before being compared again.</p>
+<p><code>sum(...) / sum(...)</code> returns <code>0 {}</code></p>
+<p><code>vector(0) &gt;= 0.05</code> returns <code>no data</code></p>
+<p>As per the <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#logical-set-binary-operators">logical binary operator</a> description:</p>
+<blockquote>
+<p><code>vector1 or vector2</code> results in a vector that contains all original elements (label sets + values) of vector1 and additionally all elements of vector2 which do not have matching label sets in vector1</p>
+</blockquote>
+<p>This means the final result will be <code>{} 0</code>.</p>
+<hr>
+<h2 id="how-does-prometheusthanos-ruler-evaluates-promql-result-and-trigger-alerts">How does Prometheus/Thanos-ruler evaluates PromQL result and trigger alerts?</h2>
+<p>Intuitively (or not), one might assume that for a PromQL result to trigger an alert, the resulting query must evaluate to a &ldquo;truthy&rdquo; value. At least that was what I assumed.</p>
+<p>On further testing with PromQLs that returned either <code>0</code>, <code>1</code> or <code>no data</code>, I realized that:</p>
+<ul>
+<li><code>no data</code> means &ldquo;ALL OK&rdquo;</li>
+<li>evaluating to ANY data (0, 1, whatever else) will be deemed as &ldquo;SOMETHING IS WRONG. TRIGGER ALERT&rdquo;</li>
+</ul>
+<p>This is supported by what I found in <a href="https://github.com/prometheus/prometheus/blob/03d084f8629477907cab39fc3d314b375eeac010/rules/alerting.go#L300">Prometheus source code</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AlertingRule</span>) <span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">ts</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>, <span style="color:#a6e22e">query</span> <span style="color:#a6e22e">QueryFunc</span>, <span style="color:#a6e22e">externalURL</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">limit</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Lock</span>()
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Unlock</span>()
+
+	<span style="color:#75715e">// Create pending alerts for any new vector elements in the alert expression
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// or update the expression value for existing elements.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">resultFPs</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">struct</span>{}{}
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vec</span> <span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">smpl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">res</span> {
+		<span style="color:#75715e">// Provide the alert information to the template.
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span>))
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">lbl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span> {
+			<span style="color:#a6e22e">l</span>[<span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Name</span>] = <span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Value</span>
+		}
+    <span style="color:#f92672">...</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
+</code></pre></div><p>If PromQL returned any data (i.e not <code>no data</code>), an <code>alerts</code> mapping will be created.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
+</code></pre></div><hr>
+<h2 id="summary">Summary</h2>
+<p>We have a better understanding of <code>vector()</code> function, comparison binary operators and how alerts are triggered by Prometheus/Thanos-ruler now.</p>
+<p>So what exactly were the changes made to the PromQL to have it evaluate as intended?</p>
+<p>Well, one way is to enclose the entire section before the <code>&gt;=</code> operator</p>
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+  / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
+</code></pre><p>The alternative is to remove the redundant <code>OR vector(0)</code>.</p>
+<pre tabindex="0"><code>sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+  / sum(rate(service_foo__http_request_total[1h])) &gt;= 0.05 
+</code></pre>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/nodejs-flamegraph-analysis/">
+                  <span class="button__text">Nodejs application CPU profile analysis with Flame Graphs</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+  </body>
+</html>
