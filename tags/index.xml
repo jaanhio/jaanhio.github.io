@@ -9,15 +9,35 @@
     <description>Recent content in Tags on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Sep 2021 11:46:24 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Sep 2021 13:44:24 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>grafana</title>
+      <link>/tags/grafana/</link>
+      <pubDate>Sun, 26 Sep 2021 13:44:24 +0800</pubDate>
+      
+      <guid>/tags/grafana/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
       <title>monitoring</title>
       <link>/tags/monitoring/</link>
-      <pubDate>Mon, 20 Sep 2021 11:46:24 +0800</pubDate>
+      <pubDate>Sun, 26 Sep 2021 13:44:24 +0800</pubDate>
       
       <guid>/tags/monitoring/</guid>
       <description>
@@ -37,7 +57,7 @@
     <item>
       <title>prometheus</title>
       <link>/tags/prometheus/</link>
-      <pubDate>Mon, 20 Sep 2021 11:46:24 +0800</pubDate>
+      <pubDate>Sun, 26 Sep 2021 13:44:24 +0800</pubDate>
       
       <guid>/tags/prometheus/</guid>
       <description>

@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        prometheus ::
+        Blogs ::
         jaanhio
       </title>
     
@@ -18,7 +18,7 @@
   content=""
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="/tags/prometheus/" />
+<link rel="canonical" href="/blog/" />
 
 
 
@@ -46,20 +46,20 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="prometheus"/>
+<meta name="twitter:title" content="Blogs"/>
 <meta name="twitter:description" content=""/>
 
 
 
-<meta property="og:title" content="prometheus" />
+<meta property="og:title" content="Blogs" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/prometheus/" /><meta property="og:site_name" content="jaanhio" />
+<meta property="og:url" content="/blog/" /><meta property="og:site_name" content="jaanhio" />
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/tags/prometheus/index.xml" title="jaanhio" />
+<link rel="alternate" type="application/rss+xml" href="/blog/index.xml" title="jaanhio" />
 <meta name="description" content="I write about tech and more!" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -250,6 +250,108 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
       </div>
     
       <div class="post on-list">
+        <h1 class="post-title"><a href="/blog/nodejs-flamegraph-analysis/">Nodejs application CPU profile analysis with Flame Graphs</a></h1>
+        <div class="post-meta">
+          
+            <span class="post-date">
+              6 Sep 2021
+            </span>
+
+            
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 5 min read</span
+            >
+          
+        </div>
+
+        
+          <span class="post-tags">
+            
+              <a href="/tags/debug/">#debug</a>&nbsp;
+            
+              <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
+            
+              <a href="/tags/nodejs/">#nodejs</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
+ What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/blog/nodejs-flamegraph-analysis/"
+              >Read more →</a
+            >
+          </div>
+        
+      </div>
+    
+      <div class="post on-list">
+        <h1 class="post-title"><a href="/blog/debugging-nodejs-app/">Debugging high CPU usage and memory leak on Nodejs application</a></h1>
+        <div class="post-meta">
+          
+            <span class="post-date">
+              6 Sep 2021
+            </span>
+
+            
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 7 min read</span
+            >
+          
+        </div>
+
+        
+          <span class="post-tags">
+            
+              <a href="/tags/debug/">#debug</a>&nbsp;
+            
+              <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
+            
+              <a href="/tags/nodejs/">#nodejs</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
+It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/blog/debugging-nodejs-app/"
+              >Read more →</a
+            >
+          </div>
+        
+      </div>
+    
+      <div class="post on-list">
         <h1 class="post-title"><a href="/blog/understanding-alertmanager/">Understanding the differences between alertmanager&rsquo;s group_wait, group_interval and repeat_interval</a></h1>
         <div class="post-meta">
           
@@ -301,8 +403,69 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         
       </div>
     
+      <div class="post on-list">
+        <h1 class="post-title"><a href="/blog/linux-node-exporter-setup/">Node-exporter setup with Systemd</a></h1>
+        <div class="post-meta">
+          
+            <span class="post-date">
+              6 Aug 2021
+            </span>
+
+            
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
+        </div>
+
+        
+          <span class="post-tags">
+            
+              <a href="/tags/linux/">#linux</a>&nbsp;
+            
+              <a href="/tags/monitoring/">#monitoring</a>&nbsp;
+            
+              <a href="/tags/node-exporter/">#node-exporter</a>&nbsp;
+            
+              <a href="/tags/systemd/">#systemd</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
+To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
+This is where systemd comes in.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/blog/linux-node-exporter-setup/"
+              >Read more →</a
+            >
+          </div>
+        
+      </div>
+    
     <div class="pagination">
   <div class="pagination__buttons">
+    
+      <span class="button previous">
+        <a href="/blog/">
+          <span class="button__icon">←</span>
+          <span class="button__text">Newer posts</span>
+        </a>
+      </span>
     
     
   </div>
