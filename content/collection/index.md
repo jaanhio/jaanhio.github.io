@@ -4,6 +4,9 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Understanding How Facebook Disappeared from the Internet
+    url: https://blog.cloudflare.com/october-2021-facebook-outage/
+    tags: ["networking", "site reliability", "disaster recovery"]
   - title: Nodejs internals
     url: https://www.smashingmagazine.com/2020/04/nodejs-internals/
     tags: ["nodejs", "debug", "performance analysis"]
@@ -33,7 +36,7 @@ content:
     url: https://wizardzines.com/
     tags: ["linux"]
     description: "Complicated topics packaged in a digestible format"
-  - title: Linux source code reference 
+  - title: Linux source code reference
     url: https://elixir.bootlin.com/linux/latest/source
     tags: ["linux"]
   - title: Creating a simple kubernetes debug pod
@@ -189,7 +192,7 @@ content:
   - title: "Beej's Guide to Network Programming"
     url: https://beej.us/guide/bgnet/html/
     tags: ["linux", "networking"]
-    description: "Really really deeeep dive into internals of networking." 
+    description: "Really really deeeep dive into internals of networking."
   - title: "Keynote: How Spotify Accidentally Deleted All its Kube Clusters with No User Impact - David Xia"
     url: https://youtu.be/ix0Tw8uinWs
     tags: ["kubernetes"]
