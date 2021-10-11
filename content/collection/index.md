@@ -4,7 +4,7 @@ draft: false
 type: collection
 enableSearch: true
 content:
-  - title: Amazing collection of tech publications by Stripe
+  - title: Debugging beyond the debugger
     url: https://chameth.com/debugging-beyond-the-debugger/
     tags: ["blog", "debug", "linux"]
   - title: Amazing collection of tech publications by Stripe
