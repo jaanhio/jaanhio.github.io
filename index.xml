@@ -9,10 +9,34 @@
     <description>Recent content on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Sep 2021 13:44:24 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 Oct 2021 20:25:08 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Debugging containers using nsenter</title>
+      <link>/blog/nsenter-debug/</link>
+      <pubDate>Mon, 11 Oct 2021 20:25:08 +0800</pubDate>
+      
+      <guid>/blog/nsenter-debug/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&amp;rsquo;t want to behave the way they are supposed to.
+You checked the logs and traced it back to the source code. Logic checks out :white_check_mark:
+You started narrowing down the causes. Networking issue? Configuration issue?
+You entered the container and decided to use ping to identify network connectivity issues.
+/ $ ping google.com PING google.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Visualizing alerts metrics on Grafana</title>
