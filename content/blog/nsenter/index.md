@@ -3,7 +3,7 @@ title: "Debugging containers using nsenter"
 date: 2021-10-11T20:25:08+08:00
 slug: "nsenter-debug"
 description: ""
-keywords: ["debugging", "linux", "kubernetes"]
+keywords: ["debug", "linux", "kubernetes"]
 draft: false
 tags: []
 math: false

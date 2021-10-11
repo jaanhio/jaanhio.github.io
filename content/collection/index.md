@@ -5,7 +5,10 @@ type: collection
 enableSearch: true
 content:
   - title: Amazing collection of tech publications by Stripe
-    url: https://increment.com//
+    url: https://chameth.com/debugging-beyond-the-debugger/
+    tags: ["blog", "debug", "linux"]
+  - title: Amazing collection of tech publications by Stripe
+    url: https://increment.com/
     tags: ["blog"]
   - title: Understanding How Facebook Disappeared from the Internet
     url: https://blog.cloudflare.com/october-2021-facebook-outage/
