@@ -4,6 +4,7 @@ theme: hello-friend
 paginate: 5
 disqusShortname: jaanhio-me
 googleAnalytics: G-SX2DZ2KVGS
+enableEmoji: true
 params:
   contentTypeName: blog
   defaultTheme: light
@@ -13,8 +14,8 @@ languages:
   en:
     title: jaanhio
     subtitle:
-    keywords: ''
-    copyright: ''
+    keywords: ""
+    copyright: ""
     menuMore: Show more
     writtenBy: Written by
     readMore: Read more
@@ -22,8 +23,8 @@ languages:
     newerPosts: Newer posts
     olderPosts: Older posts
     minuteReadingTime: min read
-    dateFormatSingle: '6 Jan 2006'
-    dateFormatList: '6 Jan 2006'
+    dateFormatSingle: "6 Jan 2006"
+    dateFormatList: "6 Jan 2006"
     params:
       logo:
         logoText: $
