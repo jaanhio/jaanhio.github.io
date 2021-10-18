@@ -152,6 +152,58 @@
   <div class="posts">
     
       <div class="post on-list">
+        <h1 class="post-title"><a href="/blog/eks-private-ip-resolution/">Managing multiple EKS clusters access using Apiservers' private endpoints with AWS VPN</a></h1>
+        <div class="post-meta">
+          
+            <span class="post-date">
+              6 Oct 2021
+            </span>
+
+            
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
+        </div>
+
+        
+          <span class="post-tags">
+            
+              <a href="/tags/aws/">#aws</a>&nbsp;
+            
+              <a href="/tags/eks/">#eks</a>&nbsp;
+            
+              <a href="/tags/dns/">#dns</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/blog/eks-private-ip-resolution/"
+              >Read more →</a
+            >
+          </div>
+        
+      </div>
+    
+      <div class="post on-list">
         <h1 class="post-title"><a href="/blog/nsenter-debug/">Debugging containers using nsenter</a></h1>
         <div class="post-meta">
           
@@ -179,7 +231,7 @@
           
             
               If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out :white_check_mark:
+You checked the logs and traced it back to the source code. Logic checks out ✅
 You started narrowing down the causes. Networking issue? Configuration issue?
 You entered the container and decided to use ping to identify network connectivity issues.
 / $ ping google.com PING google.

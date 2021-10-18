@@ -9,10 +9,32 @@
     <description>Recent content in Blogs on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Oct 2021 20:25:08 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 18 Oct 2021 08:11:48 +0800</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN</title>
+      <link>/blog/eks-private-ip-resolution/</link>
+      <pubDate>Mon, 18 Oct 2021 08:11:48 +0800</pubDate>
+      
+      <guid>/blog/eks-private-ip-resolution/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Debugging containers using nsenter</title>
@@ -29,7 +51,7 @@
         
         
           If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&amp;rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out :white_check_mark:
+You checked the logs and traced it back to the source code. Logic checks out ✅
 You started narrowing down the causes. Networking issue? Configuration issue?
 You entered the container and decided to use ping to identify network connectivity issues.
 / $ ping google.com PING google.

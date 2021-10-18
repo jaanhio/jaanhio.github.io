@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead."
+/>
+<meta
+  name="keywords"
+  content="aws, eks, dns"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/eks-private-ip-resolution/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN"/>
+<meta name="twitter:description" content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead."/>
+
+
+
+<meta property="og:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN" />
+<meta property="og:description" content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/eks-private-ip-resolution/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-10-18T08:11:48+08:00" />
+<meta property="article:modified_time" content="2021-10-18T08:11:48+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Managing multiple EKS clusters access using Apiservers' private endpoints with AWS VPN</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Oct 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/aws/">#aws</a>&nbsp;
+        
+          <a href="/tags/eks/">#eks</a>&nbsp;
+        
+          <a href="/tags/dns/">#dns</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.</p>
+<p>However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="multi-cluster.png">
+      <label for="multi-cluster.png">
+        <img src="multi-cluster.png" alt="" />
+      </label>
+    
+</figure>
+<p>This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.</p>
+<p>There&rsquo;s a few ways we can accomplish this:</p>
+<ul>
+<li>entirely remove Bastion instances and allow users to access all EKS Apiservers via their <strong>publice endpoints</strong></li>
+<li>entirely remove Bastion instances and allow users to access all EKS Apiservers via their <strong>private endpoints</strong> + AWS VPN servers in each VPC</li>
+<li>entirely remove Bastion instances and allow users to access all EKS Apiservers via their <strong>private endpoints</strong> + single AWS VPN server</li>
+</ul>
+<hr>
+<h2 id="accessing-apiservers-via-their-public-endpoints">Accessing Apiservers via their public endpoints</h2>
+<p>This is the most straightforward approach, and also the least maintainable one. Let me explain.</p>
+<h4 id="increased-attack-surface">Increased attack surface</h4>
+<p>Having a publicly exposed endpoint for the EKS Apiservers is akin to apartments having publicly accessible doors. To control access, we use credentials and keys to authenticate users, similar to how the apartment door can only be unlocked by specific keys given to a few tenants.</p>
+<p>BUT just because someone doesn&rsquo;t have valid credentials to access doesn&rsquo;t mean they will not try accessing it.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="public-access.png">
+      <label for="public-access.png">
+        <img src="public-access.png" alt="" />
+      </label>
+    
+</figure>
+<p>Fortunately, AWS EKS comes with the ability to whitelist IP addresses that can access reach the public endpoints.</p>
+<p>This approach works well for a small team but when we are configuring access for potentially hundreds of users, this whitelisting approach can get real messy real quick.</p>
+<p>Also considering that most of us are working remotely, we certainly do not want to be updating the whitelist every single time we switched to a different location to do our work.</p>
+<hr>
+<h2 id="access-apiservers-via-their-private-endpoints--aws-vpn-servers">Access Apiservers via their private endpoints + AWS VPN servers</h2>
+<p>How can we reduce our attack surface without having to manually whitelist valid users' IP addresses?</p>
+<p>Simple: by removing the public endpoints entirely.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="vpn-access.png">
+      <label for="vpn-access.png">
+        <img src="vpn-access.png" alt="" />
+      </label>
+    
+</figure>
+<p>However in a multi-clusters/VPCs environment, it can be a chore to constantly switch between VPN profiles in order to access different Apiservers.</p>
+<p>I read that OpenVPN has a paid service that can help with management of multiple VPN servers access but it might not be suitable for us as we are using AWS VPN.</p>
+<p>Which brings us to the last option&hellip;</p>
+<hr>
+<h2 id="access-apiservers-via-their-private-endpoints--a-single-aws-vpn-server">Access Apiservers via their private endpoints + a single AWS VPN server</h2>
+<p>For now, this seems to be the best approach out of the 3 in terms of security and maintainability, with the assumption that availability of AWS VPN service shouldn&rsquo;t be a concern.</p>
+<p>Is this entirely bullet-proof? Probably not, since we are still one misconfiguration away from locking us out from all clusters (however unlikely). But it is still something worth exploring.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="single-vpn.png">
+      <label for="single-vpn.png">
+        <img src="single-vpn.png" alt="" />
+      </label>
+    
+</figure>
+<h3 id="configuration">Configuration</h3>
+<p>For this approach to work, we definitely need some form of network connections between the various VPCs.</p>
+<p>This can be accomplished using either <a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html">AWS Transit Gateways</a> or <a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a>, followed by updating the various subnets' route tables with the appropriate routing rules.</p>
+<p>Transit Gateway? ✅</p>
+<p>Route tables updated? ✅</p>
+<p>Connected to cluster A&rsquo;s VPN server? ✅</p>
+<p>Now <code>dig &lt;external apiserver endpoint&gt;</code>&hellip;.returned a public IP address. What am I missing?</p>
+<p>After some thorough Googling, I finally found an <a href="https://aws.amazon.com/blogs/compute/enabling-dns-resolution-for-amazon-eks-cluster-endpoints/">AWS blog guide</a> covering exactly what I wanted to achieve!</p>
+<p>Turns out the Route53&rsquo;s <code>Inbound Endpoints</code>, <code>Outbound Endpoints</code> and <code>Rules</code> were missing (TIL moment right here).</p>
+<figure class="post-cover">
+    <input type="checkbox" id="route53-config.png">
+      <label for="route53-config.png">
+        <img src="route53-config.png" alt="" />
+      </label>
+    
+</figure>
+<p>With those configurations, I ran <code>dig</code> command again and finally managed to resolved the private IP address of Apiserver residing in another VPC!</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/nsenter-debug/">
+                  <span class="button__text">Debugging containers using nsenter</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>

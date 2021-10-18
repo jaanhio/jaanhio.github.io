@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        404 Page not found ::
+        dns ::
         jaanhio
       </title>
     
@@ -18,7 +18,7 @@
   content=""
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="/404.html" />
+<link rel="canonical" href="/tags/dns/" />
 
 
 
@@ -46,19 +46,20 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="404 Page not found"/>
+<meta name="twitter:title" content="dns"/>
 <meta name="twitter:description" content=""/>
 
 
 
-<meta property="og:title" content="404 Page not found" />
+<meta property="og:title" content="dns" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/404.html" /><meta property="og:site_name" content="jaanhio" />
+<meta property="og:url" content="/tags/dns/" /><meta property="og:site_name" content="jaanhio" />
 
 
 
 
+<link rel="alternate" type="application/rss+xml" href="/tags/dns/index.xml" title="jaanhio" />
 <meta name="description" content="I write about tech and more!" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -148,92 +149,67 @@
 
       <div class="content">
         
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/404.html">404 Page not found</a>
-    </h1>
-    <div class="post-content">
-      <p>
-        Hmm&hellip; Sorry, this page seems to be missing.
-      </p>
+  <div class="posts">
+    
+      <div class="post on-list">
+        <h1 class="post-title"><a href="/blog/eks-private-ip-resolution/">Managing multiple EKS clusters access using Apiservers' private endpoints with AWS VPN</a></h1>
+        <div class="post-meta">
+          
+            <span class="post-date">
+              6 Oct 2021
+            </span>
 
-      
-        <p>
-          Maybe these tags will help you find what you&rsquo;re looking for. 😄
-        </p>
-        <h2>Tags</h2>
-        <div class="terms">
-          <ul class="terms__list">
             
-              <li class="terms__term">
-                <a href="/tags/alertmanager/">#alertmanager</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/aws/">#aws</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/debug/">#debug</a
-                ><span class="terms__term-count">2</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/dns/">#dns</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/eks/">#eks</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/grafana/">#grafana</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/linux/">#linux</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/monitoring/">#monitoring</a
-                ><span class="terms__term-count">4</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/node-exporter/">#node-exporter</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/nodejs/">#nodejs</a
-                ><span class="terms__term-count">2</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/performance-analysis/">#performance analysis</a
-                ><span class="terms__term-count">2</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/prometheus/">#prometheus</a
-                ><span class="terms__term-count">3</span>
-              </li>
-            
-              <li class="terms__term">
-                <a href="/tags/systemd/">#systemd</a
-                ><span class="terms__term-count">1</span>
-              </li>
-            
-          </ul>
+          
+          
+
+
+          
+            <span class="post-read-time"
+              >— 3 min read</span
+            >
+          
         </div>
-      
-    </div>
+
+        
+          <span class="post-tags">
+            
+              <a href="/tags/aws/">#aws</a>&nbsp;
+            
+              <a href="/tags/eks/">#eks</a>&nbsp;
+            
+              <a href="/tags/dns/">#dns</a>&nbsp;
+            
+          </span>
+        
+
+        
+
+        <div class="post-content">
+          
+            
+              I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+            
+          
+        </div>
+        
+          <div>
+            <a class="read-more button" href="/blog/eks-private-ip-resolution/"
+              >Read more →</a
+            >
+          </div>
+        
+      </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+    
+  </div>
+</div>
+
   </div>
 
       </div>

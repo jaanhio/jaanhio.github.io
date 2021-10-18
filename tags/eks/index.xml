@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eks on jaanhio</title>
+    
+    
+    
+    <link>/tags/eks/</link>
+    <description>Recent content in eks on jaanhio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Oct 2021 08:11:48 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/eks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN</title>
+      <link>/blog/eks-private-ip-resolution/</link>
+      <pubDate>Mon, 18 Oct 2021 08:11:48 +0800</pubDate>
+      
+      <guid>/blog/eks-private-ip-resolution/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>
