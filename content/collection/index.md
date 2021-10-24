@@ -4,6 +4,9 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: AWESOME collection of github learning resources
+    url: https://github.com/topics/awesome
+    tags: ["learnings"]
   - title: Debugging beyond the debugger
     url: https://chameth.com/debugging-beyond-the-debugger/
     tags: ["blog", "debug", "linux"]
