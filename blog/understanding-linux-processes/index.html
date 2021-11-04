@@ -11,10 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/ https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children
-https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1
-https://gist.github.com/apbarrero/6338709 https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html
-What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
+  content="What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
 When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time."
 />
 <meta
@@ -51,19 +48,13 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Orphan vs Zombie vs Daemon processes"/>
-<meta name="twitter:description" content="https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/ https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children
-https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1
-https://gist.github.com/apbarrero/6338709 https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html
-What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
+<meta name="twitter:description" content="What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
 When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time."/>
 
 
 
 <meta property="og:title" content="Orphan vs Zombie vs Daemon processes" />
-<meta property="og:description" content="https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/ https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children
-https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1
-https://gist.github.com/apbarrero/6338709 https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html
-What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
+<meta property="og:description" content="What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
 When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/understanding-linux-processes/" /><meta property="article:section" content="blog" />
@@ -200,13 +191,7 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 
     <div class="post-content">
       
-      <p><a href="https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/">https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/</a>
-<a href="https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children">https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children</a></p>
-<p><a href="https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1">https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1</a></p>
-<p><a href="https://gist.github.com/apbarrero/6338709">https://gist.github.com/apbarrero/6338709</a>
-<a href="https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of">https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of</a>
-<a href="https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html">https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html</a></p>
-<h1 id="what-are-processes">What are processes?</h1>
+      <h1 id="what-are-processes">What are processes?</h1>
 <p>A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.</p>
 <p>When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named <code>init</code>) which has <code>PID 1</code> and is responsible for running the right complement of services and daemons at any given time.</p>
 <p>One of the important responsibilities of <code>init</code> is the reaping of zombie processes, which I will cover below.</p>
