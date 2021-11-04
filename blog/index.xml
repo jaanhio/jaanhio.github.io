@@ -9,10 +9,34 @@
     <description>Recent content in Blogs on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Oct 2021 08:11:48 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 03 Nov 2021 08:53:15 +0800</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Orphan vs Zombie vs Daemon processes</title>
+      <link>/blog/understanding-linux-processes/</link>
+      <pubDate>Wed, 03 Nov 2021 08:53:15 +0800</pubDate>
+      
+      <guid>/blog/understanding-linux-processes/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          https://www.gmarik.info/blog/2012/orphan-vs-zombie-vs-daemon-processes/ https://unix.stackexchange.com/questions/264522/how-can-i-show-a-terminal-shells-process-tree-including-children
+https://askubuntu.com/questions/30891/is-there-any-way-to-kill-a-zombie-process-without-reboot?lq=1
+https://gist.github.com/apbarrero/6338709 https://stackoverflow.com/questions/4880555/what-is-the-linux-process-table-what-does-it-consist-of https://ostoday.org/linux/what-is-the-impact-of-zombie-process-in-linux.html
+What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
+When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN</title>
