@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kubernetes on jaanhio</title>
+    
+    
+    
+    <link>/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on jaanhio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 11 Nov 2021 19:30:06 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes CPU requests and limits</title>
+      <link>/blog/kubernetes-cpu-requests-limits/</link>
+      <pubDate>Thu, 11 Nov 2021 19:30:06 +0800</pubDate>
+      
+      <guid>/blog/kubernetes-cpu-requests-limits/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          It all started with this alert...
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Kubernetes CPU requests and limits ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="It all started with this alert.
+Processes experience elevated CPU throttling. 25.91% throttling of CPU in namespace vault for container consul in pod consul-server-2. I checked the dashboards and see that CPU usage was periodically peaking above the resources.requests.cpu (red line). Perhaps I should increase the CPU requests a little.
+  But throttling? Why was the process facing CPU throttling when there&amp;rsquo;s still quite a bit more to go before hitting the resources."
+/>
+<meta
+  name="keywords"
+  content="linux, cgroups, namespaces, kernel, kubernetes"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/kubernetes-cpu-requests-limits/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes CPU requests and limits"/>
+<meta name="twitter:description" content="It all started with this alert..."/>
+
+
+
+<meta property="og:title" content="Kubernetes CPU requests and limits" />
+<meta property="og:description" content="It all started with this alert..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/kubernetes-cpu-requests-limits/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-11-11T19:30:06+08:00" />
+<meta property="article:modified_time" content="2021-11-11T19:30:06+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Kubernetes CPU requests and limits</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Nov 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 6 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/linux/">#linux</a>&nbsp;
+        
+          <a href="/tags/cgroups/">#cgroups</a>&nbsp;
+        
+          <a href="/tags/namespaces/">#namespaces</a>&nbsp;
+        
+          <a href="/tags/kernel/">#kernel</a>&nbsp;
+        
+          <a href="/tags/kubernetes/">#kubernetes</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>It all started with this alert.</p>
+<pre tabindex="0"><code>Processes experience elevated CPU throttling.
+25.91% throttling of CPU in namespace vault for container consul in pod consul-server-2.
+</code></pre><p>I checked the dashboards and see that CPU usage was periodically peaking above the <code>resources.requests.cpu</code> (red line). Perhaps I should increase the CPU requests a little.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="consul-cpu-stats.png">
+      <label for="consul-cpu-stats.png">
+        <img src="consul-cpu-stats.png" alt="" />
+      </label>
+    
+</figure>
+<p>But throttling? Why was the process facing CPU throttling when there&rsquo;s still quite a bit more to go before hitting the <code>resources.limits.cpu</code> (orange line)?</p>
+<p>Isn&rsquo;t the CPU throttling logic simply:</p>
+<pre tabindex="0"><code>if cpuUsage &gt; cpuLimit {
+    throttle()
+} else {
+    continueWithProcess()
+}
+</code></pre><p>Well&hellip;not so simple&hellip;</p>
+<hr>
+<h1 id="container-requests-and-limits">Container requests and limits</h1>
+<p>Pods are the smallest deployable units of computing that one can create and manage in Kubernetes.</p>
+<p>Within pods are containers. There can be one or more containers, which we specify using a container specs list under <a href="https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodSpec">PodSpec</a>.</p>
+<p>Under the <a href="https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Container">container specs</a>, we can specify the CPU and memory resources of the container(s) that will be running within a pod.</p>
+<h2 id="setting-the-requests-and-limits">Setting the requests and limits</h2>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+.
+.
+spec:
+  containers:
+  - .
+    .
+    .
+    resources:
+      limits:
+        cpu: &quot;1&quot;
+        memory: 400Mi
+      requests:
+        cpu: 500m
+        memory: 200Mi
+</code></pre><p>These <code>spec.containers[].resources</code> specifications are then used by Kubernetes for workload scheduling and resource limiting.</p>
+<blockquote>
+<p><code>requests</code> are used by <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/#scheduling">kube-scheduler</a> to decide which worker node to assign a pod to.</p>
+</blockquote>
+<blockquote>
+<p><code>limits </code> are used by <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/#synopsis">kubelet</a> to limit how much resources a container can use</p>
+</blockquote>
+<p>Put simply, we can view them as soft limits (requests) and hard limits (limits).</p>
+<h2 id="how-are-these-cpu-requests-and-limits-mechanisms-implemented-by-kubernetes">How are these CPU requests and limits mechanisms implemented by Kubernetes?</h2>
+<p>For those who aren&rsquo;t aware, &ldquo;containers&rdquo; isn&rsquo;t a first-class concept in Linux. It is made up of Linux features like <code>cgroups</code> to control available resources to processes and <code>namespaces</code> to isolate processes.</p>
+<p>A <code>cgroup</code> is basically a grouping of processes and consists of 2 parts - the core and controllers.</p>
+<p>Taken from <a href="https://www.kernel.org/doc/Documentation/cgroup-v2.txt">https://www.kernel.org/doc/Documentation/cgroup-v2.txt</a>:</p>
+<blockquote>
+<p>cgroup is largely composed of two parts - the core and controllers. cgroup core is primarily responsible for hierarchically organizing
+processes.  A cgroup controller is usually responsible for distributing a specific type of system resource along the hierarchy
+although there are utility controllers which serve purposes other than resource distribution.</p>
+</blockquote>
+<p>Under the hood, <code>requests.cpu</code> and <code>limits.cpu</code> are implemented using features of <a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cpu.txt">CPU cgroup controller</a> (grouping processes) and CFS scheduler (assigning resource based on groupings)</p>
+<p>Though the Kubernetes configuration for both <code>requests.cpu</code> &amp; <code>limits.cpu</code> look similar, they are actually implemented using different mechanisms.</p>
+<hr>
+<h3 id="cpu-requests-via-cpushares">CPU requests via cpu.shares</h3>
+<p>CPU request is implemented using <code>cpu.shares</code>. CFS scheduler looks at the <code>cpu.shares</code> file configured for different process groupings to determine <strong>how much CPU time a process can use</strong>.</p>
+<p>This file can be found at the <code>/sys/fs/cgroup/cpu,cpuacct</code> directory of a container:</p>
+<pre tabindex="0"><code>/ $ cd /sys/fs/cgroup/cpu,cpuacct/
+/sys/fs/cgroup/cpu,cpuacct $ cat cpu.shares
+51
+</code></pre><p>The <code>cpu.shares</code> should match the container&rsquo;s <code>resources.requests.cpu</code> value (in this case, it is <code>cpu: 50m</code>).</p>
+<p>It is important to note that the value represents the <strong>relative share of CPU time</strong> a container will receive <strong>when there is contention for CPU resources</strong>. It <strong>does not represent the actual CPU time</strong> each container will receive.</p>
+<p>In Kubernetes, <strong>one CPU</strong> (1000m) is equivalent to 1 vCPU/Core for cloud providers and 1 hyperthread on bare-metal Intel processors.</p>
+<h4 id="assuming-we-are-deploying-2-containers-on-a-single-core-node-and-theres-contention-for-cpu-resources">Assuming we are deploying 2 containers on a single core node and there&rsquo;s contention for CPU resources:</h4>
+<h4 id="scenario-a-containers-configured-with-similar-requestscpu-values">Scenario A: containers configured with similar <code>requests.cpu</code> values</h4>
+<pre tabindex="0"><code>container A:
+  requests.cpu: 1000m
+container B:
+  requests.cpu: 1000m
+</code></pre><p>Both containers will receive the same amount of CPU time.</p>
+<h4 id="scenario-b-containers-configured-with-different-requestscpu-values">Scenario B: containers configured with different <code>requests.cpu</code> values</h4>
+<pre tabindex="0"><code>container A:
+  requests.cpu: 1000m
+container B:
+  requests.cpu: 2000m
+</code></pre><p>In this scenario, container B will receive twice as much CPU time as container A.</p>
+<h4 id="what-happens-if-only-container-a-is-running">What happens if only container A is running?</h4>
+<p>In this case, container A will get all the available CPU time since there&rsquo;s no other processes contending for CPU resources.</p>
+<p>That being said, there might be cases where we want to put a hard limit on the amount of CPU time a set of processes have access to (e.g hostile workloads consuming unnecessary CPU time, limit resource usage when performing load test), which brings us to the next section.</p>
+<hr>
+<h3 id="cpu-limits-via-cfs-quota">CPU limits via CFS quota</h3>
+<p>CPU limit is implemented using CFS bandwidth controller (a subsystem/extension of CFS scheduler), which will use values specified in <code>cpu.cfs_period_us</code> and <code>cpu.cfs_quota_us</code> (<code>us</code> = <code>μ</code>, microseconds) to control how much time is available to each control group.</p>
+<p><code>cpu.cfs_period_us</code>: length of the accounting period, also in microseconds. This is <strong>configured to 100,000 in Kubernetes</strong>.</p>
+<p><code>cpu.cfs_quota_us</code>: amount of CPU time (in microseconds) available to the group during each accounting period. This value is taken from the <code>limits.cpu</code>.</p>
+<pre tabindex="0"><code>1 vCPU == 1000m == 100,000us
+0.5vCPU == 500m == 50,000us
+</code></pre><p>Similar to <code>cpu.shares</code>, the files can be found at <code>/sys/fs/cgroup/cpu,cpuacct</code> directory of a container:</p>
+<pre tabindex="0"><code>/sys/fs/cgroup/cpu,cpuacct # cat cpu.cfs_quota_us
+50000
+/sys/fs/cgroup/cpu,cpuacct # cat cpu.cfs_period_us
+100000
+</code></pre><p>Let&rsquo;s say a web service container is the only process running and has the following <code>requests.cpu</code> set:</p>
+<pre tabindex="0"><code>web service container:
+  requests.cpu: 1000m
+</code></pre><p>Assuming that it takes 200ms to respond to a request and since there&rsquo;s no contention for CPU time, it will have the full 200ms of CPU time uninterrupted.</p>
+<p>What if we now set the <code>limits.cpu</code>?</p>
+<pre tabindex="0"><code>web service container:
+  requests.cpu: 1000m
+  limits.cpu: 500m
+</code></pre><p>The same request will now take 350ms to respond!</p>
+<p>This is because instead of being able to use 200ms of uninterrupted CPU time, the process now has only a quota of <code>500m/1000m * 100,000us</code> <strong>every 100,000us period</strong>. Once the quota is depleted, the process will be throttled.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="cpu-throttle.png">
+      <label for="cpu-throttle.png">
+        <img src="cpu-throttle.png" alt="" />
+      </label>
+    
+</figure>
+<p>Throttling metrics can be found in the <code>cpu.stat</code> file:</p>
+<pre tabindex="0"><code>/sys/fs/cgroup/cpu,cpuacct $ cat cpu.stat
+nr_periods 258700
+nr_throttled 107792
+throttled_time 8635080132047
+</code></pre><p><code>nr_periods</code>: number of periods a process was running WITHOUT throttling</p>
+<p><code>nr_throttled</code>: number of periods a process was throttled</p>
+<p><code>throttled_time</code>: total time a thread in cgroup was throttled</p>
+<p><code>throttled_percentage</code>: (rate of change of <code>nr_throttled</code>)/(rate of change of <code>nr_periods</code>). This can give you an idea of how badly a process is being throttled.</p>
+<h4 id="what-can-you-do-about-throttled-applicationsprocesses">What can you do about throttled applications/processes?</h4>
+<p>Fix the application OR increase/remove the limits!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p><code>requests.cpu</code> and <code>limits.cpu</code> seems similar but are implemented using very different mechanisms!</p>
+<p>Just because <code>requests.cpu &lt; limits.cpu</code> does not mean that the process/application/container will not be throttled.</p>
+<h2 id="references">References</h2>
+<p>This was by far one of the most complicated topic I have researched on, bringing me down several rabbit holes, diving into kernel documentations, articles, videos etc.</p>
+<p>For those interested, these are the resources that helped me greatly on this topic:</p>
+<ul>
+<li><a href="https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html">https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html</a></li>
+<li><a href="https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html">https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html</a></li>
+<li><a href="https://engineering.squarespace.com/blog/2017/understanding-linux-container-scheduling">https://engineering.squarespace.com/blog/2017/understanding-linux-container-scheduling</a></li>
+<li><a href="https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718">https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718</a></li>
+<li><a href="https://manpages.ubuntu.com/manpages/cosmic/man7/cgroups.7.html">https://manpages.ubuntu.com/manpages/cosmic/man7/cgroups.7.html</a></li>
+<li><a href="https://nodramadevops.com/2019/10/docker-cpu-resource-limits/">https://nodramadevops.com/2019/10/docker-cpu-resource-limits/</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html">https://man7.org/linux/man-pages/man7/cgroups.7.html</a></li>
+<li><a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cgroups.txt">https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cgroups.txt</a></li>
+<li><a href="https://lwn.net/Articles/844976/">https://lwn.net/Articles/844976/</a></li>
+<li><a href="https://github.com/kubernetes/kubernetes/issues/51135#issuecomment-373454012">https://github.com/kubernetes/kubernetes/issues/51135#issuecomment-373454012</a></li>
+<li><a href="https://github.com/kubernetes/kubernetes/issues/67577">https://github.com/kubernetes/kubernetes/issues/67577</a></li>
+<li><a href="https://kubernetes.io/blog/2018/07/24/feature-highlight-cpu-manager/">https://kubernetes.io/blog/2018/07/24/feature-highlight-cpu-manager/</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu">https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu</a></li>
+<li><a href="https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/">https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/</a></li>
+<li><a href="https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/">https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/</a></li>
+<li><a href="https://www.youtube.com/watch?v=WB3_sV_EQrQ">Throttling: New Developments in Application Performance with CPU Limits - Dave Chiluk, Indeed</a></li>
+<li><a href="https://www.youtube.com/watch?v=UE7QX98-kO0">Resource Requests and Limits Under the Hood: The Journey of a Pod Spec - Kohei Ota &amp; Kaslin Fields</a></li>
+</ul>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/understanding-linux-processes/">
+                  <span class="button__text">Orphan vs Zombie vs Daemon processes</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>
