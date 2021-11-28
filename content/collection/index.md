@@ -4,6 +4,31 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Learning Go
+    url: https://www.oreilly.com/library/view/learning-go/9781492077206/
+    tags: ["recommended books", "golang"]
+    description: "Collection of best practices when using Go"
+  - title: Google SRE book
+    url: https://sre.google/sre-book/table-of-contents/
+    tags: ["recommended books", "sre"]
+  - title: Writing An Interpreter In Go
+    url: https://interpreterbook.com/
+    tags: ["recommended books", "golang"]
+  - title: Understanding and Working with the Cgroups Interface - Michael Anderson, The PTR Group, LLC
+    url: https://www.youtube.com/watch?v=z7mgaWqiV90
+    tags: ["linux", "cgroups"]
+  - title: Russian Doll - Extending Containers with Nested Processes - Christie Wilson & Jason Hall, Google
+    url: https://www.youtube.com/watch?v=iz9_omZ0ctk
+    tags: ["kubernetes", "linux", "containers"]
+  - title: 20 Things I’ve Learned in my 20 Years as a Software Engineer
+    url: https://www.simplethread.com/20-things-ive-learned-in-my-20-years-as-a-software-engineer/
+    tags: ["learnings"]
+  - title: Offensive Golang Bonanza - Writing Golang Malware
+    url: https://www.youtube.com/watch?v=oCdaOLmKu6s
+    tags: ["golang", "security", "malware"]
+  - title: Golang Design Patterns in Kubernetes
+    url: https://aly.arriqaaq.com/golang-design-patterns/
+    tags: ["kubernetes", "golang", "design patterns"]
   - title: AWESOME collection of github learning resources
     url: https://github.com/topics/awesome
     tags: ["learnings"]
