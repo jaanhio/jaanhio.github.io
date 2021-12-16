@@ -4,6 +4,40 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Reverse Engineering/Game Patching Tutorial - Full Res Roller Coaster Tycoon with Ghidra+x64dbg+Python
+    url: https://www.youtube.com/watch?v=cwBoUuy4nGc&ab_channel=jeFF0Falltrades
+    tags: ["reverse engineering"]
+  - title: Did Kubernetes Make My p95s Worse? - Jian Cheung & Stephen Chan, Airbnb
+    url: https://www.youtube.com/watch?v=QXApVwRBeys&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D
+    tags: ["learnings", "kubernetes", "performance analysis"]
+    description: "A reminder to not blindly jump onto flashy tech. Evaluate clearly whether a tool is really what you need"
+  - title: The documentation system
+    url: https://documentation.divio.com/
+    tags: ["learnings", "documentation"]
+    description: "Do you find yourself struggling to write a documentation? If yes, this is for you"
+  - title: 7 common mistakes in Go and when to avoid them by Steve Francia (Docker)
+    url: https://www.youtube.com/watch?v=29LLRKIL_TI&ab_channel=DataCouncil
+    tags: ["golang", "design patterns"]
+  - title: Continuous Delivery Pipelines - How to Build Better Software Faster • Dave Farley • GOTO 2021
+    url: https://www.youtube.com/watch?v=MYVrLXKJp0Y&ab_channel=GOTOConferences
+    tags: ["infrastructure", "release engineering"]
+    description: "Insightful talk about some of the best practices when it comes to building and releasing software"
+  - title: The Update, The Vent, And The Disaster
+    url: https://randsinrepose.com/archives/the-update-the-vent-and-the-disaster/
+    tags: ["mentoring", "learnings"]
+  - title: Streaming Recording Rules for Prometheus, Thanos, and Cortex Using M3 Coordinator
+    url: https://www.youtube.com/watch?v=kYz6me_C_fA&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D
+    tags: ["monitoring", "prometheus"]
+  - title: Performance Matters
+    url: https://www.youtube.com/watch?v=VzyhpbrC2Bs&ab_channel=CodingTech
+    tags: ["performance analysis"]
+  - title: Network Programming with Go
+    url: https://www.goodreads.com/book/show/52555535-network-programming-with-go
+    tags: ["recommended books", "golang", "networking"]
+  - title: Networking & Kubernetes
+    url: https://www.oreilly.com/library/view/networking-and-kubernetes/9781492081647/
+    tags: ["recommended books", "kubernetes", "networking"]
+    description: "Deep dive into Kubernetes networking stack. Highly recommended for those who no longer want to view networking as a blackbox."
   - title: Learning Go
     url: https://www.oreilly.com/library/view/learning-go/9781492077206/
     tags: ["recommended books", "golang"]
