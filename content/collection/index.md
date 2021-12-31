@@ -4,6 +4,10 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Arthur Chiao's Blog
+    url: https://arthurchiao.art/categories/
+    tags: ["kubernetes", "networking", "cilium"]
+    description: "Amazing collection of write-ups related to Cilium CNI"
   - title: Reverse Engineering/Game Patching Tutorial - Full Res Roller Coaster Tycoon with Ghidra+x64dbg+Python
     url: https://www.youtube.com/watch?v=cwBoUuy4nGc&ab_channel=jeFF0Falltrades
     tags: ["reverse engineering"]
