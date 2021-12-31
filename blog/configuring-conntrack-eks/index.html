@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Configuring conntrack limits for EKS worker nodes ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="It&amp;rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.
+One of the firing alerts caught my eye:
+name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &amp;gt; 0.75 labels: severity: warning annotations: description: {{ $value | humanizePercentage }} of conntrack entries are used. runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused summary: Number of conntrack are getting close to the limit."
+/>
+<meta
+  name="keywords"
+  content="kubernetes, linux, networking, iptables, conntrack"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/configuring-conntrack-eks/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configuring conntrack limits for EKS worker nodes"/>
+<meta name="twitter:description" content="It&#39;s the last week of the year, which means more time to clean up those tech debts..."/>
+
+
+
+<meta property="og:title" content="Configuring conntrack limits for EKS worker nodes" />
+<meta property="og:description" content="It&#39;s the last week of the year, which means more time to clean up those tech debts..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/configuring-conntrack-eks/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-12-31T10:56:04+08:00" />
+<meta property="article:modified_time" content="2021-12-31T10:56:04+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Configuring conntrack limits for EKS worker nodes</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Dec 2021
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 5 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>It&rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.</p>
+<p>One of the firing alerts caught my eye:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">NodeHighNumberConntrackEntriesUsed</span>
+<span style="color:#f92672">expr</span>: <span style="color:#ae81ff">(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &gt; 0.75</span>
+<span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">severity</span>: <span style="color:#ae81ff">warning</span>
+<span style="color:#f92672">annotations</span>:
+    <span style="color:#f92672">description</span>: {{ <span style="color:#ae81ff">$value | humanizePercentage }} of conntrack entries are used.</span>
+    <span style="color:#f92672">runbook_url</span>: <span style="color:#ae81ff">https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused</span>
+    <span style="color:#f92672">summary</span>: <span style="color:#ae81ff">Number of conntrack are getting close to the limit.</span>
+</code></pre></div><p>I then checked the dashboards and noticed signs of network saturation.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="network-saturation.png">
+      <label for="network-saturation.png">
+        <img src="network-saturation.png" alt="" />
+      </label>
+    
+</figure>
+<p>We can also see kernel logs related to dropped packets using <code>dmesg</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span> 3590.416157<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+<span style="color:#f92672">[</span> 3591.021991<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+<span style="color:#f92672">[</span> 3592.882524<span style="color:#f92672">]</span> net_ratelimit: <span style="color:#ae81ff">4</span> callbacks suppressed
+<span style="color:#f92672">[</span> 3592.882525<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+<span style="color:#f92672">[</span> 3593.302573<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+<span style="color:#f92672">[</span> 3593.335852<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</code></pre></div><p>This is worrying since it is potentially affecting the user experience of our tenants accessing our services.</p>
+<p>Oddly, it&rsquo;s only affecting 1 out of 6 worker nodes.</p>
+<p>Some time spent investigating later, I identified <code>ingress-nginx-controller</code> pod (using <code>container_sockets</code> metric) as the process occupying much of the <code>conntrack</code> table, which is somewhat expected since it is the entrypoint to our cluster.</p>
+<h2 id="what-is-conntrack">What is conntrack?</h2>
+<p>Conntrack (aka &ldquo;connection tracking&rdquo;) is a core feature of Linux kernel&rsquo;s networking stack and is built on top of the <a href="https://www.netfilter.org/">netfilter</a> framework.</p>
+<p>It allows the kernel to track all network connections (protocol, source IP, source port, destination IP, destination port, connection state) on a table, thereby granting the kernel the ability to identify all packets which make up each connection and handle these connections consistently (<code>iptables</code> rules).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; sudo conntrack -L
+.
+..
+...
+tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">1</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.107 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.107 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+udp      <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">25</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> <span style="color:#f92672">[</span>UNREPLIED<span style="color:#f92672">]</span> src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">115</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</code></pre></div><h2 id="how-is-it-used-by-kubernetes">How is it used by Kubernetes?</h2>
+<p>Kubernetes uses <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> as an abstract way of exposing application running on pods. This means load can be distributed across the pods via a single DNS name.</p>
+<p>There&rsquo;s primarily two ways (excluding CNIs) this is implemented:</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-iptables">iptables mode</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-ipvs">IPVS mode</a></li>
+</ul>
+<p><code>iptables</code> mode is where <code>conntrack</code> comes into play.</p>
+<p>From the previous section, we know that <code>iptables</code> works by interacting with packet filtering hooks provided by <code>netfilter</code> to determine what to do with packets belonging to each connection.</p>
+<h2 id="implementing-a-fix-to-this-conntrack-exhaustion-problem">Implementing a fix to this conntrack exhaustion problem</h2>
+<p>I did some research and seems like there&rsquo;s 2 approaches to this problem:</p>
+<ul>
+<li>increasing <code>net.netfilter.nf_conntrack_max</code> value based on this formula <code>CONNTRACK_MAX = RAMSIZE (in bytes)/16384/(OS-architecture bit)/32</code> (e.g for server with 16GB RAM running 64-bit OS, formula will be <code>CONNTRACK_MAX = 16 * 1024 * 1024 * 1024 / 16384 / 64 / 2</code>)</li>
+<li>decreasing the connection timeout so that stale connections are terminated as soon as possible</li>
+</ul>
+<p>I manually tested the first approach and seems like it did solve the problem (for now?). Network saturation dropped to 0, although it came with an increase in CPU and memory utilization.
+<figure class="post-cover">
+    <input type="checkbox" id="post-fix.png">
+      <label for="post-fix.png">
+        <img src="post-fix.png" alt="" />
+      </label>
+    
+</figure></p>
+<p>Now to move this configuration change into IaC (infrastructure-as-code).</p>
+<h3 id="how-not-to-do-this---the-ec2-launch-template-user-data-approach">How NOT to do this - the EC2 launch template user data approach</h3>
+<p>Since I tested this by manually updating the <code>net.netfilter.nf_conntrack_max</code> value using <code>sysctl</code>, I figured I can simply move those commands into a script under <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html">EC2 launch template user data</a> and let it be executed when new instances boot up.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># formula is available_ram_in_bytes / 16384 / 2 (https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html)</span>
+AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>free -b | sed -n <span style="color:#e6db74">&#39;2 p&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $2 }&#39;</span><span style="color:#66d9ef">)</span>
+RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span>
+echo <span style="color:#e6db74">&#34;net.netfilter.nf_conntrack_max = </span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#e6db74">&#34;</span> | sudo tee -a /etc/sysctl.conf
+sudo sysctl --system
+</code></pre></div><p>PR created, approved, deployed and I expected the <code>node_nf_conntrack_entries_limit</code> to be increased for all new instances.</p>
+<p>But nope, <code>node_nf_conntrack_entries_limit</code> remained at <code>131072</code> (note: t2.xlarge instances were used).</p>
+<p>Just to be sure, I SSHed into an instance and ran <code>sudo sysctl -a | grep conntrack</code> to check the values. It was indeed unmodified.</p>
+<p>I then checked the <code>/var/log/cloud-init-output.log</code> and verified that the <code>sysctl --system</code> command was executed and even the <code>net.netfilter.nf_conntrack_max = $MAX</code> key was added to <code>/etc/sysctl.conf</code>.</p>
+<p>What. the. hell. is going on.</p>
+<p>A full day of reading and researching later, I found this <code>kube-proxy</code> documentation: <a href="https://kubernetes.io/docs/reference/config-api/kube-proxy-config.v1alpha1/#kubeproxy-config-k8s-io-v1alpha1-KubeProxyConntrackConfiguration">https://kubernetes.io/docs/reference/config-api/kube-proxy-config.v1alpha1/#kubeproxy-config-k8s-io-v1alpha1-KubeProxyConntrackConfiguration</a></p>
+<p>FINALLY.</p>
+<h3 id="how-to-do-this---the-modifying-kube-proxy-configmap-approach">How to do this - the modifying kube-proxy configmap approach</h3>
+<p>At my current work, we access our various EKS clusters using a bastion instance. This means I can automate the updating of kube-proxy configmap using the bastion instance&rsquo;s Terraform init script.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">AVAILABLE_MEM_IN_KB<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.allocatable.memory}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span> | sed <span style="color:#e6db74">&#39;s/Ki.*//&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># memory value is given in Ki units</span>
+CORES_COUNT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.capacity.cpu}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span><span style="color:#66d9ef">)</span>
+RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_MEM_IN_KB<span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span> <span style="color:#75715e"># arithmetic operations done using (()) will only return int, thus no need to convert before writing to config file which expects only int</span>
+RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">/</span>$CORES_COUNT<span style="color:#66d9ef">))</span>
+CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get cm kube-proxy-config -n kube-system -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.config}&#39;</span> | grep <span style="color:#e6db74">&#39;maxPerCore:&#39;</span> | sed <span style="color:#e6db74">&#39;s/^.*: //&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># this is used to perform sed match and replace later</span>
+kubectl get cm kube-proxy-config -n kube-system -o yaml | sed <span style="color:#e6db74">&#34;s/maxPerCore: </span><span style="color:#e6db74">${</span>CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/maxPerCore: </span><span style="color:#e6db74">${</span>RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/&#34;</span> | kubectl apply -f -
+kubectl rollout restart ds kube-proxy -n kube-system
+</code></pre></div><p>Hope this post helps someone out there (probably future-me)!</p>
+<h2 id="some-great-reading-materials">Some great reading materials</h2>
+<ul>
+<li><a href="https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/">https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/</a></li>
+<li><a href="https://www.tigera.io/blog/when-linux-conntrack-is-no-longer-your-friend/">https://www.tigera.io/blog/when-linux-conntrack-is-no-longer-your-friend/</a></li>
+<li><a href="https://deploy.live/blog/kubernetes-networking-problems-due-to-the-conntrack/">https://deploy.live/blog/kubernetes-networking-problems-due-to-the-conntrack/</a></li>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/kernel_administration_guide/working_with_sysctl_and_kernel_tunables">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/kernel_administration_guide/working_with_sysctl_and_kernel_tunables</a></li>
+<li><a href="https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html">https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html</a></li>
+<li><a href="https://arthurchiao.art/blog/conntrack-design-and-implementation/">https://arthurchiao.art/blog/conntrack-design-and-implementation/</a></li>
+<li><a href="https://youtu.be/bIRwSIwNHC0">Liberating Kubernetes From Kube-proxy and Iptables - Martynas Pumputis, Cilium</a></li>
+</ul>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/kubernetes-cpu-requests-limits/">
+                  <span class="button__text">Kubernetes CPU requests and limits</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2021 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>

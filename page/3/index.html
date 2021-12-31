@@ -163,130 +163,11 @@
   <div class="posts">
     
     <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/configuring-conntrack-eks/">Configuring conntrack limits for EKS worker nodes</a></h1>
+      <h1 class="post-title"><a href="/blog/linux-node-exporter-setup/">Node-exporter setup with Systemd</a></h1>
       <div class="post-meta">
         
           <span class="post-date">
-            6 Dec 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 5 min read</span>
-        
-      </div>
-
-      
-
-      
-
-      <div class="post-content">
-        
-          It&rsquo;s the last week of the year, which means more time to clean up those tech debts&hellip;
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/configuring-conntrack-eks/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/kubernetes-cpu-requests-limits/">Kubernetes CPU requests and limits</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Nov 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 6 min read</span>
-        
-      </div>
-
-      
-        <span class="post-tags">
-          
-            <a href="/tags/linux/">#linux</a>&nbsp;
-          
-            <a href="/tags/cgroups/">#cgroups</a>&nbsp;
-          
-            <a href="/tags/namespaces/">#namespaces</a>&nbsp;
-          
-            <a href="/tags/kernel/">#kernel</a>&nbsp;
-          
-            <a href="/tags/kubernetes/">#kubernetes</a>&nbsp;
-          
-        </span>
-      
-
-      
-
-      <div class="post-content">
-        
-          It all started with this alert&hellip;
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/kubernetes-cpu-requests-limits/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/understanding-linux-processes/">Orphan vs Zombie vs Daemon processes</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Nov 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 5 min read</span>
-        
-      </div>
-
-      
-        <span class="post-tags">
-          
-            <a href="/tags/linux/">#linux</a>&nbsp;
-          
-        </span>
-      
-
-      
-
-      <div class="post-content">
-        
-          
-            What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
-When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
-          
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/understanding-linux-processes/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/eks-private-ip-resolution/">Managing multiple EKS clusters access using Apiservers' private endpoints with AWS VPN</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Oct 2021
+            6 Aug 2021
           </span>
 
           
@@ -302,11 +183,13 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
       
         <span class="post-tags">
           
-            <a href="/tags/aws/">#aws</a>&nbsp;
+            <a href="/tags/linux/">#linux</a>&nbsp;
           
-            <a href="/tags/eks/">#eks</a>&nbsp;
+            <a href="/tags/monitoring/">#monitoring</a>&nbsp;
           
-            <a href="/tags/dns/">#dns</a>&nbsp;
+            <a href="/tags/node-exporter/">#node-exporter</a>&nbsp;
+          
+            <a href="/tags/systemd/">#systemd</a>&nbsp;
           
         </span>
       
@@ -316,65 +199,27 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
       <div class="post-content">
         
           
-            I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
-However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+            For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
+To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
+This is where systemd comes in.
           
         
       </div>
       
-        <div><a class="read-more button" href="/blog/eks-private-ip-resolution/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/nsenter-debug/">Debugging containers using nsenter</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Oct 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 2 min read</span>
-        
-      </div>
-
-      
-
-      
-
-      <div class="post-content">
-        
-          
-            If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out ✅
-You started narrowing down the causes. Networking issue? Configuration issue?
-You entered the container and decided to use ping to identify network connectivity issues.
-/ $ ping google.com PING google.
-          
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/nsenter-debug/">Read more →</a></div>
+        <div><a class="read-more button" href="/blog/linux-node-exporter-setup/">Read more →</a></div>
       
     </div>
     
     <div class="pagination">
   <div class="pagination__buttons">
     
-    
-      <span class="button next">
+      <span class="button previous">
         <a href="/page/2/">
-          <span class="button__text">Older posts</span>
-          <span class="button__icon">→</span>
+          <span class="button__icon">←</span>
+          <span class="button__text">Newer posts</span>
         </a>
       </span>
+    
     
   </div>
 </div>
