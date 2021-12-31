@@ -130,4 +130,4 @@ Hope this post helps someone out there (probably future-me)!
 * https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/kernel_administration_guide/working_with_sysctl_and_kernel_tunables
 * https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html
 * https://arthurchiao.art/blog/conntrack-design-and-implementation/
-[Liberating Kubernetes From Kube-proxy and Iptables - Martynas Pumputis, Cilium](https://youtu.be/bIRwSIwNHC0)
+* [Liberating Kubernetes From Kube-proxy and Iptables - Martynas Pumputis, Cilium](https://youtu.be/bIRwSIwNHC0)
