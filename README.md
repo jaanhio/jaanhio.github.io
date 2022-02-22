@@ -5,6 +5,10 @@ Note:
 - using `hugo --minify` messes up the generated javascript files
 
 ## Development
+Generate a new directory using `hugo`. It will create an article template `.md` file.
+```
+hugo new blog/foo/index.md
+```
 
 When doing development work (e.g creating new post), hugo can be used to serve the static files. Include `-D` flag if you want to include draft pages
 ```
