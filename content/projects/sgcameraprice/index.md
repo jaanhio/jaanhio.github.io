@@ -3,9 +3,9 @@ title: "Building my secondhand camera equipment pricing webapp"
 date: 2022-02-19T17:34:57+08:00
 slug: ""
 description: ""
-keywords: []
+keywords: ["learnings"]
 draft: false
-tags: []
+tags: ["learnings"]
 math: false
 toc: false
 ---
