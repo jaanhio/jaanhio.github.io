@@ -2,13 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/projects/sgcameraprice/</loc>
+    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
+  </url><url>
+    <loc>/tags/learnings/</loc>
+    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
+  </url><url>
+    <loc>/projects/</loc>
+    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
+  </url><url>
     <loc>/blog/</loc>
     <lastmod>2021-12-31T10:56:04+08:00</lastmod>
   </url><url>
     <loc>/blog/configuring-conntrack-eks/</loc>
-    <lastmod>2021-12-31T10:56:04+08:00</lastmod>
-  </url><url>
-    <loc>/</loc>
     <lastmod>2021-12-31T10:56:04+08:00</lastmod>
   </url><url>
     <loc>/tags/cgroups/</loc>
@@ -27,9 +39,6 @@
     <lastmod>2021-11-11T19:30:06+08:00</lastmod>
   </url><url>
     <loc>/tags/namespaces/</loc>
-    <lastmod>2021-11-11T19:30:06+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2021-11-11T19:30:06+08:00</lastmod>
   </url><url>
     <loc>/blog/understanding-linux-processes/</loc>
