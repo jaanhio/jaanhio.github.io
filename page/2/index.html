@@ -171,6 +171,44 @@
   <div class="posts">
     
     <div class="post on-list">
+      <h1 class="post-title"><a href="/blog/nsenter-debug/">Debugging containers using nsenter</a></h1>
+      <div class="post-meta">
+        
+          <span class="post-date">
+            6 Oct 2021
+          </span>
+
+          
+        
+
+        
+
+        
+          <span class="post-read-time">— 2 min read</span>
+        
+      </div>
+
+      
+
+      
+
+      <div class="post-content">
+        
+          
+            If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&rsquo;t want to behave the way they are supposed to.
+You checked the logs and traced it back to the source code. Logic checks out ✅
+You started narrowing down the causes. Networking issue? Configuration issue?
+You entered the container and decided to use ping to identify network connectivity issues.
+/ $ ping google.com PING google.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/blog/nsenter-debug/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
       <h1 class="post-title"><a href="/blog/visualizing-alerts-metrics-grafana/">Visualizing alerts metrics on Grafana</a></h1>
       <div class="post-meta">
         
@@ -343,52 +381,6 @@ It all began with an alert notifying us of the application experiencing CPU thro
       </div>
       
         <div><a class="read-more button" href="/blog/debugging-nodejs-app/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/understanding-alertmanager/">Understanding the differences between alertmanager&rsquo;s group_wait, group_interval and repeat_interval</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Aug 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 2 min read</span>
-        
-      </div>
-
-      
-        <span class="post-tags">
-          
-            <a href="/tags/alertmanager/">#alertmanager</a>&nbsp;
-          
-            <a href="/tags/monitoring/">#monitoring</a>&nbsp;
-          
-            <a href="/tags/prometheus/">#prometheus</a>&nbsp;
-          
-        </span>
-      
-
-      
-
-      <div class="post-content">
-        
-          
-            Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
-          
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/understanding-alertmanager/">Read more →</a></div>
       
     </div>
     
