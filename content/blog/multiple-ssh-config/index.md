@@ -164,7 +164,7 @@ Host github.com
 
 In this example, we set the same `Host` for both configurations.
 
-Let's clone again account2's private repository again `GIT_SSH_COMMAND="ssh -v" git clone git@github:account2/account2.github.io.git`
+Let's clone account2's private repository again using `GIT_SSH_COMMAND="ssh -v" git clone git@github:account2/account2.github.io.git`.
 ```
 Cloning into 'account2.github.io'...
 OpenSSH_8.6p1, LibreSSL 2.8.3
