@@ -168,7 +168,7 @@ However this approach can become unmaintainable over time as the number of Basti
   
 
   <div class="post">
-    <h1 class="post-title">Managing multiple EKS clusters access using Apiservers' private endpoints with AWS VPN</h1>
+    <h1 class="post-title">Managing multiple EKS clusters access using Apiservers&rsquo; private endpoints with AWS VPN</h1>
     <div class="post-meta">
       
         <span class="post-date">
@@ -240,7 +240,7 @@ However this approach can become unmaintainable over time as the number of Basti
 <p>Also considering that most of us are working remotely, we certainly do not want to be updating the whitelist every single time we switched to a different location to do our work.</p>
 <hr>
 <h2 id="access-apiservers-via-their-private-endpoints--aws-vpn-servers">Access Apiservers via their private endpoints + AWS VPN servers</h2>
-<p>How can we reduce our attack surface without having to manually whitelist valid users' IP addresses?</p>
+<p>How can we reduce our attack surface without having to manually whitelist valid users&rsquo; IP addresses?</p>
 <p>Simple: by removing the public endpoints entirely.</p>
 <figure class="post-cover">
     <input type="checkbox" id="vpn-access.png">
@@ -265,7 +265,7 @@ However this approach can become unmaintainable over time as the number of Basti
 </figure>
 <h3 id="configuration">Configuration</h3>
 <p>For this approach to work, we definitely need some form of network connections between the various VPCs.</p>
-<p>This can be accomplished using either <a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html">AWS Transit Gateways</a> or <a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a>, followed by updating the various subnets' route tables with the appropriate routing rules.</p>
+<p>This can be accomplished using either <a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html">AWS Transit Gateways</a> or <a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a>, followed by updating the various subnets&rsquo; route tables with the appropriate routing rules.</p>
 <p>Transit Gateway? ✅</p>
 <p>Route tables updated? ✅</p>
 <p>Connected to cluster A&rsquo;s VPN server? ✅</p>
@@ -315,26 +315,7 @@ However this approach can become unmaintainable over time as the number of Basti
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>

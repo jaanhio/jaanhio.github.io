@@ -216,25 +216,25 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 <p>When we run <code>ps</code> command with the <code>-aef</code> flag, we can see 2 columns that are of interest to us: <code>PID</code> &amp; <code>PPID</code>.</p>
 <p><code>PID</code>: process ID
 <code>PPID</code>: parent process ID</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -aef
-UID        PID  PPID  C STIME TTY          TIME CMD
-root         <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:04 /usr/lib/systemd/systemd --switched-root --system --deserialize <span style="color:#ae81ff">21</span>
-root         <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>kthreadd<span style="color:#f92672">]</span>
-root         <span style="color:#ae81ff">4</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>kworker/0:0H<span style="color:#f92672">]</span>
-root         <span style="color:#ae81ff">6</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>ksoftirqd/0<span style="color:#f92672">]</span>
-root         <span style="color:#ae81ff">7</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>migration/0<span style="color:#f92672">]</span>
-</code></pre></div><p>Now run it again with the <code>--forest</code> flag. This will display the processes in a tree structure, clearly depicting the relationship between processes.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ps -aef --forest
-UID        PID  PPID  C STIME TTY          TIME CMD
-.
-.
-root     <span style="color:#ae81ff">17368</span>     <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:02 /usr/bin/dockerd -H fd:// --containerd<span style="color:#f92672">=</span>/run/containerd/containerd.sock
-root     <span style="color:#ae81ff">17612</span>     <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:01 /usr/bin/amazon-ssm-agent
-root     <span style="color:#ae81ff">17697</span> <span style="color:#ae81ff">17612</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:14  <span style="color:#ae81ff">\_</span> /usr/bin/ssm-agent-worker
-root     <span style="color:#ae81ff">32548</span> <span style="color:#ae81ff">17697</span>  <span style="color:#ae81ff">0</span> 19:41 ?        00:00:05      <span style="color:#ae81ff">\_</span> /usr/bin/ssm-session-worker svc_123456 i-123456
-ec2-user <span style="color:#ae81ff">32560</span> <span style="color:#ae81ff">32548</span>  <span style="color:#ae81ff">0</span> 19:41 pts/0    00:00:00          <span style="color:#ae81ff">\_</span> sh
-root     <span style="color:#ae81ff">32561</span> <span style="color:#ae81ff">32560</span>  <span style="color:#ae81ff">0</span> 19:41 pts/0    00:00:00              <span style="color:#ae81ff">\_</span> sudo su - ec2-user
-</code></pre></div><p>We can visualize this using a tree diagram.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ps -aef
+</span></span><span style="display:flex;"><span>UID        PID  PPID  C STIME TTY          TIME CMD
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">1</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:04 /usr/lib/systemd/systemd --switched-root --system --deserialize <span style="color:#ae81ff">21</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">2</span>     <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>kthreadd<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">4</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>kworker/0:0H<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">6</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>ksoftirqd/0<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#ae81ff">7</span>     <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">0</span> 13:39 ?        00:00:00 <span style="color:#f92672">[</span>migration/0<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Now run it again with the <code>--forest</code> flag. This will display the processes in a tree structure, clearly depicting the relationship between processes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ps -aef --forest
+</span></span><span style="display:flex;"><span>UID        PID  PPID  C STIME TTY          TIME CMD
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">17368</span>     <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:02 /usr/bin/dockerd -H fd:// --containerd<span style="color:#f92672">=</span>/run/containerd/containerd.sock
+</span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">17612</span>     <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:01 /usr/bin/amazon-ssm-agent
+</span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">17697</span> <span style="color:#ae81ff">17612</span>  <span style="color:#ae81ff">0</span> 13:43 ?        00:00:14  <span style="color:#ae81ff">\_</span> /usr/bin/ssm-agent-worker
+</span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">32548</span> <span style="color:#ae81ff">17697</span>  <span style="color:#ae81ff">0</span> 19:41 ?        00:00:05      <span style="color:#ae81ff">\_</span> /usr/bin/ssm-session-worker svc_123456 i-123456
+</span></span><span style="display:flex;"><span>ec2-user <span style="color:#ae81ff">32560</span> <span style="color:#ae81ff">32548</span>  <span style="color:#ae81ff">0</span> 19:41 pts/0    00:00:00          <span style="color:#ae81ff">\_</span> sh
+</span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">32561</span> <span style="color:#ae81ff">32560</span>  <span style="color:#ae81ff">0</span> 19:41 pts/0    00:00:00              <span style="color:#ae81ff">\_</span> sudo su - ec2-user
+</span></span></code></pre></div><p>We can visualize this using a tree diagram.
 <figure class="post-cover">
     <input type="checkbox" id="process-tree.png">
       <label for="process-tree.png">
@@ -263,8 +263,8 @@ root     <span style="color:#ae81ff">32561</span> <span style="color:#ae81ff">32
 <h3 id="intentional-orphan-aka-daemon-processes">Intentional orphan aka Daemon processes</h3>
 <p>An intentional orphan process is one that is expected to continue running in the background. Typically daemon process names end with letter &ldquo;d&rdquo; (e.g <code>systemd-journald</code>).</p>
 <p>Example will be the use of <code>nohup</code> to run a job in indefinitely.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ nohup sh custom-script.sh &amp;
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ nohup sh custom-script.sh &amp;
+</span></span></code></pre></div><hr>
 <h2 id="zombie-processes">Zombie processes</h2>
 <p>We covered the process termination routine earlier on how <code>wait()</code> syscall is called by the parent process to clean up a process entry (PID) in process table after a child process is completed.</p>
 <p>A zombie process is one that has completed but isn&rsquo;t &ldquo;waited()&rdquo; by its parent process and hence continues to hold a process entry in the process table (<code>ps -axf -o pid,ppid,tty,stat,cmd</code>). Because the parent process is still running, the zombie process cannot be adopted by the <code>init</code> process and reaped (aka <code>wait()</code>). ()</p>
@@ -325,26 +325,7 @@ root     <span style="color:#ae81ff">32561</span> <span style="color:#ae81ff">32
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>

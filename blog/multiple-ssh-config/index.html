@@ -237,9 +237,9 @@ Host personal
 <hr>
 <h1 id="how-does-it-work">How does it work?</h1>
 <p>When we perform a <code>git clone</code> operation using SSH, <code>git</code> actually uses <code>ssh-agent</code> to perform <code>ssh</code>, and we can override the SSH command using <code>GIT_SSH_COMMAND</code> flag to increase the verbosity and see what happens under the hood.</p>
-<pre tabindex="0"><code>GIT_SSH_COMMAND=&quot;ssh -v&quot; git clone git@personal:account2/account2.github.io.git
+<pre tabindex="0"><code>GIT_SSH_COMMAND=&#34;ssh -v&#34; git clone git@personal:account2/account2.github.io.git
 </code></pre><p>Output:</p>
-<pre tabindex="0"><code>Cloning into 'account2.github.io'...
+<pre tabindex="0"><code>Cloning into &#39;account2.github.io&#39;...
 OpenSSH_8.6p1, LibreSSL 2.8.3
 debug1: Reading configuration data /Users/foo/.ssh/config
 debug1: /Users/foo/.ssh/config line 6: Applying options for personal &lt;----------------------------- found a matching Host from .ssh/config file
@@ -254,7 +254,7 @@ debug1: identity file /Users/foo/.ssh/id_ed25519_id2-cert type -1
 debug1: Local version string SSH-2.0-OpenSSH_8.6
 debug1: Remote protocol version 2.0, remote software version babeld-34bf8ec8
 debug1: compat_banner: no match: babeld-34bf8ec8
-debug1: Authenticating to github.com:22 as 'git'
+debug1: Authenticating to github.com:22 as &#39;git&#39;
 debug1: load_hostkeys: fopen /Users/foo/.ssh/known_hosts2: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
@@ -270,7 +270,7 @@ debug1: Server host key: ssh-ed25519 SHA256:xxxxxxx
 debug1: load_hostkeys: fopen /Users/foo/.ssh/known_hosts2: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
-debug1: Host 'github.com' is known and matches the ED25519 host key.
+debug1: Host &#39;github.com&#39; is known and matches the ED25519 host key.
 debug1: Found key in /Users/foo/.ssh/known_hosts:3
 debug1: rekey out after 134217728 blocks
 debug1: SSH2_MSG_NEWKEYS sent
@@ -321,7 +321,7 @@ Host github.com
   IdentitiesOnly yes
 </code></pre><p>In this example, we set the same <code>Host</code> for both configurations.</p>
 <p>Let&rsquo;s clone account2&rsquo;s private repository again using <code>GIT_SSH_COMMAND=&quot;ssh -v&quot; git clone git@github:account2/account2.github.io.git</code>.</p>
-<pre tabindex="0"><code>Cloning into 'account2.github.io'...
+<pre tabindex="0"><code>Cloning into &#39;account2.github.io&#39;...
 OpenSSH_8.6p1, LibreSSL 2.8.3
 debug1: Reading configuration data /Users/foo/.ssh/config
 debug1: /Users/foo/.ssh/config line 1: Applying options for github.com &lt;----------------------------- found 2 matching configurations based on Host
@@ -339,7 +339,7 @@ debug1: identity file /Users/foo/.ssh/id_ed25519_id2-cert type -1
 debug1: Local version string SSH-2.0-OpenSSH_8.6
 debug1: Remote protocol version 2.0, remote software version babeld-34bf8ec8
 debug1: compat_banner: no match: babeld-34bf8ec8
-debug1: Authenticating to github.com:22 as 'git'
+debug1: Authenticating to github.com:22 as &#39;git&#39;
 debug1: load_hostkeys: fopen /Users/foo/.ssh/known_hosts2: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
@@ -355,7 +355,7 @@ debug1: Server host key: ssh-ed25519 SHA256:+xxxx
 debug1: load_hostkeys: fopen /Users/foo/.ssh/known_hosts2: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
 debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file or directory
-debug1: Host 'github.com' is known and matches the ED25519 host key.
+debug1: Host &#39;github.com&#39; is known and matches the ED25519 host key.
 debug1: Found key in /Users/foo/.ssh/known_hosts:3
 debug1: rekey out after 134217728 blocks
 debug1: SSH2_MSG_NEWKEYS sent
@@ -428,26 +428,7 @@ debug1: Exit status 1
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>

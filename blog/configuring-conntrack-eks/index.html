@@ -13,7 +13,7 @@
   name="description"
   content="It&amp;rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.
 One of the firing alerts caught my eye:
-name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &amp;gt; 0.75 labels: severity: warning annotations: description: {{ $value | humanizePercentage }} of conntrack entries are used. runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused summary: Number of conntrack are getting close to the limit."
+name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &amp;gt; 0.75 labels:  severity: warning annotations:  description: {{ $value | humanizePercentage }} of conntrack entries are used.  runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused  summary: Number of conntrack are getting close to the limit."
 />
 <meta
   name="keywords"
@@ -194,15 +194,15 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
       
       <p>It&rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.</p>
 <p>One of the firing alerts caught my eye:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">NodeHighNumberConntrackEntriesUsed</span>
-<span style="color:#f92672">expr</span>: <span style="color:#ae81ff">(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &gt; 0.75</span>
-<span style="color:#f92672">labels</span>:
-    <span style="color:#f92672">severity</span>: <span style="color:#ae81ff">warning</span>
-<span style="color:#f92672">annotations</span>:
-    <span style="color:#f92672">description</span>: {{ <span style="color:#ae81ff">$value | humanizePercentage }} of conntrack entries are used.</span>
-    <span style="color:#f92672">runbook_url</span>: <span style="color:#ae81ff">https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused</span>
-    <span style="color:#f92672">summary</span>: <span style="color:#ae81ff">Number of conntrack are getting close to the limit.</span>
-</code></pre></div><p>I then checked the dashboards and noticed signs of network saturation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">NodeHighNumberConntrackEntriesUsed</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">expr</span>: <span style="color:#ae81ff">(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &gt; 0.75</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">severity</span>: <span style="color:#ae81ff">warning</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">description</span>: {{ <span style="color:#ae81ff">$value | humanizePercentage }} of conntrack entries are used.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runbook_url</span>: <span style="color:#ae81ff">https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">summary</span>: <span style="color:#ae81ff">Number of conntrack are getting close to the limit.</span>
+</span></span></code></pre></div><p>I then checked the dashboards and noticed signs of network saturation.</p>
 <figure class="post-cover">
     <input type="checkbox" id="network-saturation.png">
       <label for="network-saturation.png">
@@ -211,26 +211,26 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
     
 </figure>
 <p>We can also see kernel logs related to dropped packets using <code>dmesg</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span> 3590.416157<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
-<span style="color:#f92672">[</span> 3591.021991<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
-<span style="color:#f92672">[</span> 3592.882524<span style="color:#f92672">]</span> net_ratelimit: <span style="color:#ae81ff">4</span> callbacks suppressed
-<span style="color:#f92672">[</span> 3592.882525<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
-<span style="color:#f92672">[</span> 3593.302573<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
-<span style="color:#f92672">[</span> 3593.335852<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
-</code></pre></div><p>This is worrying since it is potentially affecting the user experience of our tenants accessing our services.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span> 3590.416157<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> 3591.021991<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> 3592.882524<span style="color:#f92672">]</span> net_ratelimit: <span style="color:#ae81ff">4</span> callbacks suppressed
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> 3592.882525<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> 3593.302573<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> 3593.335852<span style="color:#f92672">]</span> nf_conntrack: nf_conntrack: table full, dropping packet
+</span></span></code></pre></div><p>This is worrying since it is potentially affecting the user experience of our tenants accessing our services.</p>
 <p>Oddly, it&rsquo;s only affecting 1 out of 6 worker nodes.</p>
 <p>Some time spent investigating later, I identified <code>ingress-nginx-controller</code> pod (using <code>container_sockets</code> metric) as the process occupying much of the <code>conntrack</code> table, which is somewhat expected since it is the entrypoint to our cluster.</p>
 <h2 id="what-is-conntrack">What is conntrack?</h2>
 <p>Conntrack (aka &ldquo;connection tracking&rdquo;) is a core feature of Linux kernel&rsquo;s networking stack and is built on top of the <a href="https://www.netfilter.org/">netfilter</a> framework.</p>
 <p>It allows the kernel to track all network connections (protocol, source IP, source port, destination IP, destination port, connection state) on a table, thereby granting the kernel the ability to identify all packets which make up each connection and handle these connections consistently (<code>iptables</code> rules).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt; sudo conntrack -L
-.
-..
-...
-tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">1</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.107 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.107 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-udp      <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">25</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> <span style="color:#f92672">[</span>UNREPLIED<span style="color:#f92672">]</span> src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">115</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</code></pre></div><h2 id="how-is-it-used-by-kubernetes">How is it used by Kubernetes?</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; sudo conntrack -L
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>..
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">1</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.107 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.107 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">60055</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>udp      <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">25</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> <span style="color:#f92672">[</span>UNREPLIED<span style="color:#f92672">]</span> src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">8472</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">44762</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">115</span> TIME_WAIT src<span style="color:#f92672">=</span>10.189.1.73 dst<span style="color:#f92672">=</span>10.189.1.6 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> src<span style="color:#f92672">=</span>10.189.1.6 dst<span style="color:#f92672">=</span>10.189.1.73 sport<span style="color:#f92672">=</span><span style="color:#ae81ff">10901</span> dport<span style="color:#f92672">=</span><span style="color:#ae81ff">39640</span> <span style="color:#f92672">[</span>ASSURED<span style="color:#f92672">]</span> mark<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> use<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h2 id="how-is-it-used-by-kubernetes">How is it used by Kubernetes?</h2>
 <p>Kubernetes uses <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> as an abstract way of exposing application running on pods. This means load can be distributed across the pods via a single DNS name.</p>
 <p>There&rsquo;s primarily two ways (excluding CNIs) this is implemented:</p>
 <ul>
@@ -256,12 +256,12 @@ tcp      <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">115</s
 <p>Now to move this configuration change into IaC (infrastructure-as-code).</p>
 <h3 id="how-not-to-do-this---the-ec2-launch-template-user-data-approach">How NOT to do this - the EC2 launch template user data approach</h3>
 <p>Since I tested this by manually updating the <code>net.netfilter.nf_conntrack_max</code> value using <code>sysctl</code>, I figured I can simply move those commands into a script under <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html">EC2 launch template user data</a> and let it be executed when new instances boot up.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># formula is available_ram_in_bytes / 16384 / 2 (https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html)</span>
-AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>free -b | sed -n <span style="color:#e6db74">&#39;2 p&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $2 }&#39;</span><span style="color:#66d9ef">)</span>
-RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span>
-echo <span style="color:#e6db74">&#34;net.netfilter.nf_conntrack_max = </span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#e6db74">&#34;</span> | sudo tee -a /etc/sysctl.conf
-sudo sysctl --system
-</code></pre></div><p>PR created, approved, deployed and I expected the <code>node_nf_conntrack_entries_limit</code> to be increased for all new instances.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># formula is available_ram_in_bytes / 16384 / 2 (https://support.huaweicloud.com/intl/en-us/trouble-ecs/ecs_trouble_0324.html)</span>
+</span></span><span style="display:flex;"><span>AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>free -b | sed -n <span style="color:#e6db74">&#39;2 p&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $2 }&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_RAM_IN_BYTES<span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;net.netfilter.nf_conntrack_max = </span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#e6db74">&#34;</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sudo sysctl --system
+</span></span></code></pre></div><p>PR created, approved, deployed and I expected the <code>node_nf_conntrack_entries_limit</code> to be increased for all new instances.</p>
 <p>But nope, <code>node_nf_conntrack_entries_limit</code> remained at <code>131072</code> (note: t2.xlarge instances were used).</p>
 <p>Just to be sure, I SSHed into an instance and ran <code>sudo sysctl -a | grep conntrack</code> to check the values. It was indeed unmodified.</p>
 <p>I then checked the <code>/var/log/cloud-init-output.log</code> and verified that the <code>sysctl --system</code> command was executed and even the <code>net.netfilter.nf_conntrack_max = $MAX</code> key was added to <code>/etc/sysctl.conf</code>.</p>
@@ -270,14 +270,14 @@ sudo sysctl --system
 <p>FINALLY.</p>
 <h3 id="how-to-do-this---the-modifying-kube-proxy-configmap-approach">How to do this - the modifying kube-proxy configmap approach</h3>
 <p>At my current work, we access our various EKS clusters using a bastion instance. This means I can automate the updating of kube-proxy configmap using the bastion instance&rsquo;s Terraform init script.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">AVAILABLE_MEM_IN_KB<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.allocatable.memory}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span> | sed <span style="color:#e6db74">&#39;s/Ki.*//&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># memory value is given in Ki units</span>
-CORES_COUNT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.capacity.cpu}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span><span style="color:#66d9ef">)</span>
-RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_MEM_IN_KB<span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span> <span style="color:#75715e"># arithmetic operations done using (()) will only return int, thus no need to convert before writing to config file which expects only int</span>
-RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">/</span>$CORES_COUNT<span style="color:#66d9ef">))</span>
-CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get cm kube-proxy-config -n kube-system -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.config}&#39;</span> | grep <span style="color:#e6db74">&#39;maxPerCore:&#39;</span> | sed <span style="color:#e6db74">&#39;s/^.*: //&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># this is used to perform sed match and replace later</span>
-kubectl get cm kube-proxy-config -n kube-system -o yaml | sed <span style="color:#e6db74">&#34;s/maxPerCore: </span><span style="color:#e6db74">${</span>CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/maxPerCore: </span><span style="color:#e6db74">${</span>RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/&#34;</span> | kubectl apply -f -
-kubectl rollout restart ds kube-proxy -n kube-system
-</code></pre></div><p>Hope this post helps someone out there (probably future-me)!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>AVAILABLE_MEM_IN_KB<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.allocatable.memory}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span> | sed <span style="color:#e6db74">&#39;s/Ki.*//&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># memory value is given in Ki units</span>
+</span></span><span style="display:flex;"><span>CORES_COUNT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get nodes -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].status.capacity.cpu}&#39;</span> | awk <span style="color:#e6db74">&#39;{ print $1}&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$AVAILABLE_MEM_IN_KB<span style="color:#f92672">*</span><span style="color:#ae81ff">1024</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16384</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#66d9ef">))</span> <span style="color:#75715e"># arithmetic operations done using (()) will only return int, thus no need to convert before writing to config file which expects only int</span>
+</span></span><span style="display:flex;"><span>RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>$RECOMMENDED_MAX_CONNTRACK<span style="color:#f92672">/</span>$CORES_COUNT<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get cm kube-proxy-config -n kube-system -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.config}&#39;</span> | grep <span style="color:#e6db74">&#39;maxPerCore:&#39;</span> | sed <span style="color:#e6db74">&#39;s/^.*: //&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e"># this is used to perform sed match and replace later</span>
+</span></span><span style="display:flex;"><span>kubectl get cm kube-proxy-config -n kube-system -o yaml | sed <span style="color:#e6db74">&#34;s/maxPerCore: </span><span style="color:#e6db74">${</span>CURRENT_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/maxPerCore: </span><span style="color:#e6db74">${</span>RECOMMENDED_MAX_CONNTRACK_PER_CORE<span style="color:#e6db74">}</span><span style="color:#e6db74">/&#34;</span> | kubectl apply -f -
+</span></span><span style="display:flex;"><span>kubectl rollout restart ds kube-proxy -n kube-system
+</span></span></code></pre></div><p>Hope this post helps someone out there (probably future-me)!</p>
 <h2 id="some-great-reading-materials">Some great reading materials</h2>
 <ul>
 <li><a href="https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/">https://blog.cloudflare.com/conntrack-tales-one-thousand-and-one-flows/</a></li>
@@ -323,26 +323,7 @@ kubectl rollout restart ds kube-proxy -n kube-system
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>

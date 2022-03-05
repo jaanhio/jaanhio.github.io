@@ -13,7 +13,7 @@
   name="description"
   content="Last week at work, I encountered an alert that was misfiring. Or so I thought.
 This was the PromQL used for alerting when HTTP requests error rate exceeds the SLO of 5% per hour:
-(sum(rate(service_foo_http_request_total{status_code!~&amp;quot;2..&amp;quot;}[1h])) / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &amp;gt;= 0.05 Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.
+(sum(rate(service_foo_http_request_total{status_code!~&amp;#34;2..&amp;#34;}[1h])) / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &amp;gt;= 0.05 Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.
 The cause can be summarized into these 3 points:
  misunderstanding of how PromQL vector() function works misunderstanding of how PromQL comparison binary operators work misunderstanding of how Prometheus/Thanos-ruler evaluates query result and trigger alerts  In this post, I will share about what I have learned about the 3 points and what are changes made to PromQL to make it behave as intended."
 />
@@ -204,7 +204,7 @@ The cause can be summarized into these 3 points:
       
       <p>Last week at work, I encountered an alert that was misfiring. Or so I thought.</p>
 <p>This was the PromQL used for alerting when HTTP requests error rate exceeds the <a href="https://sre.google/sre-book/service-level-objectives/">SLO</a> of 5% per hour:</p>
-<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h]))
   / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
 </code></pre><p>Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.</p>
 <p>The cause can be summarized into these 3 points:</p>
@@ -287,7 +287,7 @@ Example of label-less data:</p>
 <li><code>&lt;=</code> (less-or-equal)</li>
 </ul>
 <p>Refering to the PromQL again:</p>
-<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h]))
   / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
 </code></pre><p>In the PromQL, we used the <code>&gt;=</code> operator.</p>
 <p><strong>Expectation 1</strong> (entire <code>(sum(...)/sum(...))</code> expression resulting in <code>no data</code>):</p>
@@ -313,7 +313,7 @@ Example of label-less data:</p>
 <p>This is why <code>no data</code> was returned.</p>
 <p>If we want it to evaluate to a boolean value (<code>{} 0</code> or <code>{} 1</code>), we will need to add a <code>bool</code> modifier after the operator.</p>
 <p>Example:</p>
-<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h]))
   / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;=bool 0.05 
 </code></pre><p>What if the entire <code>(sum(...)/sum(...))</code> expression evaluated to <code>{} 0</code> instead? Based on what we understood so far&hellip;</p>
 <p><strong>Expectation 2</strong> (entire <code>(sum(...)/sum(...))</code> expression resulting in <code>{} 0</code>):</p>
@@ -343,40 +343,40 @@ Example of label-less data:</p>
 <li>evaluating to ANY data (0, 1, whatever else) will be deemed as &ldquo;SOMETHING IS WRONG. TRIGGER ALERT&rdquo;</li>
 </ul>
 <p>This is supported by what I found in <a href="https://github.com/prometheus/prometheus/blob/03d084f8629477907cab39fc3d314b375eeac010/rules/alerting.go#L300">Prometheus source code</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AlertingRule</span>) <span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">ts</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>, <span style="color:#a6e22e">query</span> <span style="color:#a6e22e">QueryFunc</span>, <span style="color:#a6e22e">externalURL</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">limit</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Lock</span>()
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Unlock</span>()
-
-	<span style="color:#75715e">// Create pending alerts for any new vector elements in the alert expression
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// or update the expression value for existing elements.
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">resultFPs</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">struct</span>{}{}
-
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vec</span> <span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">smpl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">res</span> {
-		<span style="color:#75715e">// Provide the alert information to the template.
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span>))
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">lbl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span> {
-			<span style="color:#a6e22e">l</span>[<span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Name</span>] = <span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Value</span>
-		}
-    <span style="color:#f92672">...</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
-</code></pre></div><p>If PromQL returned any data (i.e not <code>no data</code>), an <code>alerts</code> mapping will be created.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">AlertingRule</span>) <span style="color:#a6e22e">Eval</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">ts</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>, <span style="color:#a6e22e">query</span> <span style="color:#a6e22e">QueryFunc</span>, <span style="color:#a6e22e">externalURL</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">URL</span>, <span style="color:#a6e22e">limit</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Lock</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Unlock</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create pending alerts for any new vector elements in the alert expression
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// or update the expression value for existing elements.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">resultFPs</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">struct</span>{}{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vec</span> <span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">smpl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">res</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Provide the alert information to the template.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">lbl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">l</span>[<span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Name</span>] = <span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Value</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">...</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">ts</span>)
+</span></span></code></pre></div><p>If PromQL returned any data (i.e not <code>no data</code>), an <code>alerts</code> mapping will be created.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
+</span></span></code></pre></div><hr>
 <h2 id="summary">Summary</h2>
 <p>We have a better understanding of <code>vector()</code> function, comparison binary operators and how alerts are triggered by Prometheus/Thanos-ruler now.</p>
 <p>So what exactly were the changes made to the PromQL to have it evaluate as intended?</p>
 <p>Well, one way is to enclose the entire section before the <code>&gt;=</code> operator</p>
-<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+<pre tabindex="0"><code>(sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h]))
   / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 
 </code></pre><p>The alternative is to remove the redundant <code>OR vector(0)</code>.</p>
-<pre tabindex="0"><code>sum(rate(service_foo_http_request_total{status_code!~&quot;2..&quot;}[1h]))
+<pre tabindex="0"><code>sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h]))
   / sum(rate(service_foo__http_request_total[1h])) &gt;= 0.05 
 </code></pre>
     </div>
@@ -413,26 +413,7 @@ Example of label-less data:</p>
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>

@@ -253,42 +253,42 @@ In this post, I will share my troubleshooting process and interesting stuff I di
 </figure></p>
 <p>I also noticed the application producing a rather large amount of error logs (approximately 20logs/s).</p>
 <p>I checked the application to verify the logic for triggering the scrape. It does so using an infinite recursive loop with delays between scrape implemented via <code>setTimeout</code> delays.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">exec</span>(<span style="color:#a6e22e">asyncFunc</span>, <span style="color:#a6e22e">delay</span>) {
-  <span style="color:#66d9ef">try</span> {
-    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">asyncFunc</span>();
-  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
-    <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;Error executing&#39;</span>, <span style="color:#a6e22e">e</span>);
-  } <span style="color:#66d9ef">finally</span> {
-    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
-      <span style="color:#a6e22e">exec</span>(<span style="color:#a6e22e">asyncFunc</span>, <span style="color:#a6e22e">delay</span>);
-    }, <span style="color:#a6e22e">delay</span>);
-  }
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">exec</span>(<span style="color:#a6e22e">asyncFunc</span>, <span style="color:#a6e22e">delay</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">asyncFunc</span>();
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;Error executing&#39;</span>, <span style="color:#a6e22e">e</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">exec</span>(<span style="color:#a6e22e">asyncFunc</span>, <span style="color:#a6e22e">delay</span>);
+</span></span><span style="display:flex;"><span>    }, <span style="color:#a6e22e">delay</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <h2 id="setup">Setup</h2>
 <p>First thing I did was to install some additional tools on the container to provide more visibility as to what exactly is running (note: you might need to make some additional modifications to pod configurations in order run the following tools as root).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt update <span style="color:#f92672">&amp;&amp;</span> apt install -y strace lsof net-tools
-</code></pre></div><p><code>strace</code>: Tool that traces syscalls. Goal is to find out which syscalls are taking large percentage of CPU time.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt update <span style="color:#f92672">&amp;&amp;</span> apt install -y strace lsof net-tools
+</span></span></code></pre></div><p><code>strace</code>: Tool that traces syscalls. Goal is to find out which syscalls are taking large percentage of CPU time.</p>
 <p><code>lsof</code>: Tool to list open files. Goal is to find out what connections are there.</p>
 <p><code>net-tools</code>: This package contains a variety of tools (e.g <code>arp</code>, <code>hostname</code>, <code>netstat</code> etc). I am installing just for using <code>netstat</code>. One can argue that lsof may be able to sufficiently replace use of netstat (check out this <a href="https://danielmiessler.com/study/lsof/">awesome guide on lsof</a>), but I haven&rsquo;t figure how to use <code>lsof</code> to also display the <code>recv-q</code> and <code>send-q</code> data.</p>
 <hr>
 <h2 id="inspecting-connections">Inspecting connections</h2>
 <p>I first used <code>lsof</code> to find out more information on the connections within pod.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># lsof -i</span>
-COMMAND PID USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME
-node     <span style="color:#ae81ff">18</span> root   19u  IPv6 <span style="color:#ae81ff">249577828</span>      0t0  TCP *:9999 <span style="color:#f92672">(</span>LISTEN<span style="color:#f92672">)</span>
-node     <span style="color:#ae81ff">18</span> root   20u  IPv4 <span style="color:#ae81ff">249738893</span>      0t0  TCP exporter:52984-&gt;some-ip:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
-node     <span style="color:#ae81ff">18</span> root   21u  IPv4 <span style="color:#ae81ff">249573270</span>      0t0  TCP exporter:55846-&gt;some-ip2:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
-node     <span style="color:#ae81ff">18</span> root   23u  IPv4 <span style="color:#ae81ff">249573271</span>      0t0  TCP exporter:35286-&gt;some-ip3:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
-node     <span style="color:#ae81ff">18</span> root   24u  IPv4 <span style="color:#ae81ff">249734064</span>      0t0  TCP exporter:53960-&gt;some-ip4:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
-node     <span style="color:#ae81ff">18</span> root   25u  IPv4 <span style="color:#ae81ff">249743967</span>      0t0  TCP exporter:57936-&gt;some-ip:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
-...
-..
-.
-
-<span style="color:#75715e"># lsof -i | grep 9243 | wc </span>
-<span style="color:#ae81ff">256</span>
-</code></pre></div><p>Excluding the header row and the only listening connection, there&rsquo;s a total of 256 connections, all to a bunch of IP addresses on port 9243. A quick Google search revealed that port 9243 is commonly used by ElasticCloud. Indeed, we do use <code>winston-elasticsearch</code> library for establishing transport of logs to ElasticCloud.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># lsof -i</span>
+</span></span><span style="display:flex;"><span>COMMAND PID USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   19u  IPv6 <span style="color:#ae81ff">249577828</span>      0t0  TCP *:9999 <span style="color:#f92672">(</span>LISTEN<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   20u  IPv4 <span style="color:#ae81ff">249738893</span>      0t0  TCP exporter:52984-&gt;some-ip:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   21u  IPv4 <span style="color:#ae81ff">249573270</span>      0t0  TCP exporter:55846-&gt;some-ip2:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   23u  IPv4 <span style="color:#ae81ff">249573271</span>      0t0  TCP exporter:35286-&gt;some-ip3:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   24u  IPv4 <span style="color:#ae81ff">249734064</span>      0t0  TCP exporter:53960-&gt;some-ip4:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>node     <span style="color:#ae81ff">18</span> root   25u  IPv4 <span style="color:#ae81ff">249743967</span>      0t0  TCP exporter:57936-&gt;some-ip:9243 <span style="color:#f92672">(</span>ESTABLISHED<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>..
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># lsof -i | grep 9243 | wc </span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">256</span>
+</span></span></code></pre></div><p>Excluding the header row and the only listening connection, there&rsquo;s a total of 256 connections, all to a bunch of IP addresses on port 9243. A quick Google search revealed that port 9243 is commonly used by ElasticCloud. Indeed, we do use <code>winston-elasticsearch</code> library for establishing transport of logs to ElasticCloud.</p>
 <p>I restarted the application multiple times while varying the duration between scrape and observed the number of connections created. Turns out it did not start with 256 connections but instead increases over time. Increasing the duration between scrape slowed down the rate of increase of connections. It also reduced the amount of logs produced.</p>
 <p><figure class="post-cover">
     <input type="checkbox" id="container-sockets.png">
@@ -310,19 +310,19 @@ node     <span style="color:#ae81ff">18</span> root   25u  IPv4 <span style="col
 </figure></p>
 <p>Notice that number of connections is capped at 256? Definitely not a coincidence and some code somewhere is somehow limiting the max number of connections.</p>
 <p>I also used <code>netstat</code> to get information on the <code>recv-q</code> and <code>send-q</code> on each socket.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># netstat -ntp</span>
-Active Internet connections <span style="color:#f92672">(</span>w/o servers<span style="color:#f92672">)</span>
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:43536      some-ip:9243      ESTABLISHED       19/node
-tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:51434      some-ip:9243      ESTABLISHED       19/node
-tcp     <span style="color:#ae81ff">0</span>       <span style="color:#ae81ff">443</span> 10.189.2.170:43534      some-ip:9243      ESTABLISHED       19/node
-tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:47432      some-ip:9243      ESTABLISHED       19/node
-tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:47384      some-ip:9243      ESTABLISHED       19/node
-tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:34586      some-ip:9243      ESTABLISHED       19/node
-...
-..
-.
-</code></pre></div><p>As the name suggests, <code>recv-q</code> and <code>send-q</code> are the receive and send queues/buffer for a particular socket and indicates the number of bytes in the queue/buffer. Having non-zero value under any of the queue columns indicates that data is not being processed fast enough, which could be due to an abnormally large volume of data or something is slowing down the processing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># netstat -ntp</span>
+</span></span><span style="display:flex;"><span>Active Internet connections <span style="color:#f92672">(</span>w/o servers<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:43536      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:51434      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">0</span>       <span style="color:#ae81ff">443</span> 10.189.2.170:43534      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:47432      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:47384      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>tcp     <span style="color:#ae81ff">1101</span>      <span style="color:#ae81ff">0</span> 10.189.2.170:34586      some-ip:9243      ESTABLISHED       19/node
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>..
+</span></span><span style="display:flex;"><span>.
+</span></span></code></pre></div><p>As the name suggests, <code>recv-q</code> and <code>send-q</code> are the receive and send queues/buffer for a particular socket and indicates the number of bytes in the queue/buffer. Having non-zero value under any of the queue columns indicates that data is not being processed fast enough, which could be due to an abnormally large volume of data or something is slowing down the processing.</p>
 <p>I also noticed that <code>recv-q</code> bytes is capped at <code>1101</code> and <code>send-q</code> is capped at <code>443</code>.</p>
 <hr>
 <h2 id="inspecting-cpu-load">Inspecting CPU load</h2>
@@ -370,21 +370,21 @@ strace: Process 25 attached
 </figure>
 From the CPU profile, we can see large percentage of CPU time used by <code>EventEmitter.emit</code>, with some of source files being <code>_stream_readable.js</code>, <code>_http_client.js</code>, <code>Transport.js</code>, <code>bulk_writer.js</code>, <code>Connection.js</code>.</p>
 <p>Aha! These files are related to <code>winston-elasticsearch</code> library.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">ElasticsearchTransport</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;winston-elasticsearch&#39;</span>);
-
-<span style="color:#a6e22e">ElasticsearchTransport</span> 
-<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">readable</span><span style="color:#f92672">-</span><span style="color:#a6e22e">stream</span>
-<span style="color:#f92672">-&gt;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">elastic</span><span style="color:#f92672">/</span><span style="color:#a6e22e">elasticsearch</span>
-<span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">winston</span><span style="color:#f92672">-</span><span style="color:#a6e22e">elasticsearch</span>
-</code></pre></div><p>After spending some time tracing calls with debugger, I found the answer to the 256 connections limit: <a href="https://github.com/elastic/elasticsearch-js/blob/b67d42cb5ff7a39a1836d176266ac32af9e72f07/lib/Connection.js#L63">https://github.com/elastic/elasticsearch-js/blob/b67d42cb5ff7a39a1836d176266ac32af9e72f07/lib/Connection.js#L63</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"> <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">agentOptions</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">assign</span>({}, {
-        <span style="color:#a6e22e">keepAlive</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
-        <span style="color:#a6e22e">keepAliveMsecs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1000</span>,
-        <span style="color:#a6e22e">maxSockets</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">256</span>, <span style="color:#f92672">&lt;---------------</span> <span style="color:#f92672">!!</span>
-        <span style="color:#a6e22e">maxFreeSockets</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">256</span>,
-        <span style="color:#a6e22e">scheduling</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;lifo&#39;</span>
-      }, <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">agent</span>)
-</code></pre></div><p>Depending on the options (<code>opts.proxy</code>) passed, the creation of sockets is handled either by Nodejs <code>http</code> or <code>https</code> module or <code>hpagent</code> (which uses <code>http</code>/<code>https</code> modules under-the-hood), which reminds me of the <a href="https://medium.com/the-node-js-collection/why-the-hell-would-you-use-node-js-4b053b94ab8e">power of Nodejs and event loop</a> to support large number of concurrent connections</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">ElasticsearchTransport</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;winston-elasticsearch&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ElasticsearchTransport</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">readable</span><span style="color:#f92672">-</span><span style="color:#a6e22e">stream</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-&gt;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">elastic</span><span style="color:#f92672">/</span><span style="color:#a6e22e">elasticsearch</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-&gt;</span> <span style="color:#a6e22e">winston</span><span style="color:#f92672">-</span><span style="color:#a6e22e">elasticsearch</span>
+</span></span></code></pre></div><p>After spending some time tracing calls with debugger, I found the answer to the 256 connections limit: <a href="https://github.com/elastic/elasticsearch-js/blob/b67d42cb5ff7a39a1836d176266ac32af9e72f07/lib/Connection.js#L63">https://github.com/elastic/elasticsearch-js/blob/b67d42cb5ff7a39a1836d176266ac32af9e72f07/lib/Connection.js#L63</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span> <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">agentOptions</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">assign</span>({}, {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">keepAlive</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">keepAliveMsecs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1000</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">maxSockets</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">256</span>, <span style="color:#f92672">&lt;---------------</span> <span style="color:#f92672">!!</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">maxFreeSockets</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">256</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">scheduling</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;lifo&#39;</span>
+</span></span><span style="display:flex;"><span>      }, <span style="color:#a6e22e">opts</span>.<span style="color:#a6e22e">agent</span>)
+</span></span></code></pre></div><p>Depending on the options (<code>opts.proxy</code>) passed, the creation of sockets is handled either by Nodejs <code>http</code> or <code>https</code> module or <code>hpagent</code> (which uses <code>http</code>/<code>https</code> modules under-the-hood), which reminds me of the <a href="https://medium.com/the-node-js-collection/why-the-hell-would-you-use-node-js-4b053b94ab8e">power of Nodejs and event loop</a> to support large number of concurrent connections</p>
 <p>Now for the memory profile.
 <figure class="post-cover">
     <input type="checkbox" id="memory-profile.png">
@@ -396,10 +396,10 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
     
 </figure></p>
 <p>I will not be sharing details of the objects captured due to potentially sensitive information but the bulk of it are these:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(<span style="color:#a6e22e">array</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">objects</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">connections</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">ElasticCloud</span>
-(<span style="color:#a6e22e">string</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">each</span> <span style="color:#a6e22e">log</span> (<span style="color:#a6e22e">looking</span> <span style="color:#a6e22e">closely</span>, <span style="color:#a6e22e">we</span> <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">see</span> <span style="color:#a6e22e">theres</span> <span style="color:#a6e22e">many</span> <span style="color:#a6e22e">references</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">timers</span>.<span style="color:#a6e22e">js</span>. <span style="color:#66d9ef">this</span> <span style="color:#a6e22e">matches</span> <span style="color:#a6e22e">what</span> <span style="color:#a6e22e">was</span> <span style="color:#a6e22e">mentioned</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">nodejs</span> <span style="color:#a6e22e">timers</span> <span style="color:#a6e22e">article</span> <span style="color:#a6e22e">above</span>)
-(<span style="color:#a6e22e">closure</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">response</span> <span style="color:#a6e22e">objects</span>...<span style="color:#a6e22e">perhaps</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">ElasticCloud</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>(<span style="color:#a6e22e">array</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">objects</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">connections</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">ElasticCloud</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">string</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">each</span> <span style="color:#a6e22e">log</span> (<span style="color:#a6e22e">looking</span> <span style="color:#a6e22e">closely</span>, <span style="color:#a6e22e">we</span> <span style="color:#a6e22e">can</span> <span style="color:#a6e22e">see</span> <span style="color:#a6e22e">theres</span> <span style="color:#a6e22e">many</span> <span style="color:#a6e22e">references</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">timers</span>.<span style="color:#a6e22e">js</span>. <span style="color:#66d9ef">this</span> <span style="color:#a6e22e">matches</span> <span style="color:#a6e22e">what</span> <span style="color:#a6e22e">was</span> <span style="color:#a6e22e">mentioned</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">nodejs</span> <span style="color:#a6e22e">timers</span> <span style="color:#a6e22e">article</span> <span style="color:#a6e22e">above</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">closure</span>)<span style="color:#f92672">:</span> <span style="color:#a6e22e">response</span> <span style="color:#a6e22e">objects</span>...<span style="color:#a6e22e">perhaps</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">ElasticCloud</span>
+</span></span></code></pre></div><hr>
 <h2 id="final-verification">Final verification</h2>
 <p>I removed the use of <code>winston-elasticsearch</code> library and wala. Also, this library is no longer needed since we have <code>fluent-bit</code> running in our EKS clusters for shipping logs.</p>
 <p>Below are diagrams comparing before and after change was made (new pod metrics in TEAL color).
@@ -479,26 +479,7 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
 
     
       
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "jaanhio-me" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
       
     
   </div>
