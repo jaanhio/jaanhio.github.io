@@ -2,7 +2,7 @@
 title: "Difference between TCP window size & MTU"
 date: 2022-03-06T21:56:44+08:00
 slug: ""
-description: ""
+description: "A brief explanation on the differences between TCP window size & MTU."
 keywords: ["networking", "tcp", "mtu"]
 draft: false
 tags: ["networking", "tcp", "mtu"]
