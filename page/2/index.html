@@ -171,6 +171,52 @@
   <div class="posts">
     
     <div class="post on-list">
+      <h1 class="post-title"><a href="/blog/eks-private-ip-resolution/">Managing multiple EKS clusters access using Apiservers&rsquo; private endpoints with AWS VPN</a></h1>
+      <div class="post-meta">
+        
+          <span class="post-date">
+            6 Oct 2021
+          </span>
+
+          
+        
+
+        
+
+        
+          <span class="post-read-time">— 3 min read</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            <a href="/tags/aws/">#aws</a>&nbsp;
+          
+            <a href="/tags/eks/">#eks</a>&nbsp;
+          
+            <a href="/tags/dns/">#dns</a>&nbsp;
+          
+        </span>
+      
+
+      
+
+      <div class="post-content">
+        
+          
+            I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
+  This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/blog/eks-private-ip-resolution/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
       <h1 class="post-title"><a href="/blog/nsenter-debug/">Debugging containers using nsenter</a></h1>
       <div class="post-meta">
         
@@ -336,51 +382,6 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
       </div>
       
         <div><a class="read-more button" href="/blog/nodejs-flamegraph-analysis/">Read more →</a></div>
-      
-    </div>
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/debugging-nodejs-app/">Debugging high CPU usage and memory leak on Nodejs application</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            6 Sep 2021
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 7 min read</span>
-        
-      </div>
-
-      
-        <span class="post-tags">
-          
-            <a href="/tags/debug/">#debug</a>&nbsp;
-          
-            <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
-          
-            <a href="/tags/nodejs/">#nodejs</a>&nbsp;
-          
-        </span>
-      
-
-      
-
-      <div class="post-content">
-        
-          
-            Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
-          
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/debugging-nodejs-app/">Read more →</a></div>
       
     </div>
     

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Difference between TCP window size &amp; MTU ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="I was reading up on TCP recently when I came across the term &amp;ldquo;Window size&amp;rdquo;, which also reminded me of another term I came across earlier, &amp;ldquo;MTU&amp;rdquo;.
+I briefly understood that these 2 terms dictate how quickly data can be transferred between 2 machines, but what exactly are the differences?
+Here is a very brief explanation on it.
+What is window size? Window size is a TCP header value which controls the flow of data."
+/>
+<meta
+  name="keywords"
+  content="networking, tcp, mtu"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/tcp-window-size-mtu/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Difference between TCP window size &amp; MTU"/>
+<meta name="twitter:description" content="A brief explanation on the differences between TCP window size &amp; MTU."/>
+
+
+
+<meta property="og:title" content="Difference between TCP window size &amp; MTU" />
+<meta property="og:description" content="A brief explanation on the differences between TCP window size &amp; MTU." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/tcp-window-size-mtu/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-03-06T21:56:44+08:00" />
+<meta property="article:modified_time" content="2022-03-06T21:56:44+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+        
+          <li><a href="/projects">Projects</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+      
+        <li><a href="/projects">Projects</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Difference between TCP window size &amp; MTU</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Mar 2022
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/networking/">#networking</a>&nbsp;
+        
+          <a href="/tags/tcp/">#tcp</a>&nbsp;
+        
+          <a href="/tags/mtu/">#mtu</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>I was reading up on TCP recently when I came across the term &ldquo;Window size&rdquo;, which also reminded me of another term I came across earlier, &ldquo;MTU&rdquo;.</p>
+<p>I briefly understood that these 2 terms dictate how quickly data can be transferred between 2 machines, but what exactly are the differences?</p>
+<p>Here is a very brief explanation on it.</p>
+<h1 id="what-is-window-size">What is window size?</h1>
+<p>Window size is a TCP header value which controls the flow of data. The header space for this value is 2 bytes long, which translates to a maximum value of 65535 bytes. This value is OS/TCP stack dependent.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="window-size.png">
+      <label for="window-size.png">
+        <img src="window-size.png" alt="window-size" />
+      </label>
+    
+</figure>
+<h1 id="what-does-it-do">What does it do?</h1>
+<p>Imagine you own a brewery and is currently tasked with transferring a huge tank of beer to your customer&rsquo;s own beer tank.</p>
+<p>Instead of being able to pump the beer directly into the other tank, your customer can only receive it with a pail before transferring it to the main tank.</p>
+<p>The size of this pail is the <code>window size</code>.</p>
+<p>I used pail as an example but you can imagine it being a cup if the window size is even smaller.</p>
+<p>Now think about the amount of round trips required to completely transfer the beer over. Throw in the latency between each transfer and we can easily see how this can become a bottleneck.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="small-cup.png">
+      <label for="small-cup.png">
+        <img src="small-cup.png" alt="small-cup" />
+      </label>
+    
+</figure>
+<h1 id="window-scaling-optional">Window scaling (optional)</h1>
+<p>For modern client-server communications, 65535 bytes wouldn&rsquo;t cut it.</p>
+<p>Thankfully, there&rsquo;s the <code>window scale</code> option and is only sent with <code>SYN</code> packet.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="window-scale.png">
+      <label for="window-scale.png">
+        <img src="window-scale.png" alt="window-scale" />
+      </label>
+    
+</figure>
+<p>This serves as a multiplier for the <code>window size</code>, which means a much larger buffer to hold the data.</p>
+<p>Using the beer transfer analogy again, it&rsquo;s like upgrading the pail to a cement truck.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="big-truck.png">
+      <label for="big-truck.png">
+        <img src="big-truck.png" alt="big-truck" />
+      </label>
+    
+</figure>
+<p>Caveat: both server and client have to support this option, else it wouldn&rsquo;t be available for use.</p>
+<h1 id="how-does-this-differ-from-mtu">How does this differ from MTU?</h1>
+<p>MTU stands for Maximum Transmission Unit.</p>
+<p>We can view the entire data transfer process as a combination of a few entities: server, client and the pipe connecting them.</p>
+<p>The MTU determines the size of the pipe whereas <code>window size</code> determines the size of buffer at both ends.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="mtu.png">
+      <label for="mtu.png">
+        <img src="mtu.png" alt="mtu" />
+      </label>
+    
+</figure>
+<p>Assuming MTU is 1500 bytes and the entire payload is 15000 bytes, there will be a total of 10 exchanges needed for entire transfer to complete.</p>
+<p>Using Wireshark, we can see how MTU (1500 bytes) limits the <code>TCP segment len</code>, and also how these segments are finally assembled.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="assembled-segments.png">
+      <label for="assembled-segments.png">
+        <img src="assembled-segments.png" alt="big-truck" />
+      </label>
+    
+</figure>
+<hr>
+<p>When performing analysis using Wireshark, do note that because <code>window scale</code> option is only sent with <code>SYN</code> packet, failing to capture this packet will result in Wireshark being unable to determine the &ldquo;actual&rdquo; <code>window size</code> and thus affect the analysis.</p>
+<p>More info: <a href="https://networkengineering.stackexchange.com/questions/54107/how-can-a-tcp-window-size-be-allowed-to-be-larger-than-the-maximum-size-of-an-et">https://networkengineering.stackexchange.com/questions/54107/how-can-a-tcp-window-size-be-allowed-to-be-larger-than-the-maximum-size-of-an-et</a></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/multiple-ssh-config/">
+                  <span class="button__text">Using multiple SSH configurations for git operations</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2022 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>

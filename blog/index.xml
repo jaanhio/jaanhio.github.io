@@ -9,10 +9,30 @@
     <description>Recent content in Blogs on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Feb 2022 09:58:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Mar 2022 21:56:44 +0800</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Difference between TCP window size &amp; MTU</title>
+      <link>/blog/tcp-window-size-mtu/</link>
+      <pubDate>Sun, 06 Mar 2022 21:56:44 +0800</pubDate>
+      
+      <guid>/blog/tcp-window-size-mtu/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          A brief explanation on the differences between TCP window size &amp; MTU.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Using multiple SSH configurations for git operations</title>
