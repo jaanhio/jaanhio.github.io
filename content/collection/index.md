@@ -4,6 +4,29 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: Visualizing concurrency in Go
+    url: https://divan.dev/posts/go_concurrency_visualize
+    tags: ["golang"]
+  - title: Observability - a 3 year retrospective
+    url: https://thenewstack.io/observability-a-3-year-retrospective/
+    tags: ["observability"]
+  - title: Observability is a many-splendored definition
+    url: https://charity.wtf/2020/03/03/observability-is-a-many-splendored-thing
+    tags: ["observability"]
+  - title: Linux insides
+    url: https://github.com/0xAX/linux-insides
+    tags: ["linux"]
+  - title: What happens when
+    url: https://github.com/alex/what-happens-when
+    tags: ["learnings", "networking"]
+    description: "Ever wondered what goes on underneath when you search for something on Google?"
+  - title: 7 Database paradigms
+    url: https://www.youtube.com/watch?v=W2Z7fbCLSTw&ab_channel=Fireship
+    tags: ["database"]
+    description: "Use the right tool for the job"
+  - title: Tao of Node - Design, Architecture & Best Practices
+    url: https://alexkondov.com/tao-of-node
+    tags: ["nodejs", "architecture", "design patterns"]
   - title: Arthur Chiao's Blog
     url: https://arthurchiao.art/categories/
     tags: ["kubernetes", "networking", "cilium"]
