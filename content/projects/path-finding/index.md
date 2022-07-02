@@ -24,7 +24,7 @@ So I decided to build an application to visalize it.
 
 {{<image src="./path-finding.webp" alt="usage-video" position="center" >}}
 
-There's some tweaks required to the A* implementation (adjusting heuristic value) but I will leave it as it for now.
+There's some tweaks required to the A* implementation (adjusting heuristic value) and also the overall styling (going for the retro look here eh) but I will leave it as it for now.
 
 Try it out yourself [here](https://path-finding.jaanhio.me/).
 
