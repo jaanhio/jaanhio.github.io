@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        debug ::
+        Path Finding ::
         jaanhio
       </title>
     
@@ -11,14 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content=""
+  content="It all started with Leetcode #417 Pacific Atlantic Water Flow given to me during a phone screen quite some time back.
+I thought I could just wing it without any prep and boy was I wrong and I flunked it hard. I knew the solution on a theoretical level but couldn&amp;rsquo;t figure out how to implement it.
+As someone from a non-CS background (degree in mechanical engineering), I must admit that algorithms and data structures isn&amp;rsquo;t my strong suit."
 />
 <meta
   name="keywords"
-  content=""
+  content="learnings, algorithms"
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="/tags/debug/" />
+<link rel="canonical" href="/projects/path-finding/" />
 
 
 
@@ -46,20 +48,21 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="debug"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Path Finding"/>
+<meta name="twitter:description" content="The path to figuring out the shortest path isn&#39;t such a short one."/>
 
 
 
-<meta property="og:title" content="debug" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/debug/" /><meta property="og:site_name" content="jaanhio" />
+<meta property="og:title" content="Path Finding" />
+<meta property="og:description" content="The path to figuring out the shortest path isn&#39;t such a short one." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/path-finding/" /><meta property="article:section" content="projects" />
+<meta property="article:published_time" content="2022-07-02T08:58:30+08:00" />
+<meta property="article:modified_time" content="2022-07-02T08:58:30+08:00" /><meta property="og:site_name" content="jaanhio" />
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/tags/debug/index.xml" title="jaanhio" />
 <meta name="description" content="I write about tech and more!" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -157,117 +160,70 @@
 
       <div class="content">
         
-  <div class="posts">
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Path Finding</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Jul 2022
+        </span>
+
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 2 min read</span
+        >
+      
+    </div>
+
     
-      <div class="post on-list">
-        <h1 class="post-title"><a href="/blog/nodejs-flamegraph-analysis/">Nodejs application CPU profile analysis with Flame Graphs</a></h1>
-        <div class="post-meta">
-          
-            <span class="post-date">
-              6 Sep 2021
-            </span>
-
-            
-          
-          
-
-
-          
-            <span class="post-read-time"
-              >— 5 min read</span
-            >
-          
-        </div>
-
+      <span class="post-tags">
         
-          <span class="post-tags">
-            
-              <a href="/tags/debug/">#debug</a>&nbsp;
-            
-              <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
-            
-              <a href="/tags/nodejs/">#nodejs</a>&nbsp;
-            
-          </span>
+          <a href="/tags/learnings/">#learnings</a>&nbsp;
         
-
+          <a href="/tags/algorithms/">#algorithms</a>&nbsp;
         
-
-        <div class="post-content">
-          
-            
-              In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
-What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
-            
-          
-        </div>
-        
-          <div>
-            <a class="read-more button" href="/blog/nodejs-flamegraph-analysis/"
-              >Read more →</a
-            >
-          </div>
-        
-      </div>
+      </span>
     
-      <div class="post on-list">
-        <h1 class="post-title"><a href="/blog/debugging-nodejs-app/">Debugging high CPU usage and memory leak on Nodejs application</a></h1>
-        <div class="post-meta">
-          
-            <span class="post-date">
-              6 Sep 2021
-            </span>
 
-            
-          
-          
-
-
-          
-            <span class="post-read-time"
-              >— 7 min read</span
-            >
-          
-        </div>
-
-        
-          <span class="post-tags">
-            
-              <a href="/tags/debug/">#debug</a>&nbsp;
-            
-              <a href="/tags/performance-analysis/">#performance analysis</a>&nbsp;
-            
-              <a href="/tags/nodejs/">#nodejs</a>&nbsp;
-            
-          </span>
-        
-
-        
-
-        <div class="post-content">
-          
-            
-              Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
-            
-          
-        </div>
-        
-          <div>
-            <a class="read-more button" href="/blog/debugging-nodejs-app/"
-              >Read more →</a
-            >
-          </div>
-        
-      </div>
     
-    <div class="pagination">
-  <div class="pagination__buttons">
-    
-    
-  </div>
-</div>
 
+    <div class="post-content">
+      
+      <p>It all started with <a href="https://leetcode.com/problems/pacific-atlantic-water-flow/">Leetcode #417 Pacific Atlantic Water Flow</a> given to me during a phone screen quite some time back.</p>
+<p>I thought I could just wing it without any prep and boy was I wrong and I flunked it hard. I knew the solution on a theoretical level but couldn&rsquo;t figure out how to implement it.</p>
+<p>As someone from a non-CS background (degree in mechanical engineering), I must admit that algorithms and data structures isn&rsquo;t my strong suit. Sure, I know of their existence but never to the level where I am able to implement them effectively. I mean these are just some &ldquo;low level implementation&rdquo; that can be added with some third-party package if need be right?</p>
+<p>After that horrible phone screen, I started looking at the various graph questions, dug into the theories and was really intrigued by it.</p>
+<p>I eventually got better at graph questions but as a visual learner, I always wondered how exactly does the various path finding algorithms look like when visualized on a screen.</p>
+<p>So I decided to build an application to visalize it.</p>
+
+  <img src="./path-finding.webp"  alt="usage-video"  class="center"  />
+
+
+<p>There&rsquo;s some tweaks required to the A* implementation (adjusting heuristic value) and also the overall styling (going for the retro look here eh) but I will leave it as it for now.</p>
+<p>Try it out yourself <a href="https://path-finding.jaanhio.me/">here</a>.</p>
+<p>Reference materials:</p>
+<ul>
+<li><a href="https://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html">https://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html</a></li>
+<li><a href="https://stackoverflow.com/questions/5687882/what-are-some-good-methods-to-finding-a-heuristic-for-the-a-algorithm">https://stackoverflow.com/questions/5687882/what-are-some-good-methods-to-finding-a-heuristic-for-the-a-algorithm</a></li>
+<li><a href="https://theory.stanford.edu/~amitp/GameProgramming/Variations.html#any-angle-movement">https://theory.stanford.edu/~amitp/GameProgramming/Variations.html#any-angle-movement</a></li>
+<li><a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">https://www.redblobgames.com/pathfinding/a-star/introduction.html</a></li>
+</ul>
+
+    </div>
+    
+
+    
+      
+    
   </div>
 
       </div>

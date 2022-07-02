@@ -9,10 +9,50 @@
     <description>Recent content in Tags on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Mar 2022 21:56:44 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 02 Jul 2022 08:58:30 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>algorithms</title>
+      <link>/tags/algorithms/</link>
+      <pubDate>Sat, 02 Jul 2022 08:58:30 +0800</pubDate>
+      
+      <guid>/tags/algorithms/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>learnings</title>
+      <link>/tags/learnings/</link>
+      <pubDate>Sat, 02 Jul 2022 08:58:30 +0800</pubDate>
+      
+      <guid>/tags/learnings/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>mtu</title>
@@ -120,26 +160,6 @@
       <pubDate>Sun, 27 Feb 2022 09:58:43 +0800</pubDate>
       
       <guid>/tags/ssh/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>learnings</title>
-      <link>/tags/learnings/</link>
-      <pubDate>Sat, 19 Feb 2022 17:34:57 +0800</pubDate>
-      
-      <guid>/tags/learnings/</guid>
       <description>
         
           

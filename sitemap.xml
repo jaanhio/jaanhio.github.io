@@ -2,22 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/algorithms/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
+    <loc>/tags/learnings/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
+    <loc>/projects/path-finding/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
+    <loc>/projects/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-07-02T08:58:30+08:00</lastmod>
+  </url><url>
     <loc>/blog/</loc>
     <lastmod>2022-03-06T21:56:44+08:00</lastmod>
   </url><url>
     <loc>/blog/tcp-window-size-mtu/</loc>
     <lastmod>2022-03-06T21:56:44+08:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2022-03-06T21:56:44+08:00</lastmod>
-  </url><url>
     <loc>/tags/mtu/</loc>
     <lastmod>2022-03-06T21:56:44+08:00</lastmod>
   </url><url>
     <loc>/tags/networking/</loc>
-    <lastmod>2022-03-06T21:56:44+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2022-03-06T21:56:44+08:00</lastmod>
   </url><url>
     <loc>/tags/tcp/</loc>
@@ -36,12 +48,6 @@
     <lastmod>2022-02-27T09:58:43+08:00</lastmod>
   </url><url>
     <loc>/projects/sgcameraprice/</loc>
-    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
-  </url><url>
-    <loc>/tags/learnings/</loc>
-    <lastmod>2022-02-19T17:34:57+08:00</lastmod>
-  </url><url>
-    <loc>/projects/</loc>
     <lastmod>2022-02-19T17:34:57+08:00</lastmod>
   </url><url>
     <loc>/blog/configuring-conntrack-eks/</loc>
