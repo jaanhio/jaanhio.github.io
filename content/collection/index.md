@@ -4,6 +4,9 @@ draft: false
 type: collection
 enableSearch: true
 content:
+  - title: 11 Best GitHub Repositories That Help You Become A Better Software Developer
+    url: https://blog.oliverjumpertz.dev/11-best-github-repositories-that-help-you-become-a-better-software-developer
+    tags: ["learnings", "blog"]
   - title: Visualizing concurrency in Go
     url: https://divan.dev/posts/go_concurrency_visualize
     tags: ["golang"]
