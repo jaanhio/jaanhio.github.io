@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Is Node.js single-threaded or multi-threaded? ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="I am sure most of us who have used Node.js have heard of this statement:
+Node.js is single-threaded.
+Is this statement correct? Well yes, partially.
+Node.js uses an asynchronous event-driven architecture consisting of an event loop and a worker pool.
+When we say that Node.js is single-threaded, we are actually referring to the event loop which is also known as the single main/event thread. This event loop handles the orchestration of new client connection and the corresponding response."
+/>
+<meta
+  name="keywords"
+  content="nodejs"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/nodejs-single-multi/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Is Node.js single-threaded or multi-threaded?"/>
+<meta name="twitter:description" content="Or both?"/>
+
+
+
+<meta property="og:title" content="Is Node.js single-threaded or multi-threaded?" />
+<meta property="og:description" content="Or both?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/nodejs-single-multi/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-07-09T14:25:21+08:00" />
+<meta property="article:modified_time" content="2022-07-09T14:25:21+08:00" /><meta property="og:site_name" content="jaanhio" />
+
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+        
+          <li><a href="/projects">Projects</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+      
+        <li><a href="/projects">Projects</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Is Node.js single-threaded or multi-threaded?</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Jul 2022
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 9 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/nodejs/">#nodejs</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>I am sure most of us who have used Node.js have heard of this statement:</p>
+<blockquote>
+<p>Node.js is single-threaded.</p>
+</blockquote>
+<p>Is this statement correct? Well yes, partially.</p>
+<p>Node.js uses an asynchronous event-driven architecture consisting of an <code>event loop</code> and a <code>worker pool</code>.</p>
+<p>When we say that Node.js is single-threaded, we are actually referring to the <code>event loop</code> which is also known as the <strong>single main/event thread</strong>. This <code>event loop</code> handles the orchestration of new client connection and the corresponding response.</p>
+<p>The <code>worker pool</code>, as the name suggests, consists of multiple threads forming a thread pool, used particularly for expensive tasks that are I/O-intensive and/or CPU-intensive so that the main thread doesn&rsquo;t get blocked.</p>
+<p>The short answer to the question is Node.js: it is both single and multi threaded depending on what functions are being executed.</p>
+<hr>
+<h2 id="worker-pool">Worker pool</h2>
+<p>The <code>worker pool</code> is implemented using <a href="https://docs.libuv.org/en/v1.x/threadpool.html">libuv</a>.</p>
+<p>According to the <a href="https://nodejs.org/en/docs/guides/dont-block-the-event-loop/">&ldquo;don&rsquo;t block the event loop&rdquo;</a> guide, these are the Node.js APIs that uses the <code>worker pool</code>:</p>
+<blockquote>
+<p>I/O-intensive tasks</p>
+<ul>
+<li>DNS (<code>dns.lookup()</code>, <code>dns.lookupService()</code>)</li>
+<li>File system (all file system API except <code>fs.FSWatcher()</code> and those that are explicitly synchronous)</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>CPU-intensive tasks</p>
+<ul>
+<li>Crypto (<code>crypto.pbkdf2()</code>, <code>crypto.scrypt()</code>, <code>crypto.randomBytes()</code>, <code>crypto.randomFill()</code>, <code>crypto.generateKeyPair()</code>)</li>
+<li>Zlib (all except those are explicitly synchronous)</li>
+</ul>
+</blockquote>
+<p>On top of these, it&rsquo;s also possible for applications and modules that use a <a href="https://nodejs.org/api/addons.html">C++ add-on</a> to submit tasks to the <code>worker pool</code>.</p>
+<p>This means all other intensive tasks do not make use of the worker pool:</p>
+<ul>
+<li>very long running for-loop (e.g a really inefficient way of determining if a number is a prime number)</li>
+<li>synchronous version of APIs listed above (e.g <code>crypto.randomFillSync()</code>, <code>zlib.inflateSync</code> etc)</li>
+</ul>
+<hr>
+<h2 id="waiter-in-a-restaurant">Waiter in a restaurant</h2>
+<p>Still confused? Let&rsquo;s look at an analogy instead.</p>
+<p>Imagine a waiter working in a small restaurant with 5 tables.</p>
+<p>The worker&rsquo;s responsibilities are:</p>
+<ul>
+<li>attending to requests from each of the tables and bringing food orders to the kitchen for preparation</li>
+<li>serving up prepared food in a timely manner (nobody likes cold food right?)</li>
+</ul>
+<p>Supporting him are the kitchen staffs whose responsibilities are to prepare the food and clear the trash as quickly and correctly as possible.</p>
+
+  <img src="waiter-analogy.gif"  class="left"  />
+
+
+<p>In this case, the waiter is the <code>event loop</code> (main thread) and the kitchen staffs are the <code>worker pool</code>.</p>
+<p>When the order for steak and cheese fries (computationally intensive task like <code>crypto.randomFill()</code>) comes in, the waiter accepts the request and passes the order to the kitchen for preparation. This frees up the waiter to handle other requests.</p>
+<p>Then another table requests for a glass of water. Since this is a relatively non-intensive task, the waiter has no need (also not able) to offload the preparation to the kitchen and is able to get the water and respond to the request quickly.</p>
+<p>Once the steak and cheese fries order is ready, the waiter can head back to retrieve it and fulfill the request, wasting no time in between orders.</p>
+<p>Now the problem starts when someone decides to order a whiskey highball (computationally intensive synchronous task like <code>crypto.randomFillSync()</code>) that can only be fulfilled by the waiter.</p>
+<p>At the same time, 2 other order requests comes in. Being blocked by the whiskey highball preparation, the waiter has no way to attend to the new requests.</p>
+<p>In the best case, the customers wait patiently for their requests to be attended to. Worst case, they get impatient and leave (requests timing out).</p>
+<p>I hope this gives you have a better understanding of how the <code>event loop</code> and <code>worker pool</code> work together.</p>
+<hr>
+<h2 id="experiment">Experiment</h2>
+<p>So we know the theory, but how does a Node.js application&rsquo;s performance differ between using non-blocking <code>crypto.randomFill()</code> (using <code>worker pool</code>) and blocking <code>crypto.randomFillSync()</code> (non <code>worker pool</code>) APIs in practice?</p>
+<p>Also, how does using the <code>worker pool</code> actually look like in practice?</p>
+<h4 id="setup">Setup</h4>
+<p>Node application source code: <a href="https://github.com/jaanhio/is-nodejs-single-or-multithreaded">https://github.com/jaanhio/is-nodejs-single-or-multithreaded</a></p>
+<p>To prevent <a href="https://docs.microsoft.com/en-us/azure/architecture/antipatterns/noisy-neighbor/noisy-neighbor">noisy neighbour effect</a> from affecting the result of the experiment, I am running the node.js application on my spare raspberry pi 4 (4CPU, 4GB memory) running <code>ubuntu 21.10</code> kernel version <code>5.13.0-1031-raspi</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ubuntu@ubuntu:~$ lscpu
+</span></span><span style="display:flex;"><span>Architecture:                    aarch64
+</span></span><span style="display:flex;"><span>CPU op-mode<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:                  32-bit, 64-bit
+</span></span><span style="display:flex;"><span>Byte Order:                      Little Endian
+</span></span><span style="display:flex;"><span>CPU<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:                          <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>On-line CPU<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> list:             0-3
+</span></span><span style="display:flex;"><span>Thread<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> per core:              <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Core<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> per socket:              <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>Socket<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:                       <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Vendor ID:                       ARM
+</span></span><span style="display:flex;"><span>Model:                           <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>Model name:                      Cortex-A72
+</span></span><span style="display:flex;"><span>Stepping:                        r0p3
+</span></span><span style="display:flex;"><span>CPU max MHz:                     1500.0000
+</span></span><span style="display:flex;"><span>CPU min MHz:                     600.0000
+</span></span><span style="display:flex;"><span>BogoMIPS:                        108.00
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ubuntu@ubuntu:~$ free -m
+</span></span><span style="display:flex;"><span>               total        used        free      shared  buff/cache   available
+</span></span><span style="display:flex;"><span>Mem:            <span style="color:#ae81ff">3791</span>         <span style="color:#ae81ff">227</span>        <span style="color:#ae81ff">3453</span>           <span style="color:#ae81ff">2</span>         <span style="color:#ae81ff">110</span>        <span style="color:#ae81ff">3426</span>
+</span></span><span style="display:flex;"><span>Swap:              <span style="color:#ae81ff">0</span>           <span style="color:#ae81ff">0</span>           <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h4 id="execution">Execution</h4>
+<p>Test cases:</p>
+<p>Buffer size used: <code>2**20 = 1048576</code></p>
+<ol>
+<li>asynchronous function</li>
+</ol>
+<p><code>curl -v http://192.168.1.248:8080?type=async&amp;size=1048576</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cryptoFillAsync</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">bufferSize</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;executing crypto fill async&#39;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">buf</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">alloc</span>(<span style="color:#a6e22e">bufferSize</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">randomFill</span>(<span style="color:#a6e22e">buf</span>, (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">buf</span>) =&gt; {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;err filling async&#39;</span>, <span style="color:#a6e22e">err</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">err</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Buffer filled&#39;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">resolve</span>();
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>synchronous function</li>
+</ol>
+<p><code>curl -v http://192.168.1.248:8080?type=sync&amp;size=1048576</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cryptoFillSync</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">bufferSize</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;executing crypto fill sync&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">buf</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">alloc</span>(<span style="color:#a6e22e">bufferSize</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">randomFillSync</span>(<span style="color:#a6e22e">buf</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Buffer filled&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Scenarios:</p>
+<ol>
+<li>max 5 users increasing at a rate of 1 user/sec</li>
+<li>max 50 users increasing at a rate of 10 users/sec</li>
+<li>max 100 users increasing at a rate of 20 users/sec</li>
+<li>max 150 users increasing at a rate of 20 users/sec</li>
+<li>max 200 users increasing at a rate of 20 users/sec</li>
+</ol>
+<p>I tested each of the scenarios for 2 mins and here are the results.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>5 users. 1 user/s</th>
+<th>50 users. 10 users/s</th>
+<th>100 users. 20 users/s</th>
+<th>150 users. 20 users/s</th>
+<th>200 users. 20 users/s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>asynchronous</td>
+<td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 90ms</td>
+<td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 250ms</td>
+<td>error rate: 0%, 50th percentile latency: 51ms, 99th percentile latency: 260ms</td>
+<td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 280ms</td>
+<td>error rate: 0%, 50th percentile latency: 64ms, 99th percentile latency: 330ms</td>
+</tr>
+<tr>
+<td>synchronous</td>
+<td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 200ms</td>
+<td>error rate: 1%, 50th percentile latency: 76ms, 99th percentile latency: 320ms</td>
+<td>error rate: 7%, 50th percentile latency: 670ms, 99th percentile latency: 2100ms</td>
+<td>error rate: 12%, 50th percentile latency: 790ms, 99th percentile latency: 4500ms</td>
+<td>error rate: 24%, 50th percentile latency: 2300ms, 99th percentile latency: 7300ms</td>
+</tr>
+</tbody>
+</table>
+<p>It&rsquo;s apparent that the use of asynchronous non-blocking function call greatly outperformed the synchronous blocking function call in terms of both the error rate and response time.</p>
+<p>Perhaps you might still be wondering what exactly does it mean by blocking.</p>
+<p>We can see this clearly by increasing the buffer size (to increase the compute time and resources required) such that there&rsquo;s enough time to make a second call before the first one completes.</p>
+<p>For that, I picked a number that requires both functions to take approximately 5s to execute and ended up with <code>2**27 = 134217728</code>.</p>
+<h5 id="asynchronous">Asynchronous</h5>
+
+  <img src="./async.webp"  alt="async-calls-video"  class="center"  />
+
+
+<p>As you can see, all 3 consecutive calls were accepted and handled by the server. The expensive compute was offloaded to the <code>worker pool</code> threads, leaving the <code>event loop</code> available to handle other incoming requests.</p>
+<p>Now compare this to the synchronous version.</p>
+<h5 id="synchronous">Synchronous</h5>
+
+  <img src="./sync.webp"  alt="sync-calls-video"  class="center"  />
+
+
+<p>Even though 3 consecutive calls were made, the server could only handle 1 request at a time, leaving the other requests waiting. This resulted in a way higher request latency.</p>
+<p>Increase the request rate to the scenarios mentioned above and you can imagine requests being queued so far back that they timed out.</p>
+<hr>
+<h2 id="all-about-the-extra-threads">All about the extra threads</h2>
+<p>Those with sharp eyes might have spotted something: there&rsquo;s more than 1 <a href="https://unix.stackexchange.com/questions/670836/why-do-threads-have-their-own-pid#:~:text=In%20Linux%2C%20each%20thread%20has,matches%20its%20thread%20group%20id.">threads/processes</a> that belongs to the application displayed by <code>htop</code> the moment I run it.</p>
+<p>After enabling &ldquo;Tree View&rdquo; display setting on <code>htop</code>,</p>
+<figure class="post-cover">
+    <input type="checkbox" id="./another-tree-view.png">
+      <label for="./another-tree-view.png">
+        <img src="./another-tree-view.png" alt="" />
+      </label>
+    
+</figure>
+<p>By now we know that Node.js has a single <code>event loop</code> thread and multiple <code>worker pool</code> threads that helps with CPU/I/O-intensive tasks.</p>
+<p>Are those extra threads actually the <code>worker pool</code> threads?</p>
+<p>From what I have gathered so far, these threads are actually by the V8 engine to perform tasks like garbage collection etc. They are different from the <code>worker pool</code> threads.</p>
+<p>We can actually change the number of these threads using the <code>--v8-pool-size</code> option when running <code>node</code>.</p>
+<p>Taken from <a href="https://nodejs.org/api/cli.html#--v8-pool-sizenum">https://nodejs.org/api/cli.html#--v8-pool-sizenum</a>:</p>
+<blockquote>
+<p><code>--v8-pool-size=num#</code></p>
+<p>Added in: v5.10.0</p>
+<p>Set V8&rsquo;s thread pool size which will be used to allocate background jobs.</p>
+<p>If set to 0 then V8 will choose an appropriate size of the thread pool based on the number of online processors.</p>
+<p>If the value provided is larger than V8&rsquo;s maximum, then the largest value will be chosen.</p>
+</blockquote>
+<p>Let&rsquo;s try running it again with the <code>--v8-pool-size</code> option.</p>
+<p><figure class="post-cover">
+    <input type="checkbox" id="./pool-size-2.png">
+      <label for="./pool-size-2.png">
+        <img src="./pool-size-2.png" alt="" />
+      </label>
+    
+</figure>
+<figure class="post-cover">
+    <input type="checkbox" id="./pool-size-1.png">
+      <label for="./pool-size-1.png">
+        <img src="./pool-size-1.png" alt="" />
+      </label>
+    
+</figure>
+<figure class="post-cover">
+    <input type="checkbox" id="./pool-size-0.png">
+      <label for="./pool-size-0.png">
+        <img src="./pool-size-0.png" alt="" />
+      </label>
+    
+</figure></p>
+<p>What about the <code>worker pool</code> threads?</p>
+<p>Turns out, we are also about to configure the number of threads in a <code>worker pool</code> using environment variable <code>UV_THREADPOOL_SIZE</code>.</p>
+<p><code>UV_THREADPOOL_SIZE=3 node --v8-pool-size=0 main.js</code></p>
+
+  <img src="./uv-threadpool-3.webp"  alt="threadpool-3-video"  class="center"  />
+
+
+<p>Wait, there&rsquo;s no changes to the number of threads isn&rsquo;t it? It&rsquo;s still the same number of threads as above.</p>
+<p>The magic happens when the server starts calling functions that are able to use the <code>worker pool</code>.</p>
+<p>For that, I made a total of 9 requests at once to trigger the asynchronous function call.</p>
+<p><code>time curl -v &quot;http://localhost:8080?type=async&amp;size=134217728&quot;</code></p>
+<figure class="post-cover">
+    <input type="checkbox" id="./9-requests.png">
+      <label for="./9-requests.png">
+        <img src="./9-requests.png" alt="" />
+      </label>
+    
+</figure>
+
+  <img src="./uv-threadpool-3-with-requests.webp"  alt="threadpool-3-video"  class="center"  />
+
+
+<p>Notice that 3 other threads appeared (can identify them by the new PIDs 39362 - 39364).</p>
+<p>Also notice that although all requests are &ldquo;handled&rdquo; by the server, the server could only process 3 of these CPU-intensive tasks at a time, resulting in request latency ranging from 4.9s - 14.8s.</p>
+<p>Does this mean by increasing <code>UV_THREADPOOL_SIZE=9</code> we should expect a way lower request latency?</p>
+
+  <img src="./uv-threadpool-9-with-requests.webp"  alt="threadpool-9-video"  class="center"  />
+
+
+<p>The request latency became more uniform (~11s), which also meant a much longer waiting time for 2/3 of the requests when comparing it to <code>UV_THREADPOOL_SIZE=3</code>.</p>
+<p>I repeated the same for 3 other thread pool size. Note again that this is running on a 4CPU, 4GB memory raspberry pi4.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>min latency (s)</th>
+<th>max latency (s)</th>
+<th>avg latency of 9 requests (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size = 2</td>
+<td>4.928</td>
+<td>24.362</td>
+<td>13.548</td>
+</tr>
+<tr>
+<td>size = 3</td>
+<td>4.912</td>
+<td>14.667</td>
+<td>9.794</td>
+</tr>
+<tr>
+<td>size = 4</td>
+<td>4.926</td>
+<td>14.728</td>
+<td>8.248</td>
+</tr>
+<tr>
+<td>size = 5</td>
+<td>5.546</td>
+<td>11.321</td>
+<td>8.343</td>
+</tr>
+<tr>
+<td>size = 6</td>
+<td>6.180</td>
+<td>12.115</td>
+<td>8.884</td>
+</tr>
+<tr>
+<td>size = 9</td>
+<td>10.976</td>
+<td>11.145</td>
+<td>11.069</td>
+</tr>
+</tbody>
+</table>
+<p>What we can conclude:</p>
+<ul>
+<li>min latency is approximately 4.9s and starts increasing once thread pool size &gt; 4</li>
+<li>lowest average latency is 8.248s when thread pool size = 4</li>
+</ul>
+<p>Why is this so?</p>
+<p><a href="https://afteracademy.com/blog/what-is-context-switching-in-operating-system">Context switching</a>. It is the process that involves switching of tasks/processes running on the CPU to and from various states such as &ldquo;ready&rdquo;, &ldquo;waiting&rdquo;, &ldquo;blocked&rdquo;.</p>
+<p>While the upside is giving CPU the ability to multitask, it comes with the cost of additional latency when switching between processes.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="./context-switch-count.png">
+      <label for="./context-switch-count.png">
+        <img src="./context-switch-count.png" alt="" />
+      </label>
+    
+</figure>
+<hr>
+<p>Some really useful reference materials:</p>
+<ul>
+<li><a href="https://yarin.dev/nodejs-cpu-bound-tasks-worker-threads/">https://yarin.dev/nodejs-cpu-bound-tasks-worker-threads/</a></li>
+<li><a href="https://nodejs.org/en/docs/guides/dont-block-the-event-loop/">https://nodejs.org/en/docs/guides/dont-block-the-event-loop/</a></li>
+<li><a href="https://nodejs.org/api/cli.html#--v8-options">https://nodejs.org/api/cli.html#--v8-options</a></li>
+<li><a href="https://stackoverflow.com/a/32507707/8096221">https://stackoverflow.com/a/32507707/8096221</a></li>
+<li><a href="https://github.com/nodejs/node/blob/278a9267ec41f37e6b7dda876c417945d7725973/src/node.cc#L3964-L3965">https://github.com/nodejs/node/blob/278a9267ec41f37e6b7dda876c417945d7725973/src/node.cc#L3964-L3965</a></li>
+<li><a href="https://youtu.be/DKmBRl8j3Ak">OS Context Switching - Computerphile</a></li>
+</ul>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/tcp-window-size-mtu/">
+                  <span class="button__text">Difference between TCP window size &amp; MTU</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2022 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>
