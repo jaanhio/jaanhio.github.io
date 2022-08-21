@@ -87,6 +87,44 @@ Under the hood, `requests.cpu` and `limits.cpu` are implemented using features o
 
 Though the Kubernetes configuration for both `requests.cpu` & `limits.cpu` look similar, they are actually implemented using different mechanisms.
 
+We can see the related configurations and files under the `/sys/fs/cgroup/kubepods` directory.
+
+{{<zoomable-img src="kubepods-dir.png">}}
+
+From the image above, we can see how the `cgroup` directories are structured in order to control the CPU resource for each pod/process.
+
+```
+/kubepods
+|__...cgroup related files
+|__/besteffort
+|   |__...cgroup related files
+|   |__/pod700d3573-6918-4f34-a802-facd3d7c6228
+|   |__/pod7c6497d6-c5c7-497f-8f8f-b54d9010ea49
+|   |__/pod90c3c7ed-d488-4e2e-8aaf-edaa935f31b9
+|   |__/podb8e4fe2d-6ca9-4ba1-bfc9-a4dfb40e9544
+|   |__/podba6a8975-37a7-4c9c-a365-347844d069e6
+|__/burstable
+    |__...cgroup related files
+    |__/podc8b9ed51-a468-46ec-afc8-8d000da6942e
+    |__/podd7ee7ff2-9089-4825-ab80-281f59f5487a
+    |__/podf8802cf7-4278-4596-b278-ce21f4ab2145
+    |__/pod84cc4e4e-beea-4ff4-8700-5d534e266304
+    |__/pod1351a523-8320-4bb2-9104-7528fd43e8ae
+        |__...cgroup related files
+        |__/ce90611f00c776ab1a99ba92c88d972aac6f89bf6fd5b2c4b16a0ba5c83cf28a
+        |__/bd2bd6e9d405703ceb140e0a94eb4df02ed0930498459b1faeeba2504c81a7e8
+```
+
+We can also see that there's 10 pods (directories prefixed with `pod`) running on this particular node, which matches the output of `kubectl get pod | grep <node name>`.
+
+{{<zoomable-img src="k-get-po.png">}}
+
+Then there's the directories nested under one of the `pod` directories with alphanumeric hashes as their names. These are for the containers within a pod.
+
+We can verify it by viewing the details of the pods.
+
+{{<zoomable-img src="example-pod.png">}}
+
 ---
 ### CPU requests via cpu.shares
 
@@ -183,6 +221,7 @@ throttled_time 8635080132047
 `throttled_time`: total time a thread in cgroup was throttled
 
 `throttled_percentage`: (rate of change of `nr_throttled`)/(rate of change of `nr_periods`). This can give you an idea of how badly a process is being throttled.
+
 #### What can you do about throttled applications/processes?
 
 Fix the application OR increase/remove the limits!
