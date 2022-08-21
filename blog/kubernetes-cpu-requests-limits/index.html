@@ -266,6 +266,51 @@ although there are utility controllers which serve purposes other than resource 
 </blockquote>
 <p>Under the hood, <code>requests.cpu</code> and <code>limits.cpu</code> are implemented using features of <a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cpu.txt">CPU cgroup controller</a> (grouping processes) and CFS scheduler (assigning resource based on groupings)</p>
 <p>Though the Kubernetes configuration for both <code>requests.cpu</code> &amp; <code>limits.cpu</code> look similar, they are actually implemented using different mechanisms.</p>
+<p>The related configurations and files are located under the <code>/sys/fs/cgroup/kubepods</code> directory.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="kubepods-dir.png">
+      <label for="kubepods-dir.png">
+        <img src="kubepods-dir.png" alt="" />
+      </label>
+    
+</figure>
+<p>From the image above, we can see how the <code>cgroup</code> directories are structured in order to control the CPU resource for each pod/process.</p>
+<pre tabindex="0"><code>/kubepods
+|__...cgroup related files
+|__/besteffort
+|   |__...cgroup related files
+|   |__/pod700d3573-6918-4f34-a802-facd3d7c6228
+|   |__/pod7c6497d6-c5c7-497f-8f8f-b54d9010ea49
+|   |__/pod90c3c7ed-d488-4e2e-8aaf-edaa935f31b9
+|   |__/podb8e4fe2d-6ca9-4ba1-bfc9-a4dfb40e9544
+|   |__/podba6a8975-37a7-4c9c-a365-347844d069e6
+|__/burstable
+    |__...cgroup related files
+    |__/podc8b9ed51-a468-46ec-afc8-8d000da6942e
+    |__/podd7ee7ff2-9089-4825-ab80-281f59f5487a
+    |__/podf8802cf7-4278-4596-b278-ce21f4ab2145
+    |__/pod84cc4e4e-beea-4ff4-8700-5d534e266304
+    |__/pod1351a523-8320-4bb2-9104-7528fd43e8ae
+        |__...cgroup related files
+        |__/ce90611f00c776ab1a99ba92c88d972aac6f89bf6fd5b2c4b16a0ba5c83cf28a
+        |__/bd2bd6e9d405703ceb140e0a94eb4df02ed0930498459b1faeeba2504c81a7e8
+</code></pre><p>We can also see that there&rsquo;s 10 pods (directories prefixed with <code>pod</code>) running on this particular node, which matches the output of <code>kubectl get pod | grep &lt;node name&gt;</code>.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="k-get-po.png">
+      <label for="k-get-po.png">
+        <img src="k-get-po.png" alt="" />
+      </label>
+    
+</figure>
+<p>Then there&rsquo;s the directories nested under one of the <code>pod</code> directories with alphanumeric hashes as their names. These are for the containers within a pod.</p>
+<p>This is verified by comparing it with the details of the pods.</p>
+<figure class="post-cover">
+    <input type="checkbox" id="example-pod.png">
+      <label for="example-pod.png">
+        <img src="example-pod.png" alt="" />
+      </label>
+    
+</figure>
 <hr>
 <h3 id="cpu-requests-via-cpushares">CPU requests via cpu.shares</h3>
 <p>CPU request is implemented using <code>cpu.shares</code>. CFS scheduler looks at the <code>cpu.shares</code> file configured for different process groupings to determine <strong>how much CPU time a process can use</strong>.</p>
