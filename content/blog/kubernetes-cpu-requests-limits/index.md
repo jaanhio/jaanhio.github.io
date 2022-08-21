@@ -87,7 +87,7 @@ Under the hood, `requests.cpu` and `limits.cpu` are implemented using features o
 
 Though the Kubernetes configuration for both `requests.cpu` & `limits.cpu` look similar, they are actually implemented using different mechanisms.
 
-We can see the related configurations and files under the `/sys/fs/cgroup/kubepods` directory.
+The related configurations and files are located under the `/sys/fs/cgroup/kubepods` directory.
 
 {{<zoomable-img src="kubepods-dir.png">}}
 
@@ -121,7 +121,7 @@ We can also see that there's 10 pods (directories prefixed with `pod`) running o
 
 Then there's the directories nested under one of the `pod` directories with alphanumeric hashes as their names. These are for the containers within a pod.
 
-We can verify it by viewing the details of the pods.
+This is verified by comparing it with the details of the pods.
 
 {{<zoomable-img src="example-pod.png">}}
 
