@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Miscs on jaanhio</title>
+    
+    
+    
+    <link>/misc/</link>
+    <description>Recent content in Miscs on jaanhio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Jan 2023 08:58:30 +0800</lastBuildDate>
+    
+	<atom:link href="/misc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>First misc post</title>
+      <link>/misc/path-finding/</link>
+      <pubDate>Sun, 29 Jan 2023 08:58:30 +0800</pubDate>
+      
+      <guid>/misc/path-finding/</guid>
+      <description>
+        
+          &lt;img src=&#34;/misc/path-finding/./img01.jpeg&#34;/&gt;
+          
+        
+        
+        
+           
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>

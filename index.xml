@@ -9,10 +9,29 @@
     <description>Recent content on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Jul 2022 14:25:21 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jan 2023 08:58:30 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>First misc post</title>
+      <link>/misc/path-finding/</link>
+      <pubDate>Sun, 29 Jan 2023 08:58:30 +0800</pubDate>
+      
+      <guid>/misc/path-finding/</guid>
+      <description>
+        
+          &lt;img src=&#34;/misc/path-finding/./img01.jpeg&#34;/&gt;
+          
+        
+        
+        
+           
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Is Node.js single-threaded or multi-threaded?</title>
