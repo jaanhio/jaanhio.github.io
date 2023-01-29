@@ -8,7 +8,7 @@ enableEmoji: true
 params:
   contentTypeName: blog
   defaultTheme: light
-  showMenuItems: 3
+  showMenuItems: 4
   showReadingTime: true
 languages:
   en:
@@ -40,3 +40,6 @@ languages:
         - identifier: "Projects"
           name: "Projects"
           url: /projects
+        - identifier: "Misc"
+          name: "Misc"
+          url: /misc
