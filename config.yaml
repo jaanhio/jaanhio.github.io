@@ -40,6 +40,6 @@ languages:
         - identifier: "Projects"
           name: "Projects"
           url: /projects
-        - identifier: "Misc"
-          name: "Misc"
-          url: /misc
+        - identifier: "Moments"
+          name: "Moments"
+          url: /moments
