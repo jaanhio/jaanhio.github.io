@@ -9,10 +9,30 @@
     <description>Recent content in networking on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Mar 2022 21:56:44 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Feb 2023 08:06:27 +0800</lastBuildDate>
     
 	<atom:link href="/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How Wireshark saved my sanity while setting up OpenVPN on Raspberry Pi</title>
+      <link>/blog/wireshark-vpn-raspberrypi/</link>
+      <pubDate>Sat, 18 Feb 2023 08:06:27 +0800</pubDate>
+      
+      <guid>/blog/wireshark-vpn-raspberrypi/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          And also a shallow dive into OpenVPN protocol...
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Difference between TCP window size &amp; MTU</title>

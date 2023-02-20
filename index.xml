@@ -9,20 +9,40 @@
     <description>Recent content on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Jan 2023 08:58:30 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Feb 2023 08:06:27 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>First misc post</title>
-      <link>/misc/misc1/</link>
-      <pubDate>Sun, 29 Jan 2023 08:58:30 +0800</pubDate>
+      <title>How Wireshark saved my sanity while setting up OpenVPN on Raspberry Pi</title>
+      <link>/blog/wireshark-vpn-raspberrypi/</link>
+      <pubDate>Sat, 18 Feb 2023 08:06:27 +0800</pubDate>
       
-      <guid>/misc/misc1/</guid>
+      <guid>/blog/wireshark-vpn-raspberrypi/</guid>
       <description>
         
-          &lt;img src=&#34;/misc/misc1/./img01.jpeg&#34;/&gt;
+          
+          
+          
+        
+        
+        
+          And also a shallow dive into OpenVPN protocol...
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>First misc post</title>
+      <link>/moments/misc1/</link>
+      <pubDate>Sun, 29 Jan 2023 08:58:30 +0800</pubDate>
+      
+      <guid>/moments/misc1/</guid>
+      <description>
+        
+          &lt;img src=&#34;/moments/misc1/./img01.jpeg&#34;/&gt;
           
         
         

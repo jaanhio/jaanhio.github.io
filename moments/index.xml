@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Miscs on jaanhio</title>
+    <title>Moments on jaanhio</title>
     
     
     
-    <link>/misc/</link>
-    <description>Recent content in Miscs on jaanhio</description>
+    <link>/moments/</link>
+    <description>Recent content in Moments on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 29 Jan 2023 08:58:30 +0800</lastBuildDate>
     
-	<atom:link href="/misc/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/moments/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First misc post</title>
-      <link>/misc/misc1/</link>
+      <link>/moments/misc1/</link>
       <pubDate>Sun, 29 Jan 2023 08:58:30 +0800</pubDate>
       
-      <guid>/misc/misc1/</guid>
+      <guid>/moments/misc1/</guid>
       <description>
         
-          &lt;img src=&#34;/misc/misc1/./img01.jpeg&#34;/&gt;
+          &lt;img src=&#34;/moments/misc1/./img01.jpeg&#34;/&gt;
           
         
         
