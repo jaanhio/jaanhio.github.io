@@ -1,5 +1,5 @@
 ---
-title: "First misc post"
+title: "First moment post"
 date: 2023-01-29T08:58:30+08:00
 slug: ""
 description: ""
