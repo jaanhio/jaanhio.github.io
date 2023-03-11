@@ -6,4 +6,6 @@ description: ""
 keywords: []
 draft: false
 tags: []
+cover: COVER_IMG_PATH
+useRelativeCover: true
 ---
