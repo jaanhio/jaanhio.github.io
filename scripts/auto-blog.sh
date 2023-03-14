@@ -34,10 +34,16 @@ fi
 hugo_content_path="moments/$current_date"
 full_hugo_content_path="$repo_path/content/$hugo_content_path"
 index_md_path="$full_hugo_content_path/index.md"
-echo "Found valid $target_path...creating hugo content path: $hugo_content_path"
+echo "Found valid $target_path...checking if content has already been created at $index_md_path..."
 
+if [ -f "$index_md_path" ]; then
+    echo "Content already created. Exiting..."
+    exit 0
+fi
+
+echo "Content not created yet...creating hugo content path: $hugo_content_path"
 # else, create a new post directory using hugo new moments/{date}/index.md
-(cd $repo_path && hugo new $hugo_content_path/index.md)
+(cd $repo_path && git pull origin main && hugo new $hugo_content_path/index.md)
 
 echo "Copying files from $target_path to $full_hugo_content_path"
 
