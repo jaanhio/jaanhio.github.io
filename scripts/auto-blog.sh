@@ -60,7 +60,7 @@ for file in $target_path/*; do
 
     if [ $count -eq 1 ]; then
         echo "Setting first image $filename as cover image..."
-        sed -i.bakup "s/COVER_IMG_PATH/\".\/$filename\"/g" $index_md_path #Mac's version of sed expects an extension to the -i flag e.g -i.bakup
+        sed -i "s/COVER_IMG_PATH/\".\/$filename\"/g" $index_md_path #Mac's version of sed expects an extension to the -i flag e.g -i.bakup
     else
         echo "Setting image $count $filename into content..."
         echo -e "\n" >> $index_md_path
