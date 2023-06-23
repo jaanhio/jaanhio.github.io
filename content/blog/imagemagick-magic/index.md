@@ -2,7 +2,7 @@
 title: "Automation magic with Imagemagick"
 date: 2023-06-22T23:33:18+08:00
 slug: ""
-description: ""
+description: "How I saved hours of editing using a single command..."
 keywords: ["automation", "imagemagick"]
 draft: false
 tags: ["automation", "imagemagick"]
