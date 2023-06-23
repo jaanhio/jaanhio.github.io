@@ -8,11 +8,51 @@
     <link>/tags/</link>
     <description>Recent content in Tags on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 18 Feb 2023 08:06:27 +0800</lastBuildDate>
+    <language>en</language>
+    <lastBuildDate>Thu, 22 Jun 2023 23:33:18 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>automation</title>
+      <link>/tags/automation/</link>
+      <pubDate>Thu, 22 Jun 2023 23:33:18 +0800</pubDate>
+      
+      <guid>/tags/automation/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>imagemagick</title>
+      <link>/tags/imagemagick/</link>
+      <pubDate>Thu, 22 Jun 2023 23:33:18 +0800</pubDate>
+      
+      <guid>/tags/imagemagick/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>learnings</title>
