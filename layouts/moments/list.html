@@ -1,0 +1,63 @@
+{{ define "main" }}
+  <div class="moments-grid">
+    {{ $postsPerPage := 20 }}
+    {{ $paginator := .Paginate (where .Pages "Type" "moments") $postsPerPage }}
+    {{ range $paginator.Pages }}
+      <div class="moments-list">
+        {{ if .Params.tags }}
+          <span class="post-tags">
+            {{ range .Params.tags }}
+              <a href="{{ (urlize (printf "tags/%s" . )) | absURL }}/">#{{ . }}</a>&nbsp;
+            {{ end }}
+          </span>
+          {{ end }}
+          
+          {{ if .Params.Cover }}
+          <a href="{{ .Permalink }}">
+            <figure class="moment-post-cover">
+              {{ if .Params.UseRelativeCover }}
+              <img src="{{ (printf "%s%s" .Permalink .Params.Cover ) }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
+              {{ else }}
+              <img src="{{ .Params.Cover | absURL }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
+              {{ end }}
+              
+              {{ if .Params.CoverCaption }}
+              <figcaption class="center">{{ .Params.CoverCaption | markdownify }}</figcaption>
+              {{ end }}
+            </figure>
+          </a>
+        {{ end }}
+
+        <div class="post-content">
+          {{ with .Description }}
+            {{ . | markdownify }}
+            {{ else }}
+            {{ if .Truncated }}
+              {{ .Summary }}
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  </div>
+  <div class="moments-pagination">
+    <div class="pagination__buttons">
+      {{ if .Paginator.HasPrev }}
+        <span class="button previous">
+          <a href="{{ .Paginator.Prev.URL }}">
+            <span class="button__icon">←</span>
+            <span class="button__text">{{ $.Site.Params.NewerPosts | default "Newer posts" }}</span>
+          </a>
+        </span>
+      {{ end }}
+      {{ if .Paginator.HasNext }}
+        <span class="button next">
+          <a href="{{ .Paginator.Next.URL }}">
+            <span class="button__text">{{ $.Site.Params.OlderPosts | default "Older posts" }}</span>
+            <span class="button__icon">→</span>
+          </a>
+        </span>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}
