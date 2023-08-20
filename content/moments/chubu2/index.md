@@ -6,6 +6,6 @@ description: ""
 keywords: []
 draft: false
 tags: []
-cover: "./chubu2.JPG"
+cover: "./bnb2.jpeg"
 useRelativeCover: true
 ---
