@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/moments/chair/</loc>
+    <lastmod>2023-08-20T10:02:07+08:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2023-08-20T10:02:07+08:00</lastmod>
+  </url><url>
+    <loc>/moments/</loc>
+    <lastmod>2023-08-20T10:02:07+08:00</lastmod>
+  </url><url>
+    <loc>/moments/boards/</loc>
+    <lastmod>2023-08-20T10:01:57+08:00</lastmod>
+  </url><url>
+    <loc>/moments/ski/</loc>
+    <lastmod>2023-08-20T10:01:47+08:00</lastmod>
+  </url><url>
+    <loc>/moments/breakwater/</loc>
+    <lastmod>2023-08-20T10:01:41+08:00</lastmod>
+  </url><url>
+    <loc>/moments/sup/</loc>
+    <lastmod>2023-08-20T10:01:35+08:00</lastmod>
+  </url><url>
     <loc>/moments/chubu10/</loc>
     <lastmod>2023-08-19T23:56:50+08:00</lastmod>
   </url><url>
@@ -35,10 +56,52 @@
     <loc>/moments/chubu9/</loc>
     <lastmod>2023-08-19T23:56:50+08:00</lastmod>
   </url><url>
-    <loc>/</loc>
+    <loc>/moments/cyclist/</loc>
     <lastmod>2023-08-19T23:56:50+08:00</lastmod>
   </url><url>
-    <loc>/moments/</loc>
+    <loc>/moments/fuji/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/ginza/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/higoki-shibuya/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/ise/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/kansui-starbucks/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/matsumoto/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/miyashita/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/monorail/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/omoide/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/omotesando-rain/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/raining-wajima/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/shibuya-skate/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/skyline/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/wanton-desc/</loc>
+    <lastmod>2023-08-19T23:56:50+08:00</lastmod>
+  </url><url>
+    <loc>/moments/wanton/</loc>
     <lastmod>2023-08-19T23:56:50+08:00</lastmod>
   </url><url>
     <loc>/moments/chubu1/</loc>
@@ -73,12 +136,6 @@
   </url><url>
     <loc>/moments/2023-03-17/</loc>
     <lastmod>2023-03-17T12:45:04+00:00</lastmod>
-  </url><url>
-    <loc>/moments/2023-03-15/</loc>
-    <lastmod>2023-03-15T01:45:04+00:00</lastmod>
-  </url><url>
-    <loc>/moments/2023-03-14/</loc>
-    <lastmod>2023-03-14T15:47:25+00:00</lastmod>
   </url><url>
     <loc>/moments/2023-03-12/</loc>
     <lastmod>2023-03-12T09:40:59+00:00</lastmod>
