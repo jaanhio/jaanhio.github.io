@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        A little trick I learned for copying files out of a (somewhat) locked down EC2 worker node for EKS ::
+        jaanhio
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Scenario:
+You encountered some weird networking issue with one of the pods running on EKS cluster and decided to perform some packet analysis using Wireshark.
+Due to security reasons, the only way to access an EC2 worker node is via the AWS Session Manager. Once inside, you ran tcpdump and generated a .pcap file, all ready to be analyzed. Except for one problem - how can you get that file out?"
+/>
+<meta
+  name="keywords"
+  content="eks, kubectl, proc, pseudo-filesystem, linux, containers, namespaces, cgroups"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/blog/proc-root/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A little trick I learned for copying files out of a (somewhat) locked down EC2 worker node for EKS"/>
+<meta name="twitter:description" content="Disclaimer: you should have also have access to EKS cluster via `kubectl`"/>
+
+
+
+<meta property="og:title" content="A little trick I learned for copying files out of a (somewhat) locked down EC2 worker node for EKS" />
+<meta property="og:description" content="Disclaimer: you should have also have access to EKS cluster via `kubectl`" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/proc-root/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-09-16T14:54:10+08:00" />
+<meta property="article:modified_time" content="2023-09-16T14:54:10+08:00" />
+
+
+
+<meta name="description" content="I write about tech and more!" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  </head>
+  <body class="">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >$</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About me</a></li>
+        
+      
+        
+          <li><a href="/collection">Collection</a></li>
+        
+      
+        
+          <li><a href="/moments">Moments</a></li>
+        
+      
+        
+          <li><a href="/projects">Projects</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About me</a></li>
+      
+    
+      
+        <li><a href="/collection">Collection</a></li>
+      
+    
+      
+        <li><a href="/moments">Moments</a></li>
+      
+    
+      
+        <li><a href="/projects">Projects</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">A little trick I learned for copying files out of a (somewhat) locked down EC2 worker node for EKS</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          6 Sep 2023
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          <a href="/tags/eks/">#eks</a>&nbsp;
+        
+          <a href="/tags/kubectl/">#kubectl</a>&nbsp;
+        
+          <a href="/tags/proc/">#proc</a>&nbsp;
+        
+          <a href="/tags/pseudo-filesystem/">#pseudo-filesystem</a>&nbsp;
+        
+          <a href="/tags/linux/">#linux</a>&nbsp;
+        
+          <a href="/tags/containers/">#containers</a>&nbsp;
+        
+          <a href="/tags/namespaces/">#namespaces</a>&nbsp;
+        
+          <a href="/tags/cgroups/">#cgroups</a>&nbsp;
+        
+      </span>
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>Scenario:</p>
+<p>You encountered some weird networking issue with one of the pods running on EKS cluster and decided to perform some packet analysis using Wireshark.</p>
+<p>Due to security reasons, the only way to access an EC2 worker node is via the AWS Session Manager. Once inside, you ran <code>tcpdump</code> and generated a <code>.pcap</code> file, all ready to be analyzed. Except for one problem - how can you get that file out?</p>
+<p><code>SSH</code> access from local machine isn&rsquo;t available so forget about using <code>scp</code>.</p>
+<p>Then you remembered you have access to EKS cluster pods via <code>kubectl</code>, which has a <code>kubectl cp</code> <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp">command</a>. This means you can copy a file out of or into a pod from your machine.</p>
+<p>But wait, how is that useful for copying a file out of the EC2 node? The file isn&rsquo;t even on any of the container.</p>
+<p>Before going to the implementation of the trick, here are 3 things to know:</p>
+<ol>
+<li>
+<p>Containers aren&rsquo;t really a thing - they are constructed out of <a href="https://man7.org/linux/man-pages/man7/namespaces.7.html"><code>namespaces</code></a> and <a href="https://man7.org/linux/man-pages/man7/cgroups.7.html"><code>cgroups</code></a> by isolating processes running on a machine. Each of the containers that are running are just processes.</p>
+</li>
+<li>
+<p>There&rsquo;s a <code>/proc</code> directory, which is a pseudo-filesystem that serves as an interface to kernel data structure. Each of the numbers from the <code>ls /proc</code> output are the PIDs of processes. They are also directories and contains information about the process.</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vagrant@ubuntu-focal64:~$ ls /proc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">137146</span>  <span style="color:#ae81ff">18</span>     <span style="color:#ae81ff">21</span>      <span style="color:#ae81ff">27</span>      <span style="color:#ae81ff">280985</span>  <span style="color:#ae81ff">283</span>    <span style="color:#ae81ff">483</span>    <span style="color:#ae81ff">62160</span>  <span style="color:#ae81ff">67759</span>  <span style="color:#ae81ff">807</span>  <span style="color:#ae81ff">94</span>         consoles     interrupts   kpageflags  pagetypeinfo  sys                zoneinfo
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>      <span style="color:#ae81ff">137147</span>  <span style="color:#ae81ff">183</span>    <span style="color:#ae81ff">22</span>      <span style="color:#ae81ff">271412</span>  <span style="color:#ae81ff">281280</span>  <span style="color:#ae81ff">29</span>     <span style="color:#ae81ff">484</span>    <span style="color:#ae81ff">624</span>    <span style="color:#ae81ff">694</span>    <span style="color:#ae81ff">81</span>   <span style="color:#ae81ff">95</span>         cpuinfo      iomem        loadavg     partitions    sysrq-trigger
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">100</span>     <span style="color:#ae81ff">137148</span>  <span style="color:#ae81ff">189</span>    <span style="color:#ae81ff">23</span>      <span style="color:#ae81ff">279367</span>  <span style="color:#ae81ff">281294</span>  <span style="color:#ae81ff">3</span>      <span style="color:#ae81ff">485</span>    <span style="color:#ae81ff">626</span>    <span style="color:#ae81ff">70634</span>  <span style="color:#ae81ff">82</span>   <span style="color:#ae81ff">96</span>         crypto       ioports      locks       pressure      sysvipc
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10348</span>   <span style="color:#ae81ff">137150</span>  <span style="color:#ae81ff">19251</span>  <span style="color:#ae81ff">24</span>      <span style="color:#ae81ff">279484</span>  <span style="color:#ae81ff">281322</span>  <span style="color:#ae81ff">30</span>     <span style="color:#ae81ff">486</span>    <span style="color:#ae81ff">632</span>    <span style="color:#ae81ff">709</span>    <span style="color:#ae81ff">83</span>   <span style="color:#ae81ff">960</span>        devices      irq          mdstat      sched_debug   thread-self
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">105913</span>  <span style="color:#ae81ff">137151</span>  <span style="color:#ae81ff">19254</span>  <span style="color:#ae81ff">242</span>     <span style="color:#ae81ff">279485</span>  <span style="color:#ae81ff">281851</span>  <span style="color:#ae81ff">32236</span>  <span style="color:#ae81ff">496</span>    <span style="color:#ae81ff">635</span>    <span style="color:#ae81ff">76507</span>  <span style="color:#ae81ff">84</span>   <span style="color:#ae81ff">97</span>         diskstats    kallsyms     meminfo     schedstat     timer_list
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">109</span>     <span style="color:#ae81ff">137152</span>  <span style="color:#ae81ff">2</span>      <span style="color:#ae81ff">243144</span>  <span style="color:#ae81ff">28</span>      <span style="color:#ae81ff">281859</span>  <span style="color:#ae81ff">373</span>    <span style="color:#ae81ff">498</span>    <span style="color:#ae81ff">640</span>    <span style="color:#ae81ff">77</span>     <span style="color:#ae81ff">85</span>   <span style="color:#ae81ff">99</span>         dma          kcore        misc        scsi          tty
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11</span>      <span style="color:#ae81ff">14</span>      <span style="color:#ae81ff">20</span>     <span style="color:#ae81ff">243145</span>  <span style="color:#ae81ff">280697</span>  <span style="color:#ae81ff">281967</span>  <span style="color:#ae81ff">38034</span>  <span style="color:#ae81ff">499</span>    <span style="color:#ae81ff">643</span>    <span style="color:#ae81ff">77326</span>  <span style="color:#ae81ff">89</span>   acpi       driver       key-users    modules     self          uptime
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">112</span>     <span style="color:#ae81ff">15</span>      <span style="color:#ae81ff">202</span>    <span style="color:#ae81ff">25</span>      <span style="color:#ae81ff">280805</span>  <span style="color:#ae81ff">282</span>     <span style="color:#ae81ff">39342</span>  <span style="color:#ae81ff">56658</span>  <span style="color:#ae81ff">649</span>    <span style="color:#ae81ff">77541</span>  <span style="color:#ae81ff">9</span>    buddyinfo  execdomains  keys         mounts      slabinfo      version
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span>      <span style="color:#ae81ff">16</span>      <span style="color:#ae81ff">203</span>    <span style="color:#ae81ff">257814</span>  <span style="color:#ae81ff">280883</span>  <span style="color:#ae81ff">282266</span>  <span style="color:#ae81ff">4</span>      <span style="color:#ae81ff">56677</span>  <span style="color:#ae81ff">651</span>    <span style="color:#ae81ff">78</span>     <span style="color:#ae81ff">90</span>   bus        fb           kmsg         mpt         softirqs      version_signature
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">125</span>     <span style="color:#ae81ff">17</span>      <span style="color:#ae81ff">205</span>    <span style="color:#ae81ff">257849</span>  <span style="color:#ae81ff">280884</span>  <span style="color:#ae81ff">282883</span>  <span style="color:#ae81ff">404</span>    <span style="color:#ae81ff">56683</span>  <span style="color:#ae81ff">666</span>    <span style="color:#ae81ff">79</span>     <span style="color:#ae81ff">92</span>   cgroups    filesystems  kpagecgroup  mtrr        stat          vmallocinfo
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">13</span>      <span style="color:#ae81ff">170</span>     <span style="color:#ae81ff">206</span>    <span style="color:#ae81ff">26</span>      <span style="color:#ae81ff">280963</span>  <span style="color:#ae81ff">282947</span>  <span style="color:#ae81ff">42712</span>  <span style="color:#ae81ff">6</span>      <span style="color:#ae81ff">676</span>    <span style="color:#ae81ff">80</span>     <span style="color:#ae81ff">93</span>   cmdline    fs           kpagecount   net         swaps         vmstat
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vagrant@ubuntu-focal64:/proc/21$ sudo ls
+</span></span><span style="display:flex;"><span>arch_status  cgroup	 coredump_filter  exe	   io	      maps	 mountstats  oom_adj	    patch_state  sched	    smaps	  statm    timers
+</span></span><span style="display:flex;"><span>attr	     clear_refs  cpuset		  fd	   limits     mem	 net	     oom_score	    personality  schedstat  smaps_rollup  status   timerslack_ns
+</span></span><span style="display:flex;"><span>autogroup    cmdline	 cwd		  fdinfo   loginuid   mountinfo  ns	     oom_score_adj  projid_map	 sessionid  stack	  syscall  uid_map
+</span></span><span style="display:flex;"><span>auxv	     comm	 environ	  gid_map  map_files  mounts	 numa_maps   pagemap	    root	 setgroups  stat	  task	   wchan
+</span></span></code></pre></div><ol start="3">
+<li>The <code>/proc/&lt;PID&gt;/root</code> directory serves as not just a symbolic link to the process&rsquo; root directory, it also provides the same view of the filesystem as the process itself. That means if you copy a file into the <code>/proc/&lt;PID&gt;/root</code> directory, it will be visible on the process&rsquo; filesystem.</li>
+</ol>
+<hr>
+<p>Now here are the steps:</p>
+<ol>
+<li>Identify a pod you have access to. You should be able to execute <code>kubectl cp</code> on this pod.</li>
+<li>Identify the node on which the pod is running on. <code>kubectl get po -o wide</code></li>
+<li>Access node using Session Manager and identify the PID of that pod. You can locate this by <code>ps aux | grep &lt;container run command&gt;</code>.</li>
+<li>Copy the file from VM into the <code>/proc/&lt;PID&gt;/root</code> directory of the PID you identified in step 2.</li>
+<li>Copy the file from pod to your local machine via <code>kubectl cp &lt;some-namespace&gt;/&lt;some-pod&gt;:/somefile.pcap ~/Desktop/somefile.pcap</code></li>
+</ol>
+<p>You have now successfully copied the file onto your local machine.</p>
+<p>Useful references:</p>
+<ul>
+<li><a href="https://www.andrew.cmu.edu/course/14-712-s20/applications/ln/Namespaces_Cgroups_Conatiners.pdf">https://www.andrew.cmu.edu/course/14-712-s20/applications/ln/Namespaces_Cgroups_Conatiners.pdf</a></li>
+<li><a href="https://man7.org/linux/man-pages/man5/proc.5.html">https://man7.org/linux/man-pages/man5/proc.5.html</a></li>
+</ul>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/blog/imagemagick-magic/">
+                  <span class="button__text">Automation magic with Imagemagick</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span
+          >© 2023 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+
+      
+    </div>
+
+    
+      
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
+}
+</script>
+
+    
+  </body>
+</html>

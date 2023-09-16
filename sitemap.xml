@@ -2,10 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/moments/anotherbreakfast/</loc>
-    <lastmod>2023-09-10T09:19:08+08:00</lastmod>
+    <loc>/blog/proc-root/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/blog/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/cgroups/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/containers/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/eks/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
   </url><url>
     <loc>/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/kubectl/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/linux/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/namespaces/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/proc/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/pseudo-filesystem/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2023-09-16T14:54:10+08:00</lastmod>
+  </url><url>
+    <loc>/moments/anotherbreakfast/</loc>
     <lastmod>2023-09-10T09:19:08+08:00</lastmod>
   </url><url>
     <loc>/moments/</loc>
@@ -161,13 +194,7 @@
     <loc>/blog/imagemagick-magic/</loc>
     <lastmod>2023-06-22T23:33:18+08:00</lastmod>
   </url><url>
-    <loc>/blog/</loc>
-    <lastmod>2023-06-22T23:33:18+08:00</lastmod>
-  </url><url>
     <loc>/tags/imagemagick/</loc>
-    <lastmod>2023-06-22T23:33:18+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2023-06-22T23:33:18+08:00</lastmod>
   </url><url>
     <loc>/moments/2023-03-17/</loc>
@@ -180,9 +207,6 @@
     <lastmod>2023-02-18T08:06:27+08:00</lastmod>
   </url><url>
     <loc>/tags/learnings/</loc>
-    <lastmod>2023-02-18T08:06:27+08:00</lastmod>
-  </url><url>
-    <loc>/tags/linux/</loc>
     <lastmod>2023-02-18T08:06:27+08:00</lastmod>
   </url><url>
     <loc>/tags/networking/</loc>
@@ -239,9 +263,6 @@
     <loc>/blog/configuring-conntrack-eks/</loc>
     <lastmod>2021-12-31T10:56:04+08:00</lastmod>
   </url><url>
-    <loc>/tags/cgroups/</loc>
-    <lastmod>2021-11-11T19:30:06+08:00</lastmod>
-  </url><url>
     <loc>/tags/kernel/</loc>
     <lastmod>2021-11-11T19:30:06+08:00</lastmod>
   </url><url>
@@ -251,9 +272,6 @@
     <loc>/blog/kubernetes-cpu-requests-limits/</loc>
     <lastmod>2021-11-11T19:30:06+08:00</lastmod>
   </url><url>
-    <loc>/tags/namespaces/</loc>
-    <lastmod>2021-11-11T19:30:06+08:00</lastmod>
-  </url><url>
     <loc>/blog/understanding-linux-processes/</loc>
     <lastmod>2021-11-03T08:53:15+08:00</lastmod>
   </url><url>
@@ -261,9 +279,6 @@
     <lastmod>2021-10-18T08:11:48+08:00</lastmod>
   </url><url>
     <loc>/tags/dns/</loc>
-    <lastmod>2021-10-18T08:11:48+08:00</lastmod>
-  </url><url>
-    <loc>/tags/eks/</loc>
     <lastmod>2021-10-18T08:11:48+08:00</lastmod>
   </url><url>
     <loc>/blog/eks-private-ip-resolution/</loc>

@@ -9,10 +9,170 @@
     <description>Recent content in Tags on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 23:33:18 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 16 Sep 2023 14:54:10 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>cgroups</title>
+      <link>/tags/cgroups/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/cgroups/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>containers</title>
+      <link>/tags/containers/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/containers/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>eks</title>
+      <link>/tags/eks/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/eks/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>kubectl</title>
+      <link>/tags/kubectl/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/kubectl/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>/tags/linux/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/linux/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>namespaces</title>
+      <link>/tags/namespaces/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/namespaces/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>proc</title>
+      <link>/tags/proc/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/proc/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>pseudo-filesystem</title>
+      <link>/tags/pseudo-filesystem/</link>
+      <pubDate>Sat, 16 Sep 2023 14:54:10 +0800</pubDate>
+      
+      <guid>/tags/pseudo-filesystem/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>automation</title>
@@ -60,26 +220,6 @@
       <pubDate>Sat, 18 Feb 2023 08:06:27 +0800</pubDate>
       
       <guid>/tags/learnings/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>linux</title>
-      <link>/tags/linux/</link>
-      <pubDate>Sat, 18 Feb 2023 08:06:27 +0800</pubDate>
-      
-      <guid>/tags/linux/</guid>
       <description>
         
           
@@ -295,26 +435,6 @@
     </item>
     
     <item>
-      <title>cgroups</title>
-      <link>/tags/cgroups/</link>
-      <pubDate>Thu, 11 Nov 2021 19:30:06 +0800</pubDate>
-      
-      <guid>/tags/cgroups/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          
-          
-        
-        </description>
-    </item>
-    
-    <item>
       <title>kernel</title>
       <link>/tags/kernel/</link>
       <pubDate>Thu, 11 Nov 2021 19:30:06 +0800</pubDate>
@@ -355,26 +475,6 @@
     </item>
     
     <item>
-      <title>namespaces</title>
-      <link>/tags/namespaces/</link>
-      <pubDate>Thu, 11 Nov 2021 19:30:06 +0800</pubDate>
-      
-      <guid>/tags/namespaces/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          
-          
-        
-        </description>
-    </item>
-    
-    <item>
       <title>aws</title>
       <link>/tags/aws/</link>
       <pubDate>Mon, 18 Oct 2021 08:11:48 +0800</pubDate>
@@ -400,26 +500,6 @@
       <pubDate>Mon, 18 Oct 2021 08:11:48 +0800</pubDate>
       
       <guid>/tags/dns/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>eks</title>
-      <link>/tags/eks/</link>
-      <pubDate>Mon, 18 Oct 2021 08:11:48 +0800</pubDate>
-      
-      <guid>/tags/eks/</guid>
       <description>
         
           
