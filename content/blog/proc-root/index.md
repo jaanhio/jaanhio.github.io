@@ -62,3 +62,7 @@ Now here are the steps:
 5. Copy the file from pod to your local machine via `kubectl cp <some-namespace>/<some-pod>:/somefile.pcap ~/Desktop/somefile.pcap`
 
 You have now successfully copied the file onto your local machine.
+
+Useful references:
+-  https://www.andrew.cmu.edu/course/14-712-s20/applications/ln/Namespaces_Cgroups_Conatiners.pdf
+- https://man7.org/linux/man-pages/man5/proc.5.html
