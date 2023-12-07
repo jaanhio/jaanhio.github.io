@@ -57,7 +57,7 @@ WantedBy=multi-user.target
 EOF'
 ```
 
-We now perform a reload, start and enable the process. The `enable` call will ensure it will start at boot:
+We now perform a reload, start and enable the process. The enable call will ensure it will start at boot:
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl start node_exporter
