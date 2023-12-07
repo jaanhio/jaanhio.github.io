@@ -57,15 +57,16 @@ WantedBy=multi-user.target
 EOF'
 ```
 
-We now perform a reload and start the process.
+We now perform a reload, start and enable the process. The `enable` call will ensure it will start at boot:
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
 ```
 
 We can then check to see if process is running properly.
 ```shell
-$ sudo systemctl status node_exporter
+sudo systemctl status node_exporter
 ● node_exporter.service - Node Exporter
    Loaded: loaded (/etc/systemd/system/node_exporter.service; disabled; vendor preset: disabled)
    Active: active (running) since Thu 2021-08-19 14:38:14 +08; 23h ago
