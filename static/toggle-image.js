@@ -11,24 +11,34 @@ const setDivStyleAndAttr = (div) => {
     div.style.justifyContent = 'center'
     div.style.alignItems = 'center'
     div.style.backgroundColor = 'rgba(0,0,0,0.4)'
+    div.style.zIndex = '9999'
 
     div.setAttribute('id', 'overlay-div')
 }
 
 const setImgStyle = (img) => {
-    img.style.maxWidth = '90%'
     img.style.cursor = 'zoom-out'
 }
 
 for (const img of zoomableImgs) {
     img.addEventListener('click', (event) => {
-        const imgSrc = event.target.attributes.src.value;
+
+        if (isToggled) {
+            alert('hmmmm what are you trying to do...?')
+            isToggled = false
+            const overlayDiv = document.getElementById('overlay-div')
+            overlayDiv.remove()
+            throw new Error('???')
+        }
+
+        const imgSrc = event.target.attributes.src.value
         
         const overlayDiv = document.createElement('div')
         setDivStyleAndAttr(overlayDiv)
 
-        overlayDiv.addEventListener('click', (overlayEvent) => {
-            console.log('overlay', overlayEvent)
+        overlayDiv.addEventListener('click', () => {
+            isToggled = false
+            overlayDiv.remove()
         })
 
         const overlayImg = document.createElement('img')
