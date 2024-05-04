@@ -47,22 +47,28 @@ This is where systemd comes in."
 <link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
 
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Node-exporter setup with Systemd"/>
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Node-exporter setup with Systemd">
 <meta name="twitter:description" content="For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
 To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in."/>
+This is where systemd comes in.">
 
 
 
-<meta property="og:title" content="Node-exporter setup with Systemd" />
-<meta property="og:description" content="For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/linux-node-exporter-setup/" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2021-08-19T22:22:18+08:00" />
-<meta property="article:modified_time" content="2021-08-19T22:22:18+08:00" />
+<meta property="og:url" content="/blog/linux-node-exporter-setup/">
+  <meta property="og:site_name" content="jaanhio">
+  <meta property="og:title" content="Node-exporter setup with Systemd">
+  <meta property="og:description" content="For those who aren’t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
+To get it up and running, there’s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn’t the most reliable approach in a production environment as there’s no way to ensure that the node_exporter process will run continuously.
+This is where systemd comes in.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2021-08-19T22:22:18+08:00">
+    <meta property="article:modified_time" content="2021-08-19T22:22:18+08:00">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Monitoring">
+    <meta property="article:tag" content="Node-Exporter">
+    <meta property="article:tag" content="Systemd">
 
 
 
@@ -324,7 +330,7 @@ This is where systemd comes in." />
     
       <div class="copyright">
         <span
-          >© 2023 Powered by
+          >© 2024 Powered by
           <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
         >
       </div>
@@ -340,16 +346,25 @@ This is where systemd comes in." />
 
     
       
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
-}
-</script>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-SX2DZ2KVGS');
+        }
+      </script>
+    
+  
+
 
     
   </body>

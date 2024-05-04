@@ -1261,7 +1261,7 @@ This led to the idea of removing all Bastion instances and configure direct acce
         
         
           If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&amp;rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out ✅
+You checked the logs and traced it back to the source code. Logic checks out &amp;#x2705;
 You started narrowing down the causes. Networking issue? Configuration issue?
 You entered the container and decided to use ping to identify network connectivity issues.
 / $ ping google.com PING google.

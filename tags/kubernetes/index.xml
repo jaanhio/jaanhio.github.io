@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>kubernetes on jaanhio</title>
+    <title>Kubernetes on jaanhio</title>
     
     
     
     <link>/tags/kubernetes/</link>
-    <description>Recent content in kubernetes on jaanhio</description>
+    <description>Recent content in Kubernetes on jaanhio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Thu, 11 Nov 2021 19:30:06 +0800</lastBuildDate>

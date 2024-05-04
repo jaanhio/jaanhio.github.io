@@ -47,22 +47,27 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
 
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN"/>
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN">
 <meta name="twitter:description" content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
 However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead."/>
+This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.">
 
 
 
-<meta property="og:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN" />
-<meta property="og:description" content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
+<meta property="og:url" content="/blog/eks-private-ip-resolution/">
+  <meta property="og:site_name" content="jaanhio">
+  <meta property="og:title" content="Managing multiple EKS clusters access using Apiservers&#39; private endpoints with AWS VPN">
+  <meta property="og:description" content="I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
 However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/eks-private-ip-resolution/" /><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2021-10-18T08:11:48+08:00" />
-<meta property="article:modified_time" content="2021-10-18T08:11:48+08:00" />
+This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2021-10-18T08:11:48+08:00">
+    <meta property="article:modified_time" content="2021-10-18T08:11:48+08:00">
+    <meta property="article:tag" content="Aws">
+    <meta property="article:tag" content="Eks">
+    <meta property="article:tag" content="Dns">
 
 
 
@@ -273,9 +278,9 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <h3 id="configuration">Configuration</h3>
 <p>For this approach to work, we definitely need some form of network connections between the various VPCs.</p>
 <p>This can be accomplished using either <a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html">AWS Transit Gateways</a> or <a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a>, followed by updating the various subnets&rsquo; route tables with the appropriate routing rules.</p>
-<p>Transit Gateway? ✅</p>
-<p>Route tables updated? ✅</p>
-<p>Connected to cluster A&rsquo;s VPN server? ✅</p>
+<p>Transit Gateway? &#x2705;</p>
+<p>Route tables updated? &#x2705;</p>
+<p>Connected to cluster A&rsquo;s VPN server? &#x2705;</p>
 <p>Now <code>dig &lt;external apiserver endpoint&gt;</code>&hellip;.returned a public IP address. What am I missing?</p>
 <p>After some thorough Googling, I finally found an <a href="https://aws.amazon.com/blogs/compute/enabling-dns-resolution-for-amazon-eks-cluster-endpoints/">AWS blog guide</a> covering exactly what I wanted to achieve!</p>
 <p>Turns out the Route53&rsquo;s <code>Inbound Endpoints</code>, <code>Outbound Endpoints</code> and <code>Rules</code> were missing (TIL moment right here).</p>
@@ -335,7 +340,7 @@ This led to the idea of removing all Bastion instances and configure direct acce
     
       <div class="copyright">
         <span
-          >© 2023 Powered by
+          >© 2024 Powered by
           <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
         >
       </div>
@@ -351,16 +356,25 @@ This led to the idea of removing all Bastion instances and configure direct acce
 
     
       
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-SX2DZ2KVGS', { 'anonymize_ip': false });
-}
-</script>
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-SX2DZ2KVGS');
+        }
+      </script>
+    
+  
+
 
     
   </body>

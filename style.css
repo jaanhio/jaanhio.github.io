@@ -118,3 +118,8 @@ label > img {
     column-count:         1;
   }
 }
+
+li {
+  word-wrap: break-word;
+  margin-bottom: 5px;
+}
