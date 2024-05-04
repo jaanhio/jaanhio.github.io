@@ -246,9 +246,8 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 </span></span><span style="display:flex;"><span>root     <span style="color:#ae81ff">32561</span> <span style="color:#ae81ff">32560</span>  <span style="color:#ae81ff">0</span> 19:41 pts/0    00:00:00              <span style="color:#ae81ff">\_</span> sudo su - ec2-user
 </span></span></code></pre></div><p>We can visualize this using a tree diagram.
 <figure class="post-cover">
-    <input type="checkbox" id="process-tree.png">
       <label for="process-tree.png">
-        <img src="process-tree.png" alt="" />
+        <img class="zoomable" src="process-tree.png" alt="" />
       </label>
     
 </figure></p>
@@ -260,9 +259,8 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 <p>As the name suggests, an orphan process is one where the parent process terminates before the child process.</p>
 <p>When this happens, the kernel will adjust the orphan processes and make them children of the <code>init</code> process and call the <code>wait()</code> syscall on these newly adopted child processes.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="orphan-process.png">
       <label for="orphan-process.png">
-        <img src="orphan-process.png" alt="" />
+        <img class="zoomable" src="orphan-process.png" alt="" />
       </label>
     
 </figure>
@@ -286,9 +284,8 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 <li>processes are never responsible for cleaning up their grandchildren processes. this task is always handled by PID 1, which is usually the <code>init</code> process</li>
 </ul>
 <figure class="post-cover">
-    <input type="checkbox" id="zombie-process.png">
       <label for="zombie-process.png">
-        <img src="zombie-process.png" alt="" />
+        <img class="zoomable" src="zombie-process.png" alt="" />
       </label>
     
 </figure>
@@ -358,6 +355,7 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

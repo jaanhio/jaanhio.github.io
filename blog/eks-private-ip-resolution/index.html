@@ -221,9 +221,8 @@ This led to the idea of removing all Bastion instances and configure direct acce
       <p>I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.</p>
 <p>However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="multi-cluster.png">
       <label for="multi-cluster.png">
-        <img src="multi-cluster.png" alt="" />
+        <img class="zoomable" src="multi-cluster.png" alt="" />
       </label>
     
 </figure>
@@ -241,9 +240,8 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <p>Having a publicly exposed endpoint for the EKS Apiservers is akin to apartments having publicly accessible doors. To control access, we use credentials and keys to authenticate users, similar to how the apartment door can only be unlocked by specific keys given to a few tenants.</p>
 <p>BUT just because someone doesn&rsquo;t have valid credentials to access doesn&rsquo;t mean they will not try accessing it.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="public-access.png">
       <label for="public-access.png">
-        <img src="public-access.png" alt="" />
+        <img class="zoomable" src="public-access.png" alt="" />
       </label>
     
 </figure>
@@ -255,9 +253,8 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <p>How can we reduce our attack surface without having to manually whitelist valid users&rsquo; IP addresses?</p>
 <p>Simple: by removing the public endpoints entirely.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="vpn-access.png">
       <label for="vpn-access.png">
-        <img src="vpn-access.png" alt="" />
+        <img class="zoomable" src="vpn-access.png" alt="" />
       </label>
     
 </figure>
@@ -269,9 +266,8 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <p>For now, this seems to be the best approach out of the 3 in terms of security and maintainability, with the assumption that availability of AWS VPN service shouldn&rsquo;t be a concern.</p>
 <p>Is this entirely bullet-proof? Probably not, since we are still one misconfiguration away from locking us out from all clusters (however unlikely). But it is still something worth exploring.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="single-vpn.png">
       <label for="single-vpn.png">
-        <img src="single-vpn.png" alt="" />
+        <img class="zoomable" src="single-vpn.png" alt="" />
       </label>
     
 </figure>
@@ -285,9 +281,8 @@ This led to the idea of removing all Bastion instances and configure direct acce
 <p>After some thorough Googling, I finally found an <a href="https://aws.amazon.com/blogs/compute/enabling-dns-resolution-for-amazon-eks-cluster-endpoints/">AWS blog guide</a> covering exactly what I wanted to achieve!</p>
 <p>Turns out the Route53&rsquo;s <code>Inbound Endpoints</code>, <code>Outbound Endpoints</code> and <code>Rules</code> were missing (TIL moment right here).</p>
 <figure class="post-cover">
-    <input type="checkbox" id="route53-config.png">
       <label for="route53-config.png">
-        <img src="route53-config.png" alt="" />
+        <img class="zoomable" src="route53-config.png" alt="" />
       </label>
     
 </figure>
@@ -350,6 +345,7 @@ This led to the idea of removing all Bastion instances and configure direct acce
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

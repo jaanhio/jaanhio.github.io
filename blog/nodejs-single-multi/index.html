@@ -389,9 +389,8 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <p>Those with sharp eyes might have spotted something: there&rsquo;s more than 1 <a href="https://unix.stackexchange.com/questions/670836/why-do-threads-have-their-own-pid#:~:text=In%20Linux%2C%20each%20thread%20has,matches%20its%20thread%20group%20id.">threads/processes</a> that belongs to the application displayed by <code>htop</code> the moment I run it.</p>
 <p>After enabling &ldquo;Tree View&rdquo; display setting on <code>htop</code>,</p>
 <figure class="post-cover">
-    <input type="checkbox" id="./another-tree-view.png">
       <label for="./another-tree-view.png">
-        <img src="./another-tree-view.png" alt="" />
+        <img class="zoomable" src="./another-tree-view.png" alt="" />
       </label>
     
 </figure>
@@ -409,23 +408,20 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 </blockquote>
 <p>Let&rsquo;s try running it again with the <code>--v8-pool-size</code> option.</p>
 <p><figure class="post-cover">
-    <input type="checkbox" id="./pool-size-2.png">
       <label for="./pool-size-2.png">
-        <img src="./pool-size-2.png" alt="" />
+        <img class="zoomable" src="./pool-size-2.png" alt="" />
       </label>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="./pool-size-1.png">
       <label for="./pool-size-1.png">
-        <img src="./pool-size-1.png" alt="" />
+        <img class="zoomable" src="./pool-size-1.png" alt="" />
       </label>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="./pool-size-0.png">
       <label for="./pool-size-0.png">
-        <img src="./pool-size-0.png" alt="" />
+        <img class="zoomable" src="./pool-size-0.png" alt="" />
       </label>
     
 </figure></p>
@@ -441,9 +437,8 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <p>For that, I made a total of 9 requests at once to trigger the asynchronous function call.</p>
 <p><code>time curl -v &quot;http://localhost:8080?type=async&amp;size=134217728&quot;</code></p>
 <figure class="post-cover">
-    <input type="checkbox" id="./9-requests.png">
       <label for="./9-requests.png">
-        <img src="./9-requests.png" alt="" />
+        <img class="zoomable" src="./9-requests.png" alt="" />
       </label>
     
 </figure>
@@ -517,9 +512,8 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <p><a href="https://afteracademy.com/blog/what-is-context-switching-in-operating-system">Context switching</a>. It is the process that involves switching of tasks/processes running on the CPU to and from various states such as &ldquo;ready&rdquo;, &ldquo;waiting&rdquo;, &ldquo;blocked&rdquo;.</p>
 <p>While the upside is giving CPU the ability to multitask, it comes with the cost of additional latency when switching between processes.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="./context-switch-count.png">
       <label for="./context-switch-count.png">
-        <img src="./context-switch-count.png" alt="" />
+        <img class="zoomable" src="./context-switch-count.png" alt="" />
       </label>
     
 </figure>
@@ -591,6 +585,7 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

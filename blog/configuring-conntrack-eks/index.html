@@ -213,9 +213,8 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">summary</span>: <span style="color:#ae81ff">Number of conntrack are getting close to the limit.</span>
 </span></span></code></pre></div><p>I then checked the dashboards and noticed signs of network saturation.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="network-saturation.png">
       <label for="network-saturation.png">
-        <img src="network-saturation.png" alt="" />
+        <img class="zoomable" src="network-saturation.png" alt="" />
       </label>
     
 </figure>
@@ -256,9 +255,8 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
 </ul>
 <p>I manually tested the first approach and seems like it did solve the problem (for now?). Network saturation dropped to 0, although it came with an increase in CPU and memory utilization.
 <figure class="post-cover">
-    <input type="checkbox" id="post-fix.png">
       <label for="post-fix.png">
-        <img src="post-fix.png" alt="" />
+        <img class="zoomable" src="post-fix.png" alt="" />
       </label>
     
 </figure></p>
@@ -355,6 +353,7 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

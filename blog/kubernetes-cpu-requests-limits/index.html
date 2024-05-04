@@ -225,9 +225,8 @@ But throttling? Why was the process facing CPU throttling when there&amp;rsquo;s
 25.91% throttling of CPU in namespace vault for container consul in pod consul-server-2.
 </code></pre><p>I checked the dashboards and see that CPU usage was periodically peaking above the <code>resources.requests.cpu</code> (red line). Perhaps I should increase the CPU requests a little.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="consul-cpu-stats.png">
       <label for="consul-cpu-stats.png">
-        <img src="consul-cpu-stats.png" alt="" />
+        <img class="zoomable" src="consul-cpu-stats.png" alt="" />
       </label>
     
 </figure>
@@ -282,9 +281,8 @@ although there are utility controllers which serve purposes other than resource 
 <p>Though the Kubernetes configuration for both <code>requests.cpu</code> &amp; <code>limits.cpu</code> look similar, they are actually implemented using different mechanisms.</p>
 <p>The related configurations and files are located under the <code>/sys/fs/cgroup/kubepods</code> directory.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="kubepods-dir.png">
       <label for="kubepods-dir.png">
-        <img src="kubepods-dir.png" alt="" />
+        <img class="zoomable" src="kubepods-dir.png" alt="" />
       </label>
     
 </figure>
@@ -310,18 +308,16 @@ although there are utility controllers which serve purposes other than resource 
         |__/bd2bd6e9d405703ceb140e0a94eb4df02ed0930498459b1faeeba2504c81a7e8
 </code></pre><p>We can also see that there&rsquo;s 10 pods (directories prefixed with <code>pod</code>) running on this particular node, which matches the output of <code>kubectl get pod | grep &lt;node name&gt;</code>.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="k-get-po.png">
       <label for="k-get-po.png">
-        <img src="k-get-po.png" alt="" />
+        <img class="zoomable" src="k-get-po.png" alt="" />
       </label>
     
 </figure>
 <p>Then there&rsquo;s the directories nested under one of the <code>pod</code> directories with alphanumeric hashes as their names. These are for the containers within a pod.</p>
 <p>This is verified by comparing it with the details of the pods.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="example-pod.png">
       <label for="example-pod.png">
-        <img src="example-pod.png" alt="" />
+        <img class="zoomable" src="example-pod.png" alt="" />
       </label>
     
 </figure>
@@ -374,9 +370,8 @@ container B:
 </code></pre><p>The same request will now take 350ms to respond!</p>
 <p>This is because instead of being able to use 200ms of uninterrupted CPU time, the process now has only a quota of <code>500m/1000m * 100,000us</code> <strong>every 100,000us period</strong>. Once the quota is depleted, the process will be throttled.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="cpu-throttle.png">
       <label for="cpu-throttle.png">
-        <img src="cpu-throttle.png" alt="" />
+        <img class="zoomable" src="cpu-throttle.png" alt="" />
       </label>
     
 </figure>
@@ -474,6 +469,7 @@ throttled_time 8635080132047
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

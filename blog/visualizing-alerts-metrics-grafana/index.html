@@ -241,9 +241,8 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
 <p>The latter portion of PromQL (<code>count by (alertname) (changes(ALERTS_FOR_STATE[48h]) AND ignoring(alertstate) max_over_time(ALERTS{alertstate=&quot;firing&quot;}[48h])) * 1)</code>) is a trick to ensure that the count of each of the time series (alert) computed is incremented by 1. This is because an alert going from not existing (no <code>ALERTS_FOR_STATE</code> metric available) to existing is not counted as a change in value, thus the need to increment by 1.</p>
 <p>Combining them together:
 <figure class="post-cover">
-    <input type="checkbox" id="alert-metrics-bar.png">
       <label for="alert-metrics-bar.png">
-        <img src="alert-metrics-bar.png" alt="alert-metrics-bar" />
+        <img class="zoomable" src="alert-metrics-bar.png" alt="alert-metrics-bar" />
       </label>
     
 </figure></p>
@@ -305,6 +304,7 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

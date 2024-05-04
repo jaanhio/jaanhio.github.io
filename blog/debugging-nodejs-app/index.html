@@ -219,45 +219,40 @@ It all began with an alert notifying us of the application experiencing CPU thro
 In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.</p>
 <p>It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.</p>
 <p><figure class="post-cover">
-    <input type="checkbox" id="old-cpu-usage.png">
       <label for="old-cpu-usage.png">
-        <img src="old-cpu-usage.png" alt="" />
+        <img class="zoomable" src="old-cpu-usage.png" alt="" />
       </label>
     
       <figcaption class="center">CPU usage</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="old-cpu-throttling.png">
       <label for="old-cpu-throttling.png">
-        <img src="old-cpu-throttling.png" alt="" />
+        <img class="zoomable" src="old-cpu-throttling.png" alt="" />
       </label>
     
       <figcaption class="center">CPU throttling</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="old-memory-usage.png">
       <label for="old-memory-usage.png">
-        <img src="old-memory-usage.png" alt="" />
+        <img class="zoomable" src="old-memory-usage.png" alt="" />
       </label>
     
       <figcaption class="center">Memory usage</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="old-network-bandwidth.png">
       <label for="old-network-bandwidth.png">
-        <img src="old-network-bandwidth.png" alt="" />
+        <img class="zoomable" src="old-network-bandwidth.png" alt="" />
       </label>
     
       <figcaption class="center">Network bandwidth</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="old-packet-rate.png">
       <label for="old-packet-rate.png">
-        <img src="old-packet-rate.png" alt="" />
+        <img class="zoomable" src="old-packet-rate.png" alt="" />
       </label>
     
       <figcaption class="center">Packet rate</figcaption>
@@ -303,18 +298,16 @@ In this post, I will share my troubleshooting process and interesting stuff I di
 </span></span></code></pre></div><p>Excluding the header row and the only listening connection, there&rsquo;s a total of 256 connections, all to a bunch of IP addresses on port 9243. A quick Google search revealed that port 9243 is commonly used by ElasticCloud. Indeed, we do use <code>winston-elasticsearch</code> library for establishing transport of logs to ElasticCloud.</p>
 <p>I restarted the application multiple times while varying the duration between scrape and observed the number of connections created. Turns out it did not start with 256 connections but instead increases over time. Increasing the duration between scrape slowed down the rate of increase of connections. It also reduced the amount of logs produced.</p>
 <p><figure class="post-cover">
-    <input type="checkbox" id="container-sockets.png">
       <label for="container-sockets.png">
-        <img src="container-sockets.png" alt="" />
+        <img class="zoomable" src="container-sockets.png" alt="" />
       </label>
     
       <figcaption class="center">Container sockets</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="container-fd.png">
       <label for="container-fd.png">
-        <img src="container-fd.png" alt="" />
+        <img class="zoomable" src="container-fd.png" alt="" />
       </label>
     
       <figcaption class="center">Container FD</figcaption>
@@ -372,9 +365,8 @@ strace: Process 25 attached
 <p>When a Nodejs process application is started with <code>--inspect</code> flag, the Nodejs process will listen for a debugging client. There are multiple clients available; I used Chrome Devtools. See <a href="https://nodejs.org/en/docs/guides/debugging-getting-started/">debugging guide</a> for more information.</p>
 <p>I then captured the CPU and memory profile.</p>
 <p><figure class="post-cover">
-    <input type="checkbox" id="cpu-profile.png">
       <label for="cpu-profile.png">
-        <img src="cpu-profile.png" alt="" />
+        <img class="zoomable" src="cpu-profile.png" alt="" />
       </label>
     
       <figcaption class="center">CPU profile</figcaption>
@@ -399,9 +391,8 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
 </span></span></code></pre></div><p>Depending on the options (<code>opts.proxy</code>) passed, the creation of sockets is handled either by Nodejs <code>http</code> or <code>https</code> module or <code>hpagent</code> (which uses <code>http</code>/<code>https</code> modules under-the-hood), which reminds me of the <a href="https://medium.com/the-node-js-collection/why-the-hell-would-you-use-node-js-4b053b94ab8e">power of Nodejs and event loop</a> to support large number of concurrent connections</p>
 <p>Now for the memory profile.
 <figure class="post-cover">
-    <input type="checkbox" id="memory-profile.png">
       <label for="memory-profile.png">
-        <img src="memory-profile.png" alt="" />
+        <img class="zoomable" src="memory-profile.png" alt="" />
       </label>
     
       <figcaption class="center">Memory profile</figcaption>
@@ -416,36 +407,32 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
 <p>I removed the use of <code>winston-elasticsearch</code> library and wala. Also, this library is no longer needed since we have <code>fluent-bit</code> running in our EKS clusters for shipping logs.</p>
 <p>Below are diagrams comparing before and after change was made (new pod metrics in TEAL color).
 <figure class="post-cover">
-    <input type="checkbox" id="new-cpu-usage.png">
       <label for="new-cpu-usage.png">
-        <img src="new-cpu-usage.png" alt="" />
+        <img class="zoomable" src="new-cpu-usage.png" alt="" />
       </label>
     
       <figcaption class="center">CPU usage</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="new-memory-usage.png">
       <label for="new-memory-usage.png">
-        <img src="new-memory-usage.png" alt="" />
+        <img class="zoomable" src="new-memory-usage.png" alt="" />
       </label>
     
       <figcaption class="center">Memory usage</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="new-network-bandwidth.png">
       <label for="new-network-bandwidth.png">
-        <img src="new-network-bandwidth.png" alt="" />
+        <img class="zoomable" src="new-network-bandwidth.png" alt="" />
       </label>
     
       <figcaption class="center">Network bandwidth</figcaption>
     
 </figure>
 <figure class="post-cover">
-    <input type="checkbox" id="new-packet-rate.png">
       <label for="new-packet-rate.png">
-        <img src="new-packet-rate.png" alt="" />
+        <img class="zoomable" src="new-packet-rate.png" alt="" />
       </label>
     
       <figcaption class="center">Packet rate</figcaption>
@@ -514,6 +501,7 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>

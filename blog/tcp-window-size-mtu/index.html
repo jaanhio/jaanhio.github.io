@@ -221,9 +221,8 @@ What is window size? Window size is a TCP header value which controls the flow o
 <h1 id="what-is-window-size">What is window size?</h1>
 <p>Window size is a TCP header value which controls the flow of data. The header space for this value is 2 bytes long, which translates to a maximum value of 65535 bytes. This value is OS/TCP stack dependent.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="window-size.png">
       <label for="window-size.png">
-        <img src="window-size.png" alt="window-size" />
+        <img class="zoomable" src="window-size.png" alt="window-size" />
       </label>
     
 </figure>
@@ -234,9 +233,8 @@ What is window size? Window size is a TCP header value which controls the flow o
 <p>I used pail as an example but you can imagine it being a cup if the window size is even smaller.</p>
 <p>Now think about the amount of round trips required to completely transfer the beer over. Throw in the latency between each transfer and we can easily see how this can become a bottleneck.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="small-cup.png">
       <label for="small-cup.png">
-        <img src="small-cup.png" alt="small-cup" />
+        <img class="zoomable" src="small-cup.png" alt="small-cup" />
       </label>
     
 </figure>
@@ -244,18 +242,16 @@ What is window size? Window size is a TCP header value which controls the flow o
 <p>For modern client-server communications, 65535 bytes wouldn&rsquo;t cut it.</p>
 <p>Thankfully, there&rsquo;s the <code>window scale</code> option and is only sent with <code>SYN</code> packet.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="window-scale.png">
       <label for="window-scale.png">
-        <img src="window-scale.png" alt="window-scale" />
+        <img class="zoomable" src="window-scale.png" alt="window-scale" />
       </label>
     
 </figure>
 <p>This serves as a multiplier for the <code>window size</code>, which means a much larger buffer to hold the data.</p>
 <p>Using the beer transfer analogy again, it&rsquo;s like upgrading the pail to a cement truck.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="big-truck.png">
       <label for="big-truck.png">
-        <img src="big-truck.png" alt="big-truck" />
+        <img class="zoomable" src="big-truck.png" alt="big-truck" />
       </label>
     
 </figure>
@@ -265,18 +261,16 @@ What is window size? Window size is a TCP header value which controls the flow o
 <p>We can view the entire data transfer process as a combination of a few entities: server, client and the pipe connecting them.</p>
 <p>The MTU determines the size of the pipe whereas <code>window size</code> determines the size of buffer at both ends.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="mtu.png">
       <label for="mtu.png">
-        <img src="mtu.png" alt="mtu" />
+        <img class="zoomable" src="mtu.png" alt="mtu" />
       </label>
     
 </figure>
 <p>Assuming MTU is 1500 bytes and the entire payload is 15000 bytes, there will be a total of 10 exchanges needed for entire transfer to complete.</p>
 <p>Using Wireshark, we can see how MTU (1500 bytes) limits the <code>TCP segment len</code>, and also how these segments are finally assembled.</p>
 <figure class="post-cover">
-    <input type="checkbox" id="assembled-segments.png">
       <label for="assembled-segments.png">
-        <img src="assembled-segments.png" alt="big-truck" />
+        <img class="zoomable" src="assembled-segments.png" alt="big-truck" />
       </label>
     
 </figure>
@@ -341,6 +335,7 @@ What is window size? Window size is a TCP header value which controls the flow o
 
 <script src="/assets/main.js"></script>
 <script src="/assets/prism.js"></script><script src="/searchbar.js"></script>
+<script src="/toggle-image.js"></script>
 
       
     </div>
