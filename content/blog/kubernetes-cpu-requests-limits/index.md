@@ -236,20 +236,20 @@ This was by far one of the most complicated topic I have researched on, bringing
 
 For those interested, these are the resources that helped me greatly on this topic:
 
-* https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html
-* https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html
-* https://engineering.squarespace.com/blog/2017/understanding-linux-container-scheduling
-* https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718
-* https://manpages.ubuntu.com/manpages/cosmic/man7/cgroups.7.html
-* https://nodramadevops.com/2019/10/docker-cpu-resource-limits/
-* https://man7.org/linux/man-pages/man7/cgroups.7.html
-* https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cgroups.txt
-* https://lwn.net/Articles/844976/
-* https://github.com/kubernetes/kubernetes/issues/51135#issuecomment-373454012
-* https://github.com/kubernetes/kubernetes/issues/67577
-* https://kubernetes.io/blog/2018/07/24/feature-highlight-cpu-manager/
-* https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu
-* https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/
-* https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/
-* [Throttling: New Developments in Application Performance with CPU Limits - Dave Chiluk, Indeed](https://www.youtube.com/watch?v=WB3_sV_EQrQ)
-* [Resource Requests and Limits Under the Hood: The Journey of a Pod Spec - Kohei Ota & Kaslin Fields](https://www.youtube.com/watch?v=UE7QX98-kO0)
+* {{<new-window-anchor href="https://www.kernel.org/doc/html/latest/scheduler/sched-bwc.html">}}
+* {{<new-window-anchor href="https://www.kernel.org/doc/html/latest/scheduler/sched-design-CFS.html">}}
+* {{<new-window-anchor href="https://engineering.squarespace.com/blog/2017/understanding-linux-container-scheduling">}}
+* {{<new-window-anchor href="https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718">}}
+* {{<new-window-anchor href="https://manpages.ubuntu.com/manpages/cosmic/man7/cgroups.7.html">}}
+* {{<new-window-anchor href="https://nodramadevops.com/2019/10/docker-cpu-resource-limits/">}}
+* {{<new-window-anchor href="https://man7.org/linux/man-pages/man7/cgroups.7.html">}}
+* {{<new-window-anchor href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cgroups.txt">}}
+* {{<new-window-anchor href="https://lwn.net/Articles/844976/">}}
+* {{<new-window-anchor href="https://github.com/kubernetes/kubernetes/issues/51135#issuecomment-373454012">}}
+* {{<new-window-anchor href="https://github.com/kubernetes/kubernetes/issues/67577">}}
+* {{<new-window-anchor href="https://kubernetes.io/blog/2018/07/24/feature-highlight-cpu-manager/">}}
+* {{<new-window-anchor href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu">}}
+* {{<new-window-anchor href="https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/">}}
+* {{<new-window-anchor href="https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/">}}
+* {{<new-window-anchor href="https://www.youtube.com/watch?v=WB3_sV_EQrQ" caption="Throttling: New Developments in Application Performance with CPU Limits - Dave Chiluk, Indeed">}}
+* {{<new-window-anchor href="https://www.youtube.com/watch?v=UE7QX98-kO0" caption="Resource Requests and Limits Under the Hood: The Journey of a Pod Spec - Kohei Ota & Kaslin Fields">}}
