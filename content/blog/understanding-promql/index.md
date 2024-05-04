@@ -33,7 +33,7 @@ In this post, I will share about what I have learned about the 3 points and what
 
 ## How does `vector()` function work?
 
-Let's check out the function description from [Prometheus docs]((https://prometheus.io/docs/prometheus/latest/querying/functions/#vector)):
+Let's check out the function description from [Prometheus docs](https://prometheus.io/docs/prometheus/latest/querying/functions/#vector):
 > vector(s scalar) returns the scalar s as a vector with no labels.
 
 I think the description taken from [Prometheus: Up & Running](https://www.amazon.com/Prometheus-Infrastructure-Application-Performance-Monitoring/dp/1492034142) is much clearer:
