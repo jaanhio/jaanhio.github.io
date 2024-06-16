@@ -40,12 +40,11 @@
 
     {{ if .Params.Cover }}
       <figure class="post-cover">
-        <input type="checkbox" id="{{ .Params.Cover }}">
           <label for="{{ .Params.Cover }}">
           {{ if .Params.UseRelativeCover }}
-            <img src="{{ (printf "%s%s" .Permalink .Params.Cover ) }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
+            <img class="zoomable" src="{{ (printf "%s%s" .Permalink .Params.Cover ) }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
           {{ else }}
-            <img src="{{ .Params.Cover | absURL }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
+            <img class="zoomable" src="{{ .Params.Cover | absURL }}" alt="{{ .Params.CoverAlt | plainify | default .Title }}" />
           {{ end }}
           </label>
         {{ if .Params.CoverCaption }}
