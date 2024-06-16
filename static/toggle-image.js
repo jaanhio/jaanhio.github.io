@@ -18,6 +18,7 @@ const setDivStyleAndAttr = (div) => {
 
 const setImgStyle = (img) => {
     img.style.cursor = 'zoom-out'
+    img.style.maxHeight = '80vh'
 }
 
 for (const img of zoomableImgs) {
