@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <div class="mood-grid">
+    {{ with .Params.images }}
+    {{ range . }}
+      <div class="mood-list">
+        <a href="{{ . }}">
+          <figure>
+            <img src="{{ . }}"/>
+          </figure>
+        </a>
+      </div>
+    {{ end }}
+    {{ end }}
+  </div>
+{{ end }}
