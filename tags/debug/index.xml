@@ -28,8 +28,10 @@
         
         
         
-          In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
-What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
+          &lt;p&gt;In my &lt;a href=&#34;/blog/debugging-nodejs-app&#34;&gt;previous post&lt;/a&gt;, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;what-are-flame-graphs&#34;&gt;What are flame graphs?&lt;/h2&gt;
+&lt;p&gt;Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.&lt;/p&gt;
           
         
         </description>
@@ -49,8 +51,9 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         
         
         
-          Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+          &lt;p&gt;Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause.
+In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.&lt;/p&gt;
+&lt;p&gt;It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.&lt;/p&gt;
           
         
         </description>

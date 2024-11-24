@@ -11,9 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in."
+  content="For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
+To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
+This is where systemd comes in. systemd is an init system and system maanger and comes with a management tool called systemctl meant for managing processes, checking statuses, configuration and changing system states.
+"
 />
 <meta
   name="keywords"
@@ -52,7 +53,7 @@ This is where systemd comes in."
   <meta name="twitter:title" content="Node-exporter setup with Systemd">
   <meta name="twitter:description" content="For those who aren’t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
 To get it up and running, there’s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn’t the most reliable approach in a production environment as there’s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.">
+This is where systemd comes in. systemd is an init system and system maanger and comes with a management tool called systemctl meant for managing processes, checking statuses, configuration and changing system states.">
 
 
 
@@ -61,7 +62,7 @@ This is where systemd comes in.">
   <meta property="og:title" content="Node-exporter setup with Systemd">
   <meta property="og:description" content="For those who aren’t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
 To get it up and running, there’s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn’t the most reliable approach in a production environment as there’s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.">
+This is where systemd comes in. systemd is an init system and system maanger and comes with a management tool called systemctl meant for managing processes, checking statuses, configuration and changing system states.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -187,7 +188,7 @@ This is where systemd comes in.">
     <div class="post-meta">
       
         <span class="post-date">
-          6 Aug 2021
+          2021-08-19
         </span>
 
         
@@ -349,8 +350,6 @@ This is where systemd comes in.">
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -365,10 +364,6 @@ This is where systemd comes in.">
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

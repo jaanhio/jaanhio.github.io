@@ -11,9 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="It&amp;rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.
+  content="It&rsquo;s the last week of the year, which means more time to clean up those tech debts, one of which would be looking at some of our not-so-critical alerts and fixing them for good.
 One of the firing alerts caught my eye:
-name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &amp;gt; 0.75 labels: severity: warning annotations: description: {{ $value | humanizePercentage }} of conntrack entries are used. runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused summary: Number of conntrack are getting close to the limit."
+name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit) &gt; 0.75 labels: severity: warning annotations: description: {{ $value | humanizePercentage }} of conntrack entries are used. runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-nodehighnumberconntrackentriesused summary: Number of conntrack are getting close to the limit. I then checked the dashboards and noticed signs of network saturation.
+"
 />
 <meta
   name="keywords"
@@ -179,7 +180,7 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
     <div class="post-meta">
       
         <span class="post-date">
-          6 Dec 2021
+          2021-12-31
         </span>
 
         
@@ -362,8 +363,6 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -378,10 +377,6 @@ name: NodeHighNumberConntrackEntriesUsed expr: (node_nf_conntrack_entries / node
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

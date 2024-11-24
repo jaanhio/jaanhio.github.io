@@ -12,7 +12,8 @@
 <meta
   name="description"
   content="Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic."
+It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+"
 />
 <meta
   name="keywords"
@@ -183,7 +184,7 @@ It all began with an alert notifying us of the application experiencing CPU thro
     <div class="post-meta">
       
         <span class="post-date">
-          6 Sep 2021
+          2021-09-04
         </span>
 
         
@@ -510,8 +511,6 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -526,10 +525,6 @@ From the CPU profile, we can see large percentage of CPU time used by <code>Even
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

@@ -28,9 +28,9 @@
         
         
         
-          When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.
-However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.
-In this post, I will share how we can visualize the alert metrics on Grafana using the various PromQL operators and functions.
+          &lt;p&gt;When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.&lt;/p&gt;
+&lt;p&gt;However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.&lt;/p&gt;
+&lt;p&gt;In this post, I will share how we can visualize the alert metrics on Grafana using the various &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/querying/basics/&#34;&gt;PromQL operators and functions&lt;/a&gt;.&lt;/p&gt;
           
         
         </description>
@@ -70,9 +70,9 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         
         
         
-          Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
+          &lt;p&gt;&lt;a href=&#34;https://prometheus.io/docs/alerting/latest/alertmanager/&#34;&gt;Alertmanager&lt;/a&gt; is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.&lt;/p&gt;
+&lt;p&gt;That being said, configuring it can be a little daunting with the many different &lt;a href=&#34;https://prometheus.io/docs/alerting/latest/configuration/&#34;&gt;configurations&lt;/a&gt; available and somewhat vague explanations on some of the terms.&lt;/p&gt;
+&lt;p&gt;While configuring Alertmanager, I came across these 3 confusing terms: &lt;code&gt;group_wait&lt;/code&gt;, &lt;code&gt;group_interval&lt;/code&gt; and &lt;code&gt;repeat_interval&lt;/code&gt;.&lt;/p&gt;
           
         
         </description>

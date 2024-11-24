@@ -88,8 +88,9 @@
         
         
         
-          What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
-When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
+          &lt;h1 id=&#34;what-are-processes&#34;&gt;What are processes?&lt;/h1&gt;
+&lt;p&gt;A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.&lt;/p&gt;
+&lt;p&gt;When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named &lt;code&gt;init&lt;/code&gt;) which has &lt;code&gt;PID 1&lt;/code&gt; and is responsible for running the right complement of services and daemons at any given time.&lt;/p&gt;
           
         
         </description>
@@ -109,9 +110,9 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         
         
         
-          For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+          &lt;p&gt;For those who aren&amp;rsquo;t familiar, &lt;a href=&#34;https://github.com/prometheus/node_exporter&#34;&gt;node-exporter&lt;/a&gt; is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.&lt;/p&gt;
+&lt;p&gt;To get it up and running, there&amp;rsquo;s a &lt;a href=&#34;https://prometheus.io/docs/guides/node-exporter/&#34;&gt;simple guide&lt;/a&gt; on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.&lt;/p&gt;
+&lt;p&gt;This is where &lt;code&gt;systemd&lt;/code&gt; comes in. &lt;code&gt;systemd&lt;/code&gt; is an init system and system maanger and comes with a management tool called &lt;code&gt;systemctl&lt;/code&gt; meant for managing processes, checking statuses, configuration and changing system states.&lt;/p&gt;
           
         
         </description>

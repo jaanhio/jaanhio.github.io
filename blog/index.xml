@@ -188,8 +188,9 @@
         
         
         
-          What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
-When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
+          &lt;h1 id=&#34;what-are-processes&#34;&gt;What are processes?&lt;/h1&gt;
+&lt;p&gt;A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.&lt;/p&gt;
+&lt;p&gt;When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named &lt;code&gt;init&lt;/code&gt;) which has &lt;code&gt;PID 1&lt;/code&gt; and is responsible for running the right complement of services and daemons at any given time.&lt;/p&gt;
           
         
         </description>
@@ -209,9 +210,15 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         
         
         
-          I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
-However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+          &lt;p&gt;I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.&lt;/p&gt;
+&lt;p&gt;However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.&lt;/p&gt;
+&lt;figure class=&#34;post-cover&#34;&gt;
+      &lt;label for=&#34;multi-cluster.png&#34;&gt;
+        &lt;img class=&#34;zoomable&#34; src=&#34;multi-cluster.png&#34; alt=&#34;&#34; /&gt;
+      &lt;/label&gt;
+    
+&lt;/figure&gt;
+&lt;p&gt;This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.&lt;/p&gt;
           
         
         </description>
@@ -231,11 +238,14 @@ This led to the idea of removing all Bastion instances and configure direct acce
         
         
         
-          If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&amp;rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out &amp;#x2705;
-You started narrowing down the causes. Networking issue? Configuration issue?
-You entered the container and decided to use ping to identify network connectivity issues.
-/ $ ping google.com PING google.
+          &lt;p&gt;If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&amp;rsquo;t want to behave the way they are supposed to.&lt;/p&gt;
+&lt;p&gt;You checked the logs and traced it back to the source code. Logic checks out &amp;#x2705;&lt;/p&gt;
+&lt;p&gt;You started narrowing down the causes. Networking issue? Configuration issue?&lt;/p&gt;
+&lt;p&gt;You entered the container and decided to use &lt;code&gt;ping&lt;/code&gt; to identify network connectivity issues.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/ $ ping google.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PING google.com &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;142.251.12.138&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;56&lt;/span&gt; data bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ping: permission denied &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;are you root?&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Or maybe you wanted to install another tool like &lt;code&gt;tcpdump&lt;/code&gt; to observe network traffic.&lt;/p&gt;
           
         
         </description>
@@ -255,9 +265,9 @@ You entered the container and decided to use ping to identify network connectivi
         
         
         
-          When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.
-However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.
-In this post, I will share how we can visualize the alert metrics on Grafana using the various PromQL operators and functions.
+          &lt;p&gt;When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.&lt;/p&gt;
+&lt;p&gt;However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.&lt;/p&gt;
+&lt;p&gt;In this post, I will share how we can visualize the alert metrics on Grafana using the various &lt;a href=&#34;https://prometheus.io/docs/prometheus/latest/querying/basics/&#34;&gt;PromQL operators and functions&lt;/a&gt;.&lt;/p&gt;
           
         
         </description>
@@ -297,8 +307,10 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         
         
         
-          In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
-What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
+          &lt;p&gt;In my &lt;a href=&#34;/blog/debugging-nodejs-app&#34;&gt;previous post&lt;/a&gt;, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;what-are-flame-graphs&#34;&gt;What are flame graphs?&lt;/h2&gt;
+&lt;p&gt;Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.&lt;/p&gt;
           
         
         </description>
@@ -318,8 +330,9 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         
         
         
-          Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+          &lt;p&gt;Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause.
+In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.&lt;/p&gt;
+&lt;p&gt;It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&amp;rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.&lt;/p&gt;
           
         
         </description>
@@ -339,9 +352,9 @@ It all began with an alert notifying us of the application experiencing CPU thro
         
         
         
-          Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
+          &lt;p&gt;&lt;a href=&#34;https://prometheus.io/docs/alerting/latest/alertmanager/&#34;&gt;Alertmanager&lt;/a&gt; is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.&lt;/p&gt;
+&lt;p&gt;That being said, configuring it can be a little daunting with the many different &lt;a href=&#34;https://prometheus.io/docs/alerting/latest/configuration/&#34;&gt;configurations&lt;/a&gt; available and somewhat vague explanations on some of the terms.&lt;/p&gt;
+&lt;p&gt;While configuring Alertmanager, I came across these 3 confusing terms: &lt;code&gt;group_wait&lt;/code&gt;, &lt;code&gt;group_interval&lt;/code&gt; and &lt;code&gt;repeat_interval&lt;/code&gt;.&lt;/p&gt;
           
         
         </description>
@@ -361,9 +374,9 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         
         
         
-          For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+          &lt;p&gt;For those who aren&amp;rsquo;t familiar, &lt;a href=&#34;https://github.com/prometheus/node_exporter&#34;&gt;node-exporter&lt;/a&gt; is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.&lt;/p&gt;
+&lt;p&gt;To get it up and running, there&amp;rsquo;s a &lt;a href=&#34;https://prometheus.io/docs/guides/node-exporter/&#34;&gt;simple guide&lt;/a&gt; on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.&lt;/p&gt;
+&lt;p&gt;This is where &lt;code&gt;systemd&lt;/code&gt; comes in. &lt;code&gt;systemd&lt;/code&gt; is an init system and system maanger and comes with a management tool called &lt;code&gt;systemctl&lt;/code&gt; meant for managing processes, checking statuses, configuration and changing system states.&lt;/p&gt;
           
         
         </description>

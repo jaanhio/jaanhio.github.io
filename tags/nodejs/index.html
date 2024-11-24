@@ -172,7 +172,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Jul 2022
+              2022-07-09
             </span>
 
             
@@ -216,7 +216,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-06
             </span>
 
             
@@ -248,8 +248,10 @@
         <div class="post-content">
           
             
-              In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
-What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
+              <p>In my <a href="/blog/debugging-nodejs-app">previous post</a>, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.</p>
+<hr>
+<h2 id="what-are-flame-graphs">What are flame graphs?</h2>
+<p>Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.</p>
             
           
         </div>
@@ -267,7 +269,7 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-04
             </span>
 
             
@@ -299,8 +301,9 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         <div class="post-content">
           
             
-              Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+              <p>Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause.
+In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.</p>
+<p>It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.</p>
             
           
         </div>
@@ -347,8 +350,6 @@ It all began with an alert notifying us of the application experiencing CPU thro
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -363,10 +364,6 @@ It all began with an alert notifying us of the application experiencing CPU thro
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

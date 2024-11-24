@@ -15,7 +15,8 @@
 Node.js is single-threaded.
 Is this statement correct? Well yes, partially.
 Node.js uses an asynchronous event-driven architecture consisting of an event loop and a worker pool.
-When we say that Node.js is single-threaded, we are actually referring to the event loop which is also known as the single main/event thread. This event loop handles the orchestration of new client connection and the corresponding response."
+When we say that Node.js is single-threaded, we are actually referring to the event loop which is also known as the single main/event thread. This event loop handles the orchestration of new client connection and the corresponding response.
+"
 />
 <meta
   name="keywords"
@@ -182,7 +183,7 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
     <div class="post-meta">
       
         <span class="post-date">
-          6 Jul 2022
+          2022-07-09
         </span>
 
         
@@ -339,34 +340,34 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 </ol>
 <p>I tested each of the scenarios for 2 mins and here are the results.</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>5 users. 1 user/s</th>
-<th>50 users. 10 users/s</th>
-<th>100 users. 20 users/s</th>
-<th>150 users. 20 users/s</th>
-<th>200 users. 20 users/s</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>asynchronous</td>
-<td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 90ms</td>
-<td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 250ms</td>
-<td>error rate: 0%, 50th percentile latency: 51ms, 99th percentile latency: 260ms</td>
-<td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 280ms</td>
-<td>error rate: 0%, 50th percentile latency: 64ms, 99th percentile latency: 330ms</td>
-</tr>
-<tr>
-<td>synchronous</td>
-<td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 200ms</td>
-<td>error rate: 1%, 50th percentile latency: 76ms, 99th percentile latency: 320ms</td>
-<td>error rate: 7%, 50th percentile latency: 670ms, 99th percentile latency: 2100ms</td>
-<td>error rate: 12%, 50th percentile latency: 790ms, 99th percentile latency: 4500ms</td>
-<td>error rate: 24%, 50th percentile latency: 2300ms, 99th percentile latency: 7300ms</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th>5 users. 1 user/s</th>
+          <th>50 users. 10 users/s</th>
+          <th>100 users. 20 users/s</th>
+          <th>150 users. 20 users/s</th>
+          <th>200 users. 20 users/s</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>asynchronous</td>
+          <td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 90ms</td>
+          <td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 250ms</td>
+          <td>error rate: 0%, 50th percentile latency: 51ms, 99th percentile latency: 260ms</td>
+          <td>error rate: 0%, 50th percentile latency: 53ms, 99th percentile latency: 280ms</td>
+          <td>error rate: 0%, 50th percentile latency: 64ms, 99th percentile latency: 330ms</td>
+      </tr>
+      <tr>
+          <td>synchronous</td>
+          <td>error rate: 0%, 50th percentile latency: 57ms, 99th percentile latency: 200ms</td>
+          <td>error rate: 1%, 50th percentile latency: 76ms, 99th percentile latency: 320ms</td>
+          <td>error rate: 7%, 50th percentile latency: 670ms, 99th percentile latency: 2100ms</td>
+          <td>error rate: 12%, 50th percentile latency: 790ms, 99th percentile latency: 4500ms</td>
+          <td>error rate: 24%, 50th percentile latency: 2300ms, 99th percentile latency: 7300ms</td>
+      </tr>
+  </tbody>
 </table>
 <p>It&rsquo;s apparent that the use of asynchronous non-blocking function call greatly outperformed the synchronous blocking function call in terms of both the error rate and response time.</p>
 <p>Perhaps you might still be wondering what exactly does it mean by blocking.</p>
@@ -458,52 +459,52 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <p>The request latency became more uniform (~11s), which also meant a much longer waiting time for 2/3 of the requests when comparing it to <code>UV_THREADPOOL_SIZE=3</code>.</p>
 <p>I repeated the same for 3 other thread pool size. Note again that this is running on a 4CPU, 4GB memory raspberry pi4.</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>min latency (s)</th>
-<th>max latency (s)</th>
-<th>avg latency of 9 requests (s)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>size = 2</td>
-<td>4.928</td>
-<td>24.362</td>
-<td>13.548</td>
-</tr>
-<tr>
-<td>size = 3</td>
-<td>4.912</td>
-<td>14.667</td>
-<td>9.794</td>
-</tr>
-<tr>
-<td>size = 4</td>
-<td>4.926</td>
-<td>14.728</td>
-<td>8.248</td>
-</tr>
-<tr>
-<td>size = 5</td>
-<td>5.546</td>
-<td>11.321</td>
-<td>8.343</td>
-</tr>
-<tr>
-<td>size = 6</td>
-<td>6.180</td>
-<td>12.115</td>
-<td>8.884</td>
-</tr>
-<tr>
-<td>size = 9</td>
-<td>10.976</td>
-<td>11.145</td>
-<td>11.069</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th>min latency (s)</th>
+          <th>max latency (s)</th>
+          <th>avg latency of 9 requests (s)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>size = 2</td>
+          <td>4.928</td>
+          <td>24.362</td>
+          <td>13.548</td>
+      </tr>
+      <tr>
+          <td>size = 3</td>
+          <td>4.912</td>
+          <td>14.667</td>
+          <td>9.794</td>
+      </tr>
+      <tr>
+          <td>size = 4</td>
+          <td>4.926</td>
+          <td>14.728</td>
+          <td>8.248</td>
+      </tr>
+      <tr>
+          <td>size = 5</td>
+          <td>5.546</td>
+          <td>11.321</td>
+          <td>8.343</td>
+      </tr>
+      <tr>
+          <td>size = 6</td>
+          <td>6.180</td>
+          <td>12.115</td>
+          <td>8.884</td>
+      </tr>
+      <tr>
+          <td>size = 9</td>
+          <td>10.976</td>
+          <td>11.145</td>
+          <td>11.069</td>
+      </tr>
+  </tbody>
 </table>
 <p>What we can conclude:</p>
 <ul>
@@ -594,8 +595,6 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -610,10 +609,6 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

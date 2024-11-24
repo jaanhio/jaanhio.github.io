@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.127.0">
+	<meta name="generator" content="Hugo 0.139.2">
     
       <title>
         jaanhio
@@ -183,7 +183,7 @@
       <div class="post-meta">
         
           <span class="post-date">
-            6 Aug 2021
+            2021-08-27
           </span>
 
           
@@ -213,9 +213,9 @@
       <div class="post-content">
         
           
-            Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
+            <p><a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Alertmanager</a> is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.</p>
+<p>That being said, configuring it can be a little daunting with the many different <a href="https://prometheus.io/docs/alerting/latest/configuration/">configurations</a> available and somewhat vague explanations on some of the terms.</p>
+<p>While configuring Alertmanager, I came across these 3 confusing terms: <code>group_wait</code>, <code>group_interval</code> and <code>repeat_interval</code>.</p>
           
         
       </div>
@@ -229,7 +229,7 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
       <div class="post-meta">
         
           <span class="post-date">
-            6 Aug 2021
+            2021-08-19
           </span>
 
           
@@ -261,9 +261,9 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
       <div class="post-content">
         
           
-            For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+            <p>For those who aren&rsquo;t familiar, <a href="https://github.com/prometheus/node_exporter">node-exporter</a> is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.</p>
+<p>To get it up and running, there&rsquo;s a <a href="https://prometheus.io/docs/guides/node-exporter/">simple guide</a> on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.</p>
+<p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
           
         
       </div>
@@ -313,8 +313,6 @@ This is where systemd comes in.
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -329,10 +327,6 @@ This is where systemd comes in.
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

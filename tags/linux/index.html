@@ -172,7 +172,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2023
+              2023-09-16
             </span>
 
             
@@ -230,7 +230,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Feb 2023
+              2023-02-18
             </span>
 
             
@@ -282,7 +282,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Nov 2021
+              2021-11-11
             </span>
 
             
@@ -334,7 +334,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Nov 2021
+              2021-11-03
             </span>
 
             
@@ -362,8 +362,9 @@
         <div class="post-content">
           
             
-              What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
-When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
+              <h1 id="what-are-processes">What are processes?</h1>
+<p>A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.</p>
+<p>When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named <code>init</code>) which has <code>PID 1</code> and is responsible for running the right complement of services and daemons at any given time.</p>
             
           
         </div>
@@ -381,7 +382,7 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         <div class="post-meta">
           
             <span class="post-date">
-              6 Aug 2021
+              2021-08-19
             </span>
 
             
@@ -415,9 +416,9 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         <div class="post-content">
           
             
-              For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+              <p>For those who aren&rsquo;t familiar, <a href="https://github.com/prometheus/node_exporter">node-exporter</a> is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.</p>
+<p>To get it up and running, there&rsquo;s a <a href="https://prometheus.io/docs/guides/node-exporter/">simple guide</a> on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.</p>
+<p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
             
           
         </div>
@@ -464,8 +465,6 @@ This is where systemd comes in.
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -480,10 +479,6 @@ This is where systemd comes in.
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

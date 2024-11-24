@@ -13,7 +13,8 @@
   name="description"
   content="It all started with this alert.
 Processes experience elevated CPU throttling. 25.91% throttling of CPU in namespace vault for container consul in pod consul-server-2. I checked the dashboards and see that CPU usage was periodically peaking above the resources.requests.cpu (red line). Perhaps I should increase the CPU requests a little.
-But throttling? Why was the process facing CPU throttling when there&amp;rsquo;s still quite a bit more to go before hitting the resources."
+But throttling? Why was the process facing CPU throttling when there&rsquo;s still quite a bit more to go before hitting the resources.limits.cpu (orange line)?
+"
 />
 <meta
   name="keywords"
@@ -184,7 +185,7 @@ But throttling? Why was the process facing CPU throttling when there&amp;rsquo;s
     <div class="post-meta">
       
         <span class="post-date">
-          6 Nov 2021
+          2021-11-11
         </span>
 
         
@@ -478,8 +479,6 @@ throttled_time 8635080132047
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -494,10 +493,6 @@ throttled_time 8635080132047
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

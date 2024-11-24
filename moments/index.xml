@@ -27,7 +27,12 @@
         
         
         
-           
+          &lt;figure class=&#34;post-cover&#34;&gt;
+      &lt;label for=&#34;./noodles.jpeg&#34;&gt;
+        &lt;img class=&#34;zoomable&#34; src=&#34;./noodles.jpeg&#34; alt=&#34;&#34; /&gt;
+      &lt;/label&gt;
+    
+&lt;/figure&gt;
           
         
         </description>
@@ -977,7 +982,18 @@
         
         
         
-           
+          &lt;figure class=&#34;post-cover&#34;&gt;
+      &lt;label for=&#34;./LRM_20221227_101005.jpg&#34;&gt;
+        &lt;img class=&#34;zoomable&#34; src=&#34;./LRM_20221227_101005.jpg&#34; alt=&#34;moment&#34; /&gt;
+      &lt;/label&gt;
+    
+&lt;/figure&gt;
+&lt;figure class=&#34;post-cover&#34;&gt;
+      &lt;label for=&#34;./LRM_20221227_102606.jpg&#34;&gt;
+        &lt;img class=&#34;zoomable&#34; src=&#34;./LRM_20221227_102606.jpg&#34; alt=&#34;moment&#34; /&gt;
+      &lt;/label&gt;
+    
+&lt;/figure&gt;
           
         
         </description>
@@ -996,7 +1012,7 @@
         
         
         
-           
+          &lt;img src=&#34;./img02.jpeg&#34;  alt=&#34;usage-video&#34;  class=&#34;center&#34;  /&gt;
           
         
         </description>

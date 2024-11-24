@@ -172,7 +172,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-26
             </span>
 
             
@@ -204,9 +204,9 @@
         <div class="post-content">
           
             
-              When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.
-However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.
-In this post, I will share how we can visualize the alert metrics on Grafana using the various PromQL operators and functions.
+              <p>When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.</p>
+<p>However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.</p>
+<p>In this post, I will share how we can visualize the alert metrics on Grafana using the various <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">PromQL operators and functions</a>.</p>
             
           
         </div>
@@ -224,7 +224,7 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-20
             </span>
 
             
@@ -270,7 +270,7 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-meta">
           
             <span class="post-date">
-              6 Aug 2021
+              2021-08-27
             </span>
 
             
@@ -302,9 +302,9 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-content">
           
             
-              Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
+              <p><a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Alertmanager</a> is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.</p>
+<p>That being said, configuring it can be a little daunting with the many different <a href="https://prometheus.io/docs/alerting/latest/configuration/">configurations</a> available and somewhat vague explanations on some of the terms.</p>
+<p>While configuring Alertmanager, I came across these 3 confusing terms: <code>group_wait</code>, <code>group_interval</code> and <code>repeat_interval</code>.</p>
             
           
         </div>
@@ -322,7 +322,7 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         <div class="post-meta">
           
             <span class="post-date">
-              6 Aug 2021
+              2021-08-19
             </span>
 
             
@@ -356,9 +356,9 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         <div class="post-content">
           
             
-              For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+              <p>For those who aren&rsquo;t familiar, <a href="https://github.com/prometheus/node_exporter">node-exporter</a> is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.</p>
+<p>To get it up and running, there&rsquo;s a <a href="https://prometheus.io/docs/guides/node-exporter/">simple guide</a> on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.</p>
+<p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
             
           
         </div>
@@ -405,8 +405,6 @@ This is where systemd comes in.
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -421,10 +419,6 @@ This is where systemd comes in.
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

@@ -48,9 +48,15 @@
         
         
         
-          I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
-However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+          &lt;p&gt;I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.&lt;/p&gt;
+&lt;p&gt;However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.&lt;/p&gt;
+&lt;figure class=&#34;post-cover&#34;&gt;
+      &lt;label for=&#34;multi-cluster.png&#34;&gt;
+        &lt;img class=&#34;zoomable&#34; src=&#34;multi-cluster.png&#34; alt=&#34;&#34; /&gt;
+      &lt;/label&gt;
+    
+&lt;/figure&gt;
+&lt;p&gt;This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.&lt;/p&gt;
           
         
         </description>

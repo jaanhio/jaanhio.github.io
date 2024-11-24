@@ -13,9 +13,10 @@
   name="description"
   content="Last week at work, I encountered an alert that was misfiring. Or so I thought.
 This was the PromQL used for alerting when HTTP requests error rate exceeds the SLO of 5% per hour:
-(sum(rate(service_foo_http_request_total{status_code!~&amp;#34;2..&amp;#34;}[1h])) / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &amp;gt;= 0.05 Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.
+(sum(rate(service_foo_http_request_total{status_code!~&#34;2..&#34;}[1h])) / sum(rate(service_foo__http_request_total[1h]))) OR vector(0) &gt;= 0.05 Some debugging later, issue was finally resolved and well, the PromQL was behaving exactly how it was supposed to.
 The cause can be summarized into these 3 points:
-misunderstanding of how PromQL vector() function works misunderstanding of how PromQL comparison binary operators work misunderstanding of how Prometheus/Thanos-ruler evaluates query result and trigger alerts In this post, I will share about what I have learned about the 3 points and what are changes made to PromQL to make it behave as intended."
+misunderstanding of how PromQL vector() function works misunderstanding of how PromQL comparison binary operators work misunderstanding of how Prometheus/Thanos-ruler evaluates query result and trigger alerts In this post, I will share about what I have learned about the 3 points and what are changes made to PromQL to make it behave as intended.
+"
 />
 <meta
   name="keywords"
@@ -183,7 +184,7 @@ misunderstanding of how PromQL vector() function works misunderstanding of how P
     <div class="post-meta">
       
         <span class="post-date">
-          6 Sep 2021
+          2021-09-20
         </span>
 
         
@@ -453,8 +454,6 @@ Example of label-less data:</p>
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -469,10 +468,6 @@ Example of label-less data:</p>
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

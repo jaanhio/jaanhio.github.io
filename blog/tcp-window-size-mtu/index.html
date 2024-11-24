@@ -11,10 +11,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="I was reading up on TCP recently when I came across the term &amp;ldquo;Window size&amp;rdquo;, which also reminded me of another term I came across earlier, &amp;ldquo;MTU&amp;rdquo;.
+  content="I was reading up on TCP recently when I came across the term &ldquo;Window size&rdquo;, which also reminded me of another term I came across earlier, &ldquo;MTU&rdquo;.
 I briefly understood that these 2 terms dictate how quickly data can be transferred between 2 machines, but what exactly are the differences?
 Here is a very brief explanation on it.
-What is window size? Window size is a TCP header value which controls the flow of data."
+What is window size? Window size is a TCP header value which controls the flow of data. The header space for this value is 2 bytes long, which translates to a maximum value of 65535 bytes. This value is OS/TCP stack dependent.
+"
 />
 <meta
   name="keywords"
@@ -50,14 +51,14 @@ What is window size? Window size is a TCP header value which controls the flow o
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Difference between TCP window size &amp; MTU">
+  <meta name="twitter:title" content="Difference between TCP window size & MTU">
   <meta name="twitter:description" content="A brief explanation on the differences between TCP window size &amp; MTU.">
 
 
 
 <meta property="og:url" content="/blog/tcp-window-size-mtu/">
   <meta property="og:site_name" content="jaanhio">
-  <meta property="og:title" content="Difference between TCP window size &amp; MTU">
+  <meta property="og:title" content="Difference between TCP window size & MTU">
   <meta property="og:description" content="A brief explanation on the differences between TCP window size &amp; MTU.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -183,7 +184,7 @@ What is window size? Window size is a TCP header value which controls the flow o
     <div class="post-meta">
       
         <span class="post-date">
-          6 Mar 2022
+          2022-03-06
         </span>
 
         
@@ -344,8 +345,6 @@ What is window size? Window size is a TCP header value which controls the flow o
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -360,10 +359,6 @@ What is window size? Window size is a TCP header value which controls the flow o
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

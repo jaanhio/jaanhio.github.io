@@ -172,7 +172,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2023
+              2023-09-16
             </span>
 
             
@@ -230,7 +230,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Jun 2023
+              2023-06-22
             </span>
 
             
@@ -276,7 +276,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Feb 2023
+              2023-02-18
             </span>
 
             
@@ -328,7 +328,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Jul 2022
+              2022-07-09
             </span>
 
             
@@ -372,7 +372,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Mar 2022
+              2022-03-06
             </span>
 
             
@@ -420,7 +420,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Feb 2022
+              2022-02-27
             </span>
 
             
@@ -468,7 +468,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Dec 2021
+              2021-12-31
             </span>
 
             
@@ -506,7 +506,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Nov 2021
+              2021-11-11
             </span>
 
             
@@ -558,7 +558,7 @@
         <div class="post-meta">
           
             <span class="post-date">
-              6 Nov 2021
+              2021-11-03
             </span>
 
             
@@ -586,8 +586,9 @@
         <div class="post-content">
           
             
-              What are processes? A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.
-When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named init) which has PID 1 and is responsible for running the right complement of services and daemons at any given time.
+              <h1 id="what-are-processes">What are processes?</h1>
+<p>A process is basically a program in execution and a program is a piece of code which may be a single line or millions of lines long written in a programming language.</p>
+<p>When a UNIX machine gets powered up, the kernel will be loaded and complete its initialization process. Once initialization is completed, the kernel creates a set of processes in the user space, including the scheduling of the system management daemon process (usually named <code>init</code>) which has <code>PID 1</code> and is responsible for running the right complement of services and daemons at any given time.</p>
             
           
         </div>
@@ -605,7 +606,7 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         <div class="post-meta">
           
             <span class="post-date">
-              6 Oct 2021
+              2021-10-18
             </span>
 
             
@@ -637,9 +638,15 @@ When a UNIX machine gets powered up, the kernel will be loaded and complete its 
         <div class="post-content">
           
             
-              I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.
-However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.
-This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.
+              <p>I manage multiple EKS clusters (multi-envs multi-tenants) at work and access to these is via Bastion instances deployed within each VPC of those clusters.</p>
+<p>However this approach can become unmaintainable over time as the number of Bastion instances will grow with the number of clusters we manage. This means additional effort required for monitoring and maintenance of each of those Bastion instances.</p>
+<figure class="post-cover">
+      <label for="multi-cluster.png">
+        <img class="zoomable" src="multi-cluster.png" alt="" />
+      </label>
+    
+</figure>
+<p>This led to the idea of removing all Bastion instances and configure direct access to Apiservers instead.</p>
             
           
         </div>
@@ -657,7 +664,7 @@ This led to the idea of removing all Bastion instances and configure direct acce
         <div class="post-meta">
           
             <span class="post-date">
-              6 Oct 2021
+              2021-10-11
             </span>
 
             
@@ -679,11 +686,14 @@ This led to the idea of removing all Bastion instances and configure direct acce
         <div class="post-content">
           
             
-              If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&rsquo;t want to behave the way they are supposed to.
-You checked the logs and traced it back to the source code. Logic checks out &#x2705;
-You started narrowing down the causes. Networking issue? Configuration issue?
-You entered the container and decided to use ping to identify network connectivity issues.
-/ $ ping google.com PING google.
+              <p>If you have ever managed a Kubernetes cluster, chances are you have encountered pods that just doesn&rsquo;t want to behave the way they are supposed to.</p>
+<p>You checked the logs and traced it back to the source code. Logic checks out &#x2705;</p>
+<p>You started narrowing down the causes. Networking issue? Configuration issue?</p>
+<p>You entered the container and decided to use <code>ping</code> to identify network connectivity issues.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/ $ ping google.com
+</span></span><span style="display:flex;"><span>PING google.com <span style="color:#f92672">(</span>142.251.12.138<span style="color:#f92672">)</span>: <span style="color:#ae81ff">56</span> data bytes
+</span></span><span style="display:flex;"><span>ping: permission denied <span style="color:#f92672">(</span>are you root?<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Or maybe you wanted to install another tool like <code>tcpdump</code> to observe network traffic.</p>
             
           
         </div>
@@ -701,7 +711,7 @@ You entered the container and decided to use ping to identify network connectivi
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-26
             </span>
 
             
@@ -733,9 +743,9 @@ You entered the container and decided to use ping to identify network connectivi
         <div class="post-content">
           
             
-              When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.
-However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.
-In this post, I will share how we can visualize the alert metrics on Grafana using the various PromQL operators and functions.
+              <p>When it comes to Prometheus and alerts, the typical use case is to send alerts to Alertmanager for handling (deduplication, grouping) and routing them to the various services such Slack, PagerDuty etc.</p>
+<p>However, there might be situations where we might need to perform analysis on alert patterns and being able to visualize how often the alerts are firing can be very useful.</p>
+<p>In this post, I will share how we can visualize the alert metrics on Grafana using the various <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">PromQL operators and functions</a>.</p>
             
           
         </div>
@@ -753,7 +763,7 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-20
             </span>
 
             
@@ -799,7 +809,7 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-06
             </span>
 
             
@@ -831,8 +841,10 @@ In this post, I will share how we can visualize the alert metrics on Grafana usi
         <div class="post-content">
           
             
-              In my previous post, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.
-What are flame graphs? Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.
+              <p>In my <a href="/blog/debugging-nodejs-app">previous post</a>, I shared about my debugging process using various Linux tools and debugger. During the process, I came across the analysis technique using flame graphs and thought it will be interesting to see what information I can get out of it.</p>
+<hr>
+<h2 id="what-are-flame-graphs">What are flame graphs?</h2>
+<p>Flame graphs, as the name suggests, are graphs that look like flames because of the shape and color (usually red-yellowish hues). It was invented by Brendan Gregg for the purpose of analyzing performance issue and understand CPU usage quickly.</p>
             
           
         </div>
@@ -850,7 +862,7 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         <div class="post-meta">
           
             <span class="post-date">
-              6 Sep 2021
+              2021-09-04
             </span>
 
             
@@ -882,8 +894,9 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
         <div class="post-content">
           
             
-              Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause. In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.
-It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.
+              <p>Recently one of our nodejs application (responsible for scraping metrics for external services) running in our EKS cluster was experiencing high CPU usage and memory leak and I was tasked to figure out the root cause.
+In this post, I will share my troubleshooting process and interesting stuff I discovered along the way.</p>
+<p>It all began with an alert notifying us of the application experiencing CPU throttling. Looking at the dashboard, it became apparent that high CPU usage isn&rsquo;t the only issue; it was also experiencing memory leak and oddly high incoming and outgoing traffic.</p>
             
           
         </div>
@@ -901,7 +914,7 @@ It all began with an alert notifying us of the application experiencing CPU thro
         <div class="post-meta">
           
             <span class="post-date">
-              6 Aug 2021
+              2021-08-27
             </span>
 
             
@@ -933,9 +946,9 @@ It all began with an alert notifying us of the application experiencing CPU thro
         <div class="post-content">
           
             
-              Alertmanager is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.
-That being said, configuring it can be a little daunting with the many different configurations available and somewhat vague explanations on some of the terms.
-While configuring Alertmanager, I came across these 3 confusing terms: group_wait, group_interval and repeat_interval.
+              <p><a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Alertmanager</a> is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.</p>
+<p>That being said, configuring it can be a little daunting with the many different <a href="https://prometheus.io/docs/alerting/latest/configuration/">configurations</a> available and somewhat vague explanations on some of the terms.</p>
+<p>While configuring Alertmanager, I came across these 3 confusing terms: <code>group_wait</code>, <code>group_interval</code> and <code>repeat_interval</code>.</p>
             
           
         </div>
@@ -953,7 +966,7 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         <div class="post-meta">
           
             <span class="post-date">
-              6 Aug 2021
+              2021-08-19
             </span>
 
             
@@ -987,9 +1000,9 @@ While configuring Alertmanager, I came across these 3 confusing terms: group_wai
         <div class="post-content">
           
             
-              For those who aren&rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+              <p>For those who aren&rsquo;t familiar, <a href="https://github.com/prometheus/node_exporter">node-exporter</a> is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.</p>
+<p>To get it up and running, there&rsquo;s a <a href="https://prometheus.io/docs/guides/node-exporter/">simple guide</a> on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.</p>
+<p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
             
           
         </div>
@@ -1050,8 +1063,6 @@ This is where systemd comes in.
 
     
       
-  
-    
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX2DZ2KVGS"></script>
       <script>
         var doNotTrack = false;
@@ -1066,10 +1077,6 @@ This is where systemd comes in.
           gtag('config', 'G-SX2DZ2KVGS');
         }
       </script>
-    
-  
-
-
     
   </body>
 </html>

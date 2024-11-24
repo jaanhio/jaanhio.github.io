@@ -28,9 +28,9 @@
         
         
         
-          For those who aren&amp;rsquo;t familiar, node-exporter is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.
-To get it up and running, there&amp;rsquo;s a simple guide on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.
-This is where systemd comes in.
+          &lt;p&gt;For those who aren&amp;rsquo;t familiar, &lt;a href=&#34;https://github.com/prometheus/node_exporter&#34;&gt;node-exporter&lt;/a&gt; is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.&lt;/p&gt;
+&lt;p&gt;To get it up and running, there&amp;rsquo;s a &lt;a href=&#34;https://prometheus.io/docs/guides/node-exporter/&#34;&gt;simple guide&lt;/a&gt; on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&amp;rsquo;t the most reliable approach in a production environment as there&amp;rsquo;s no way to ensure that the node_exporter process will run continuously.&lt;/p&gt;
+&lt;p&gt;This is where &lt;code&gt;systemd&lt;/code&gt; comes in. &lt;code&gt;systemd&lt;/code&gt; is an init system and system maanger and comes with a management tool called &lt;code&gt;systemctl&lt;/code&gt; meant for managing processes, checking statuses, configuration and changing system states.&lt;/p&gt;
           
         
         </description>
