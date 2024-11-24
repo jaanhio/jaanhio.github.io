@@ -23,7 +23,7 @@
       {{ end }}
     </div>
 
-    {{ if $.Site.GoogleAnalytics }}
+    {{ if site.Config.Services.GoogleAnalytics }}
       {{ template "_internal/google_analytics.html" . }}
     {{ end }}
   </body>

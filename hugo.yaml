@@ -3,7 +3,9 @@ languageCode: en-us
 theme: hello-friend
 paginate: 5
 disqusShortname: jaanhio-me
-googleAnalytics: G-SX2DZ2KVGS
+services:
+  googleAnalytics: 
+    ID: G-SX2DZ2KVGS
 enableEmoji: true
 params:
   contentTypeName: blog
