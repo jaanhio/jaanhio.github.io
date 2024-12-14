@@ -298,7 +298,7 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
 <p>Highly recommended to read it yourself and check out the examples in it.</p>
 <p>Now the appearance of <code>__libc_start_main</code> and <code>uv_*</code> frames make sense!</p>
 <p><code>uv_*</code> are actually the functions from <code>libuv</code> library, which as explained, is required to provide low-level OS access. It is also used to <a href="https://www.atomiccommits.io/event-loop-polling/">implement the Nodejs event loop</a>!</p>
-<p>As for <code>__libc_start_main</code>, I found this <a href="https://stackoverflow.com/a/62709108">stackoverflow answer</a> explaining the role of this function and seems to match the description taken from <a href="https://refspecs.linuxbase.org/LSB_3.1.0/LSB-generic/LSB-generic/baselib---libc-start-main-.html#:~:text=The%20__libc_start_main()%20function,to%20the%20exit()%20function.">Linux standard base specification</a></p>
+<p>As for <code>__libc_start_main</code>, I found this <a href="https://stackoverflow.com/a/62709108">stackoverflow answer</a> explaining the role of this function and seems to match the description taken from <a href="https://refspecs.linuxbase.org/LSB_3.1.0/LSB-generic/LSB-generic/baselib---libc-start-main-.html#:~:text=The%20__libc_start_main%28%29%20function,to%20the%20exit%28%29%20function.">Linux standard base specification</a></p>
 <blockquote>
 <p><code>__libc_start_main</code> is an initialization routine and performs necessary initialization of execution environment.</p>
 </blockquote>

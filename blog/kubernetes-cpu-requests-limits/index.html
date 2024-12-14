@@ -280,7 +280,7 @@ spec:
 processes.  A cgroup controller is usually responsible for distributing a specific type of system resource along the hierarchy
 although there are utility controllers which serve purposes other than resource distribution.</p>
 </blockquote>
-<p>Under the hood, <code>requests.cpu</code> and <code>limits.cpu</code> are implemented using features of <a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/+/cpu_stat/Documentation/cgroups/cpu.txt">CPU cgroup controller</a> (grouping processes) and CFS scheduler (assigning resource based on groupings)</p>
+<p>Under the hood, <code>requests.cpu</code> and <code>limits.cpu</code> are implemented using features of <a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/&#43;/cpu_stat/Documentation/cgroups/cpu.txt">CPU cgroup controller</a> (grouping processes) and CFS scheduler (assigning resource based on groupings)</p>
 <p>Though the Kubernetes configuration for both <code>requests.cpu</code> &amp; <code>limits.cpu</code> look similar, they are actually implemented using different mechanisms.</p>
 <p>The related configurations and files are located under the <code>/sys/fs/cgroup/kubepods</code> directory.</p>
 <figure class="post-cover">

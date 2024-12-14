@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<meta name="generator" content="Hugo 0.139.4">
     
       <title>
+        Notes from design handbook ::
         jaanhio
       </title>
     
@@ -11,14 +11,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content=""
+  content="?"
 />
 <meta
   name="keywords"
   content=""
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="/" />
+<link rel="canonical" href="/design/design-handbook/" />
 
 
 
@@ -47,19 +47,23 @@
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="jaanhio">
+  <meta name="twitter:title" content="Notes from design handbook">
+  <meta name="twitter:description" content="?">
 
 
 
-<meta property="og:url" content="/">
+<meta property="og:url" content="/design/design-handbook/">
   <meta property="og:site_name" content="jaanhio">
-  <meta property="og:title" content="jaanhio">
+  <meta property="og:title" content="Notes from design handbook">
+  <meta property="og:description" content="?">
   <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="design">
+    <meta property="article:published_time" content="2024-12-03T10:01:18+08:00">
+    <meta property="article:modified_time" content="2024-12-03T10:01:18+08:00">
 
 
 
-<link rel="alternate" type="application/rss+xml" href="/index.xml" title="jaanhio" />
 <meta name="description" content="I write about tech and more!" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -168,124 +172,41 @@
   
   
 
-  
-  
-    
-  
-  
-
-  
-
-  <div class="posts">
-    
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/understanding-alertmanager/">Understanding the differences between alertmanager&rsquo;s group_wait, group_interval and repeat_interval</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            2021-08-27
-          </span>
-
-          
-        
-
-        
-
-        
-          <span class="post-read-time">— 2 min read</span>
-        
-      </div>
-
+  <div class="post">
+    <h1 class="post-title">Notes from design handbook</h1>
+    <div class="post-meta">
       
-        <span class="post-tags">
-          
-            <a href="/tags/alertmanager/">#alertmanager</a>&nbsp;
-          
-            <a href="/tags/monitoring/">#monitoring</a>&nbsp;
-          
-            <a href="/tags/prometheus/">#prometheus</a>&nbsp;
-          
+        <span class="post-date">
+          2024-12-03
         </span>
+
+        
       
 
       
 
-      <div class="post-content">
-        
-          
-            <p><a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Alertmanager</a> is an application that handles alerts sent by client applications such as Prometheus. It can also perform alert grouping, deduplication, silencing, inhibition. Definitely a useful addition to any modern monitoring infrastructure.</p>
-<p>That being said, configuring it can be a little daunting with the many different <a href="https://prometheus.io/docs/alerting/latest/configuration/">configurations</a> available and somewhat vague explanations on some of the terms.</p>
-<p>While configuring Alertmanager, I came across these 3 confusing terms: <code>group_wait</code>, <code>group_interval</code> and <code>repeat_interval</code>.</p>
-          
-        
-      </div>
+
       
-        <div><a class="read-more button" href="/blog/understanding-alertmanager/">Read more →</a></div>
+        <span class="post-read-time"
+          >— 1 min read</span
+        >
       
     </div>
+
     
-    <div class="post on-list">
-      <h1 class="post-title"><a href="/blog/linux-node-exporter-setup/">Node-exporter setup with Systemd</a></h1>
-      <div class="post-meta">
-        
-          <span class="post-date">
-            2021-08-19
-          </span>
 
-          
-        
+    
 
-        
-
-        
-          <span class="post-read-time">— 3 min read</span>
-        
-      </div>
-
+    <div class="post-content">
       
-        <span class="post-tags">
-          
-            <a href="/tags/linux/">#linux</a>&nbsp;
-          
-            <a href="/tags/monitoring/">#monitoring</a>&nbsp;
-          
-            <a href="/tags/node-exporter/">#node-exporter</a>&nbsp;
-          
-            <a href="/tags/systemd/">#systemd</a>&nbsp;
-          
-        </span>
-      
+      <h1 id="heading">?</h1>
 
-      
-
-      <div class="post-content">
-        
-          
-            <p>For those who aren&rsquo;t familiar, <a href="https://github.com/prometheus/node_exporter">node-exporter</a> is a Prometheus exporter that exposes hardware and OS metrics from *NIX kernels.</p>
-<p>To get it up and running, there&rsquo;s a <a href="https://prometheus.io/docs/guides/node-exporter/">simple guide</a> on Prometheus official docs. The issue with the approach is that running node-exporter by executing binary directly isn&rsquo;t the most reliable approach in a production environment as there&rsquo;s no way to ensure that the node_exporter process will run continuously.</p>
-<p>This is where <code>systemd</code> comes in. <code>systemd</code> is an init system and system maanger and comes with a management tool called <code>systemctl</code> meant for managing processes, checking statuses, configuration and changing system states.</p>
-          
-        
-      </div>
-      
-        <div><a class="read-more button" href="/blog/linux-node-exporter-setup/">Read more →</a></div>
-      
     </div>
     
-    <div class="pagination">
-  <div class="pagination__buttons">
-    
-      <span class="button previous">
-        <a href="/page/3/">
-          <span class="button__icon">←</span>
-          <span class="button__text">Newer posts</span>
-        </a>
-      </span>
-    
-    
-  </div>
-</div>
 
+    
+      
+    
   </div>
 
       </div>
