@@ -5,8 +5,6 @@ draft: false
 type: design
 layout: mood
 images:
-  - https://i.pinimg.com/736x/ae/37/a8/ae37a8d2e40f729aebd17b333f7c00be.jpg
-  - https://i.pinimg.com/736x/a7/e7/91/a7e791c26132590497a9213af2f3fbb9.jpg
   - https://images.adsttc.com/media/images/673c/dc39/3106/b51c/95e9/02de/slideshow/apartamento-praca-eixo-z-arquitetos_12.jpg
   - https://images.adsttc.com/media/images/673c/dc42/3106/b51c/95e9/02e7/slideshow/apartamento-praca-eixo-z-arquitetos_11.jpg
   - https://images.adsttc.com/media/images/672a/7c95/abb6/a232/5b5c/c4b8/slideshow/casa-morumbi-terra-e-tuma-arquitetos-associados_15.jpg
@@ -15,7 +13,15 @@ images:
   - https://images.adsttc.com/media/images/672a/7c98/abb6/a232/5b5c/c4b9/slideshow/casa-morumbi-terra-e-tuma-arquitetos-associados_4.jpg
   - https://i.pinimg.com/736x/e0/ef/3d/e0ef3d565c9b17cd8eaca471ace01054.jpg
   - https://i.pinimg.com/736x/e9/6c/ad/e96cade898453fe0331cee1e05a9e122.jpg
-  - http://eightdesign.jp/wp/wp-content/uploads/2017/05/IMGP1259.jpg
   - https://i.pinimg.com/736x/b6/40/8f/b6408f681b59a7154499debbce87433d.jpg
-  - https://i.pinimg.com/736x/e1/a4/ca/e1a4caaf84c39b670315ea54569b3bff.jpg
+  - https://images.adsttc.com/media/images/6777/1248/56c0/e400/01ca/d7e2/slideshow/043Athens_KallosTurin.jpg
+  - https://i.pinimg.com/736x/2a/04/de/2a04de1077f3a94ece961fdd18411589.jpg
+  - https://i.pinimg.com/736x/2e/b7/44/2eb744324875072ae36ff385e243604e.jpg
+  - https://images.adsttc.com/media/images/6764/61e5/8d8d/7f01/87d6/c388/slideshow/baps-house-90-plus-2-architects_16.jpg?1734632031
+  - https://images.adsttc.com/media/images/6764/61e4/8d8d/7f01/87d6/c382/slideshow/baps-house-90-plus-2-architects_10.jpg?1734631922
+  - https://i.pinimg.com/1200x/db/82/67/db826762b7bed8bcd7d32022272e6bcf.jpg
+  - https://i.pinimg.com/736x/e6/34/ac/e634acdefd0d980954105166cbfbbb72.jpg
+  - https://i.pinimg.com/1200x/e1/1b/a5/e11ba5d8ef4e8b5ad4a2d933e7a29f87.jpg
+  - https://i.pinimg.com/1200x/96/70/44/967044d50a5394a4bbdf09f123a37ea4.jpg
+  - https://i.pinimg.com/1200x/32/96/43/329643a21a8f4dd3b9e8afad04f6f1cc.jpg
 ---
