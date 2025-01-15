@@ -36,4 +36,10 @@ images:
   - https://i.pinimg.com/736x/67/5d/32/675d32547fe85ed8ae923312a3cb9ab2.jpg
   - https://i.pinimg.com/736x/23/5d/39/235d398c99745ce8a0e69c37d0a06855.jpg
   - https://i.pinimg.com/736x/e6/2d/dc/e62ddc6ec682157b65c9712f0d02a891.jpg
+  - https://images.adsttc.com/media/images/6786/8d44/f6ca/3e01/88ac/1cb9/slideshow/vung-tau-house-sanuki-daisuke-architects_30.jpg?1736871257
+  - https://images.adsttc.com/media/images/6786/8d48/f6ca/3e01/88ac/1cbc/slideshow/vung-tau-house-sanuki-daisuke-architects_24.jpg?1736871254
+  - https://images.adsttc.com/media/images/6786/8cf3/f6ca/3e01/88ac/1ca0/slideshow/vung-tau-house-sanuki-daisuke-architects_39.jpg?1736871177
+  - https://images.adsttc.com/media/images/6786/8d09/f6ca/3e01/88ac/1ca7/slideshow/vung-tau-house-sanuki-daisuke-architects_6.jpg?1736871200
+  - https://images.adsttc.com/media/images/6786/8cf4/4cac/9901/87d6/5c12/slideshow/vung-tau-house-sanuki-daisuke-architects_1.jpg?1736871177
+  - https://images.adsttc.com/media/images/6786/8ce7/f6ca/3e01/88ac/1c9d/slideshow/vung-tau-house-sanuki-daisuke-architects_8.jpg?1736871155
 ---
