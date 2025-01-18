@@ -363,15 +363,15 @@ Example of label-less data:</p>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Lock</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mtx</span>.<span style="color:#a6e22e">Unlock</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create pending alerts for any new vector elements in the alert expression
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// or update the expression value for existing elements.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">resultFPs</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">struct</span>{}{}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create pending alerts for any new vector elements in the alert expression</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// or update the expression value for existing elements.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resultFPs</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#66d9ef">struct</span>{}{}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vec</span> <span style="color:#a6e22e">promql</span>.<span style="color:#a6e22e">Vector</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">alerts</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Alert</span>, len(<span style="color:#a6e22e">res</span>))
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">smpl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">res</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Provide the alert information to the template.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Provide the alert information to the template.</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span>))
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">lbl</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">smpl</span>.<span style="color:#a6e22e">Metric</span> {
 </span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">l</span>[<span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Name</span>] = <span style="color:#a6e22e">lbl</span>.<span style="color:#a6e22e">Value</span>
 </span></span><span style="display:flex;"><span>		}
