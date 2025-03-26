@@ -71,4 +71,25 @@ images:
   - https://i.pinimg.com/1200x/af/d6/cb/afd6cb5ac3f2debe6eb0cce0a6fafc6b.jpg
   - https://i.pinimg.com/1200x/e7/13/17/e713170ff41706b372d635b6514ffa7f.jpg
   - https://i.pinimg.com/1200x/1d/f1/74/1df174ffade16bc2f3657c220fe14deb.jpg
+  - https://hipvan-images-production.imgix.net/product-images/9c88b0d9-328a-437d-9ee5-646213841237/Malmo--Vezel-Lounge-Chair--Walnut-Nile-Green-1.png
+  - https://fuji-furniture.jp/wp2/wp-content/uploads/2020/09/D03780N-4.jpg
+  - https://fuji-furniture.jp/wp2/wp-content/uploads/2021/08/nico10.jpg
+  - https://www.originals.com.sg/cdn/shop/files/Sketch_baker_mega_arm_fabric_sofa_salt_and_pepper_WEB_1_700x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/NS_sienna_fabric_armchair_clay_75cm_WEB_1_800x.jpg
+  - https://www.originals.com.sg/cdn/shop/products/Pro-CaptureOne65351_800x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/SK_scribe_armchair_canyon_WEB_1_24563198-208d-475b-9d88-e1f459bfbf1d_800x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/Sketch-poise-leather-dining-chair-coal-2_700x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/Ethnicraft_oak_bok_dining_chair_natural_WEB_14_700x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/tolv_farnsworth_rack_oak_WEB_1_800x.jpg
+  - https://www.originals.com.sg/cdn/shop/files/ethnicraft_air_bedside_table_oak_WEB_1_800x.jpg
+  - https://i.pinimg.com/736x/89/9b/6f/899b6fc2ea3799f766a394b40d3d67ab.jpg
+  - https://i.pinimg.com/736x/40/94/eb/4094eb46c4599d7d93c452308b2ff186.jpg
+  - https://i.pinimg.com/736x/cd/9f/10/cd9f105d1a099be2753d95d592d24c25.jpg
+  - https://i.pinimg.com/736x/2e/4d/5c/2e4d5c70320ace8206441327684f47d6.jpg
+  - https://i.pinimg.com/736x/2d/07/d3/2d07d3c4e1342cf5331193d3c73ffe10.jpg
+  - https://i.pinimg.com/1200x/4c/eb/f3/4cebf38181ce429ddf25a71dbc82e92e.jpg
+  - https://i.pinimg.com/1200x/af/d6/cb/afd6cb5ac3f2debe6eb0cce0a6fafc6b.jpg
+  - https://i.pinimg.com/736x/dd/c6/69/ddc669e537d014007d3ab2c064ac154f.jpg
+  - https://i.pinimg.com/1200x/e3/78/d8/e378d8248dc19e5053b67afece93e0fc.jpg
+  - https://i.pinimg.com/736x/e6/9b/9c/e69b9c897a1990ebe2b55551ed86239d.jpg
 ---
