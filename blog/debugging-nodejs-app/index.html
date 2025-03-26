@@ -357,8 +357,7 @@ strace: Process 25 attached
 </code></pre><p><code>clock_gettime</code>, <code>write</code>, <code>gettimeofday</code>?</p>
 <p>I came across an article on <a href="https://asafdav2.github.io/2017/node-js-timers/">nodejs timers</a>, which covers how timers are managed internally and one particular line stood out to me</p>
 <blockquote>
-<p>On top of user code and 3rd-party libraries using timers, timers are also used internally by the Node.js platform itself. For example, a dedicated timer is used with each TCP connection to detect a possible connection timeout.</p>
-</blockquote>
+<p>On top of user code and 3rd-party libraries using timers, timers are also used internally by the Node.js platform itself. For example, a dedicated timer is used with each TCP connection to detect a possible connection timeout.</p></blockquote>
 <p>Timer for connections? Well, this application has create 256 connections to ElasticCloud. And it sure is sending a non-trivial amount of error logs to ElasticCloud, which could explain the high <code>% time</code> used by <code>write</code>.</p>
 <p>At this point, my hypothesis for the root cause of high CPU usage and memory leak: use of <code>winston-elasticsearch</code> library coupled with the huge amount of logs being shipped through it.</p>
 <p>I could have just removed the use of <code>winston-elasticsearch</code> in the application to verify my hypothesis but I wanted to dig deeper.</p>

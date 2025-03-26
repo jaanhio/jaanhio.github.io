@@ -265,11 +265,9 @@ spec:
         memory: 200Mi
 </code></pre><p>These <code>spec.containers[].resources</code> specifications are then used by Kubernetes for workload scheduling and resource limiting.</p>
 <blockquote>
-<p><code>requests</code> are used by <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/#scheduling">kube-scheduler</a> to decide which worker node to assign a pod to.</p>
-</blockquote>
+<p><code>requests</code> are used by <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/#scheduling">kube-scheduler</a> to decide which worker node to assign a pod to.</p></blockquote>
 <blockquote>
-<p><code>limits </code> are used by <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/#synopsis">kubelet</a> to limit how much resources a container can use</p>
-</blockquote>
+<p><code>limits </code> are used by <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/#synopsis">kubelet</a> to limit how much resources a container can use</p></blockquote>
 <p>Put simply, we can view them as soft limits (requests) and hard limits (limits).</p>
 <h2 id="how-are-these-cpu-requests-and-limits-mechanisms-implemented-by-kubernetes">How are these CPU requests and limits mechanisms implemented by Kubernetes?</h2>
 <p>For those who aren&rsquo;t aware, &ldquo;containers&rdquo; isn&rsquo;t a first-class concept in Linux. It is made up of Linux features like <code>cgroups</code> to control available resources to processes and <code>namespaces</code> to isolate processes.</p>
@@ -278,8 +276,7 @@ spec:
 <blockquote>
 <p>cgroup is largely composed of two parts - the core and controllers. cgroup core is primarily responsible for hierarchically organizing
 processes.  A cgroup controller is usually responsible for distributing a specific type of system resource along the hierarchy
-although there are utility controllers which serve purposes other than resource distribution.</p>
-</blockquote>
+although there are utility controllers which serve purposes other than resource distribution.</p></blockquote>
 <p>Under the hood, <code>requests.cpu</code> and <code>limits.cpu</code> are implemented using features of <a href="https://kernel.googlesource.com/pub/scm/linux/kernel/git/glommer/memcg/&#43;/cpu_stat/Documentation/cgroups/cpu.txt">CPU cgroup controller</a> (grouping processes) and CFS scheduler (assigning resource based on groupings)</p>
 <p>Though the Kubernetes configuration for both <code>requests.cpu</code> &amp; <code>limits.cpu</code> look similar, they are actually implemented using different mechanisms.</p>
 <p>The related configurations and files are located under the <code>/sys/fs/cgroup/kubepods</code> directory.</p>

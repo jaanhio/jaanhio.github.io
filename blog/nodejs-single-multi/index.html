@@ -215,8 +215,7 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
       
       <p>I am sure most of us who have used Node.js have heard of this statement:</p>
 <blockquote>
-<p>Node.js is single-threaded.</p>
-</blockquote>
+<p>Node.js is single-threaded.</p></blockquote>
 <p>Is this statement correct? Well yes, partially.</p>
 <p>Node.js uses an asynchronous event-driven architecture consisting of an <code>event loop</code> and a <code>worker pool</code>.</p>
 <p>When we say that Node.js is single-threaded, we are actually referring to the <code>event loop</code> which is also known as the <strong>single main/event thread</strong>. This <code>event loop</code> handles the orchestration of new client connection and the corresponding response.</p>
@@ -231,15 +230,13 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <ul>
 <li>DNS (<code>dns.lookup()</code>, <code>dns.lookupService()</code>)</li>
 <li>File system (all file system API except <code>fs.FSWatcher()</code> and those that are explicitly synchronous)</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <blockquote>
 <p>CPU-intensive tasks</p>
 <ul>
 <li>Crypto (<code>crypto.pbkdf2()</code>, <code>crypto.scrypt()</code>, <code>crypto.randomBytes()</code>, <code>crypto.randomFill()</code>, <code>crypto.generateKeyPair()</code>)</li>
 <li>Zlib (all except those are explicitly synchronous)</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <p>On top of these, it&rsquo;s also possible for applications and modules that use a <a href="https://nodejs.org/api/addons.html">C++ add-on</a> to submit tasks to the <code>worker pool</code>.</p>
 <p>This means all other intensive tasks do not make use of the worker pool:</p>
 <ul>
@@ -407,8 +404,7 @@ When we say that Node.js is single-threaded, we are actually referring to the ev
 <p>Added in: v5.10.0</p>
 <p>Set V8&rsquo;s thread pool size which will be used to allocate background jobs.</p>
 <p>If set to 0 then V8 will choose an appropriate size of the thread pool based on the number of online processors.</p>
-<p>If the value provided is larger than V8&rsquo;s maximum, then the largest value will be chosen.</p>
-</blockquote>
+<p>If the value provided is larger than V8&rsquo;s maximum, then the largest value will be chosen.</p></blockquote>
 <p>Let&rsquo;s try running it again with the <code>--v8-pool-size</code> option.</p>
 <p><figure class="post-cover">
       <label for="./pool-size-2.png">

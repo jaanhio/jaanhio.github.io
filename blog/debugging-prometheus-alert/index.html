@@ -233,17 +233,14 @@ misunderstanding of how PromQL vector() function works misunderstanding of how P
 <h2 id="how-does-vector-function-work">How does <code>vector()</code> function work?</h2>
 <p>Let&rsquo;s check out the function description from <a href="https://prometheus.io/docs/prometheus/latest/querying/functions/#vector">Prometheus docs</a>:</p>
 <blockquote>
-<p>vector(s scalar) returns the scalar s as a vector with no labels.</p>
-</blockquote>
+<p>vector(s scalar) returns the scalar s as a vector with no labels.</p></blockquote>
 <p>I think the description taken from <a href="https://www.amazon.com/Prometheus-Infrastructure-Application-Performance-Monitoring/dp/1492034142">Prometheus: Up &amp; Running</a> is much clearer:</p>
 <blockquote>
-<p>Vector function takes a scalar value and converts it into an instant vector with one label-less sample with the given value.</p>
-</blockquote>
+<p>Vector function takes a scalar value and converts it into an instant vector with one label-less sample with the given value.</p></blockquote>
 <p>Scalar? Label-less instant vector? What are these?</p>
 <h4 id="instant-vector-data-type">Instant vector data type</h4>
 <blockquote>
-<p>a set of time series containing a single sample for each time series, all sharing the same timestamp</p>
-</blockquote>
+<p>a set of time series containing a single sample for each time series, all sharing the same timestamp</p></blockquote>
 <p>Example:</p>
 <pre tabindex="0"><code>prometheus_operator_kubernetes_client_http_requests_total
 </code></pre><p>The PromQL above returns an instant vector, with each row being a time series at a particular point in time of query.
@@ -255,8 +252,7 @@ misunderstanding of how PromQL vector() function works misunderstanding of how P
 </figure></p>
 <h4 id="scalar-data-type">Scalar data type</h4>
 <blockquote>
-<p>a simple numeric floating point value</p>
-</blockquote>
+<p>a simple numeric floating point value</p></blockquote>
 <p>It literally is just a value. It cannot have labels (i.e just scalar).</p>
 <p>Example:</p>
 <pre tabindex="0"><code>2
@@ -319,8 +315,7 @@ Example of label-less data:</p>
 </ul>
 <p>As per Prometheus docs,</p>
 <blockquote>
-<p>Between an instant vector and a scalar, these operators are applied to the value of every data sample in the vector, and vector elements between which the comparison result is false get dropped from the result vector</p>
-</blockquote>
+<p>Between an instant vector and a scalar, these operators are applied to the value of every data sample in the vector, and vector elements between which the comparison result is false get dropped from the result vector</p></blockquote>
 <p>This is why <code>no data</code> was returned.</p>
 <p>If we want it to evaluate to a boolean value (<code>{} 0</code> or <code>{} 1</code>), we will need to add a <code>bool</code> modifier after the operator.</p>
 <p>Example:</p>
@@ -342,8 +337,7 @@ Example of label-less data:</p>
 <p><code>vector(0) &gt;= 0.05</code> returns <code>no data</code></p>
 <p>As per the <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#logical-set-binary-operators">logical binary operator</a> description:</p>
 <blockquote>
-<p><code>vector1 or vector2</code> results in a vector that contains all original elements (label sets + values) of vector1 and additionally all elements of vector2 which do not have matching label sets in vector1</p>
-</blockquote>
+<p><code>vector1 or vector2</code> results in a vector that contains all original elements (label sets + values) of vector1 and additionally all elements of vector2 which do not have matching label sets in vector1</p></blockquote>
 <p>This means the final result will be <code>{} 0</code>.</p>
 <hr>
 <h2 id="how-does-prometheusthanos-ruler-evaluates-promql-result-and-trigger-alerts">How does Prometheus/Thanos-ruler evaluates PromQL result and trigger alerts?</h2>

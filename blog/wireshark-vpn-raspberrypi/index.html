@@ -380,8 +380,7 @@ Src: 192.168.1.9    Dst: mobile device  Op: P_CONTROL_HARD_RESET_SERVER_V2
 <p>After some research, I found this article (<a href="https://zeek.org/2021/03/16/a-zeek-openvpn-protocol-analyzer/">https://zeek.org/2021/03/16/a-zeek-openvpn-protocol-analyzer/</a>) that briefly discussed the OpenVPN protocol.</p>
 <p>Taken from the article:</p>
 <blockquote>
-<p>When an OpenVPN connection occurs, the client sends a control hard reset client opcode to the server. The server replies with a control hard reset server, and then both sides exchange TLS information via the P_CONTROL_V1 message type. After the TLS information has been exchanged, the VPN begins and the data is transmitted via OpenVPN data messages (either v1 or v2).</p>
-</blockquote>
+<p>When an OpenVPN connection occurs, the client sends a control hard reset client opcode to the server. The server replies with a control hard reset server, and then both sides exchange TLS information via the P_CONTROL_V1 message type. After the TLS information has been exchanged, the VPN begins and the data is transmitted via OpenVPN data messages (either v1 or v2).</p></blockquote>
 <p>Also from <a href="https://openvpn.net/community-resources/openvpn-protocol/">https://openvpn.net/community-resources/openvpn-protocol/</a>,</p>
 <pre tabindex="0"><code> *  P_CONTROL_HARD_RESET_CLIENT_V1 -- Key method 1, initial key from
  *    client, forget previous state.

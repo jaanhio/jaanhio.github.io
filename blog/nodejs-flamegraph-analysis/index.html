@@ -242,8 +242,7 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
 <li>The width of the box shows the total time it was on-CPU or part of an ancestry that was on-CPU (based on sample count). Functions with wide boxes may consume more CPU per execution than those with narrow boxes, or, they may simply be called more often. The call count is not shown (or known via sampling).</li>
 <li>The sample count can exceed elapsed time if multiple threads were running and sampled concurrently.</li>
 <li>The colors aren&rsquo;t significant, and are usually picked at random to be warm colors (other meaningful palettes are supported).</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <hr>
 <h2 id="capturing-perf-data">Capturing perf data</h2>
 <p>Before we can perform flame graph analysis, we have to first capture the CPU profile data.</p>
@@ -300,8 +299,7 @@ What are flame graphs? Flame graphs, as the name suggests, are graphs that look 
 <p><code>uv_*</code> are actually the functions from <code>libuv</code> library, which as explained, is required to provide low-level OS access. It is also used to <a href="https://www.atomiccommits.io/event-loop-polling/">implement the Nodejs event loop</a>!</p>
 <p>As for <code>__libc_start_main</code>, I found this <a href="https://stackoverflow.com/a/62709108">stackoverflow answer</a> explaining the role of this function and seems to match the description taken from <a href="https://refspecs.linuxbase.org/LSB_3.1.0/LSB-generic/LSB-generic/baselib---libc-start-main-.html#:~:text=The%20__libc_start_main%28%29%20function,to%20the%20exit%28%29%20function.">Linux standard base specification</a></p>
 <blockquote>
-<p><code>__libc_start_main</code> is an initialization routine and performs necessary initialization of execution environment.</p>
-</blockquote>
+<p><code>__libc_start_main</code> is an initialization routine and performs necessary initialization of execution environment.</p></blockquote>
 <p>Some further digging down the rabbit hole later, I found this <a href="http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html">Linux x86 Program Start Up</a> post, which explains the steps taken to load and run an application and the role that <code>__libc_start_main</code> plays.</p>
 <hr>
 <p>As the current flame graph still contains Nodejs and V8 internal functions, I filtered it again to make application related functions more visible.</p>
