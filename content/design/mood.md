@@ -92,4 +92,6 @@ images:
   - https://i.pinimg.com/736x/dd/c6/69/ddc669e537d014007d3ab2c064ac154f.jpg
   - https://i.pinimg.com/1200x/e3/78/d8/e378d8248dc19e5053b67afece93e0fc.jpg
   - https://i.pinimg.com/736x/e6/9b/9c/e69b9c897a1990ebe2b55551ed86239d.jpg
+  - https://cdn.prod.website-files.com/65c18a9a4d6c9699ac22d7bd/67edd94f4d9bc1b9e67d6afb_article-45.webp
+  - https://cdn.prod.website-files.com/65c18a9a4d6c9699ac22d7bd/67edd9ab1015d64016fddcbb_article-31.webp
 ---
